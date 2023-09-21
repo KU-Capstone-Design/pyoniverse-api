@@ -1,6 +1,12 @@
 import traceback
 
-from chalice.app import ChaliceError, ChaliceUnhandledError, Request, Response
+from chalice.app import (
+    ALL_ERRORS,
+    ChaliceError,
+    ChaliceUnhandledError,
+    Request,
+    Response,
+)
 
 from chalicelib.dtos.builder import ApiBuilder
 
@@ -8,8 +14,12 @@ from chalicelib.dtos.builder import ApiBuilder
 def handle_errors(event: Request, get_response):
     try:
         response: Response = get_response(event)
+        if response.status_code != 200:
+            for error in ALL_ERRORS:
+                if error.STATUS_CODE == response.status_code:
+                    raise error(response.body)
         if response.status_code == 500:
-            raise ChaliceUnhandledError()
+            raise ChaliceUnhandledError(response.body)
     except ChaliceUnhandledError as e:
         status_code = str(500)
         status_message = None

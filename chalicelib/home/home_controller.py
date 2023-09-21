@@ -1,6 +1,6 @@
 from typing import Type
 
-from chalice import Blueprint
+from chalice import BadRequestError, Blueprint
 
 from chalicelib.dtos.api import Api
 from chalicelib.dtos.builder import ApiBuilder
@@ -16,7 +16,16 @@ class HomeController(Controller):
     @staticmethod
     @api.route("/", methods=["GET", "HEAD"], cors=True)
     def index() -> Api:
-        stores = HomeController.service.get_list(type="store")
+        params = HomeController.api.current_request.query_params
+        if not params:
+            type = "stores"
+        else:
+            type = params.get("type")
+            if type not in ["events", "products"]:
+                raise BadRequestError(
+                    f"Invalid type: {type}. Valid types are: events, products"
+                )
+        stores = HomeController.service.get_list(type=type)
         res = {
             "stores": stores,
             "search": None,
