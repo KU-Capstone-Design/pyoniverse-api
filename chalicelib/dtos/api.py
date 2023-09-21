@@ -1,8 +1,8 @@
 from dataclasses import dataclass, field
 from typing import List, Optional
 
-from chalicelib.dtos.serializer import JsonSerializer
 from chalicelib.dtos.pagination import Pagination
+from chalicelib.dtos.serializer import JsonSerializer
 
 
 @dataclass

@@ -28,7 +28,7 @@ class ProductBrandEntity:
         return cls(
             id=data["id"],
             price=ProductPriceEntity.from_dict(data["price"]),
-            events=data["events"],
+            events=data["event"],
         )
 
 
