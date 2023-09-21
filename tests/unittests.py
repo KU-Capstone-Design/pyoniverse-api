@@ -1,3 +1,5 @@
+import json
+
 import pytest
 
 from chalicelib.dtos.builder import ApiBuilder
@@ -52,10 +54,13 @@ def test_product_entity(product_entity):
 
 def test_serializer():
     mock = ApiBuilder().with_status_code("200 OK").with_status_message("OK").build()
-    assert JsonSerializer.serialize(mock) == {
-        "status_code": "200 OK",
-        "status_message": "OK",
-        "data": None,
-        "errors": None,
-        "pagination": None,
-    }
+    assert JsonSerializer.serialize(mock) == json.dumps(
+        {
+            "status_code": "200 OK",
+            "status_message": "OK",
+            "data": None,
+            "errors": None,
+            "pagination": None,
+        },
+        ensure_ascii=False,
+    )

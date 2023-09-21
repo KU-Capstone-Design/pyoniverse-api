@@ -1,3 +1,4 @@
+import json
 from dataclasses import dataclass, fields, is_dataclass
 
 
@@ -7,7 +8,7 @@ class JsonSerializer:
     """
 
     @staticmethod
-    def serialize(obj: dataclass) -> dict:
+    def serialize(obj: dataclass) -> str:
         res = {}
         for _field in fields(obj):
             key = _field.name.replace("-", "_")
@@ -15,4 +16,4 @@ class JsonSerializer:
             if is_dataclass(value):
                 value = JsonSerializer.serialize(value)
             res[key] = value
-        return res
+        return json.dumps(res, ensure_ascii=False)

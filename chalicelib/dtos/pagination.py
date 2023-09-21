@@ -1,7 +1,5 @@
 from dataclasses import dataclass, field
 
-from chalicelib.dtos.serializer import JsonSerializer
-
 
 @dataclass
 class Pagination:
@@ -12,6 +10,3 @@ class Pagination:
     sort: str = field()
     direction: str = field()
     filter: str = field()
-
-    def to_dict(self):
-        return JsonSerializer.serialize(self)
