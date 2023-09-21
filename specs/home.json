@@ -1,0 +1,51 @@
+{
+    "path": "/home",
+    "method": "GET",
+    "reqeust-params": null,
+    "response": {
+        "header": {
+            "code": 200
+        },
+        "body": {
+            "status-code": "200 OK",
+            "status-message": "success",
+            "data": {
+                "meta": {
+                    "meta-key": "meta-value"
+                },
+                "search": {
+                    "path": "/search",
+                    "alt": "alt message"
+                },
+                "stores": [
+                    {
+                        "brand": "CU",
+                        "name": "displayed name",
+                        "path": "/brand/cu",
+                        "image": "/images/brand/{image-id}.webp",
+                        "image-alt": "alt tag"
+                    }
+                ],
+                "events": [
+                    {
+                        "brand": "CU",
+                        "name": "displayed name",
+                        "path": "/event/{event-id}",
+                        "image": "/images/event/{image-id}.webp",
+                        "image-alt": "alt tag"
+                    }
+                ],
+                "products": [
+                    {
+                        "name": "displayed name",
+                        "path": "/product/{product-id}",
+                        "image": "/images/product/{image-id}.webp",
+                        "image-alt": "alt-tag"
+                    }
+                ]
+            },
+            "errors": null,
+            "pagination": null
+        }
+    }
+}
