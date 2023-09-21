@@ -1,21 +1,22 @@
 {
     "version": "2.0",
     "app_name": "pyoniverse-api",
-    "manae_iam_role": false,
+    "manage_iam_role": false,
     "iam_role_arn": "arn:aws:iam::792939917746:role/pyoniverse-lambda",
+    "automatic_layer": true,
     "environment_variables": {
         "COUNTRY_CODE": "kr",
         "MONGO_URI": "mongodb+srv://qkk2304:S2xyPm95OYYQmj7v@pyoniverse.poxug6k.mongodb.net"
     },
     "stages": {
-        "dev": {
-            "api_gateway_stage": "dev/v1",
+        "dev_v1": {
+            "api_gateway_stage": "dev",
             "environment_variables": {
                 "MONGO_DB": "service_dev"
             }
         },
-        "prod": {
-            "api_gateway_stage": "prod/v1",
+        "prod_v1": {
+            "api_gateway_stage": "prod",
             "environment_variables": {
                 "MONGO_DB": "service_prod"
             }

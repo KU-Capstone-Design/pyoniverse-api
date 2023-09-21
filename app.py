@@ -8,7 +8,7 @@ from chalicelib.middlewares.response_handler import handle_response
 app = Chalice(app_name="pyoniverse-api")
 app.api.binary_types.append("application/json")
 
-app.register_blueprint(HomeController.api, url_prefix="/home")
+app.register_blueprint(HomeController.api, url_prefix="/v1")
 
 app.register_middleware(handle_response, "http")
 app.register_middleware(handle_errors, "http")

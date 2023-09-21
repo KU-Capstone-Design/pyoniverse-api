@@ -14,7 +14,7 @@ class HomeController(Controller):
     service: Type[Service] = ServiceFactory.create_service("home_service")
 
     @staticmethod
-    @api.route("/", methods=["GET", "HEAD"], cors=True)
+    @api.route("/home", methods=["GET", "HEAD"], cors=True)
     def index() -> Api:
         params = HomeController.api.current_request.query_params
         if not params:
