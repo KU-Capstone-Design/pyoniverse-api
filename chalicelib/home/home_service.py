@@ -47,6 +47,7 @@ class HomeService(Service):
                         "name": "GS25",
                         "image": "https://hpsimg.gsretail.com/medias"
                         "/sys_master/images/images/h96/ha6/9088902135838.jpg",
+                        "image-alt": "yyy",
                     },
                     {
                         "id": 1,
@@ -55,6 +56,7 @@ class HomeService(Service):
                         "name": "GS25",
                         "image": "https://hpsimg.gsretail.com/medias"
                         "/sys_master/images/images/h96/ha6/9088902135838.jpg",
+                        "image-alt": "yyy",
                     },
                 ]
             case "products":
