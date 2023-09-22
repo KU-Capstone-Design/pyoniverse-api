@@ -3,6 +3,7 @@ from typing import Type
 from chalice import BadRequestError
 from overrides import override
 
+from chalicelib.dtos.converter import IdConverter
 from chalicelib.factories.repository_factory import RepositoryFactory
 from chalicelib.interfaces.repository import Repository
 from chalicelib.interfaces.service import Service
@@ -18,48 +19,23 @@ class HomeService(Service):
     def get_list(cls, **kwargs) -> list:
         match kwargs["type"]:
             case "stores":
-                res = [
-                    {
-                        "id": 1,
-                        "slug": "cu",
-                        "brand": "CU",
-                        "name": "CU",
-                        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/"
-                        "1a/CU_BI_%282017%29.svg/440px-CU_BI_%282017%29.svg.png",
-                        "image-alt": "yyy",
-                    },
-                    {
-                        "id": 2,
-                        "slug": "gs25",
-                        "brand": "GS25",
-                        "name": "GS25",
-                        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/GS25_bi_%282019%"
-                        "29.svg/400px-GS25_bi_%282019%29.svg.png",
-                        "image-alt": "yyy",
-                    },
-                ]
+                res = cls.repository.find(type="brand")
+                for brand in res:
+                    brand["brand"] = brand["name"].upper()
+                    brand["image-alt"] = f"{brand['brand']} Logo"
+
             case "events":
-                res = [
-                    {
-                        "id": 1,
-                        "brand": "gs25",
-                        "slug": "gs25",
-                        "name": "GS25",
-                        "image": "https://hpsimg.gsretail.com/medias"
-                        "/sys_master/images/images/h96/ha6/9088902135838.jpg",
-                        "image-alt": "yyy",
-                    },
-                    {
-                        "id": 1,
-                        "brand": "gs25",
-                        "slug": "gs25",
-                        "name": "GS25",
-                        "image": "https://hpsimg.gsretail.com/medias"
-                        "/sys_master/images/images/h96/ha6/9088902135838.jpg",
-                        "image-alt": "yyy",
-                    },
-                ]
+                res = cls.repository.find(type="event")
+                for event in res:
+                    event["brand"] = IdConverter.convert_brand_id(event["brand"])
+                    event["image-alt"] = f"({event['brand']['name']}) {event['name']}"
+                return res
             case "products":
+                res = cls.repository.find(type="product")
+                for product in res:
+                    product["events"] = None
+                    product["image-alt"] = f"{product['name']} thumbnail"
+                return res
                 res = [
                     {
                         "id": 1,

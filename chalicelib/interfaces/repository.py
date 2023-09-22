@@ -1,4 +1,4 @@
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta
 from typing import Optional, Tuple
 
 from chalicelib.dtos.pagination import Pagination
@@ -6,9 +6,8 @@ from chalicelib.dtos.pagination import Pagination
 
 class Repository(metaclass=ABCMeta):
     @classmethod
-    @abstractmethod
     def find_by_id(cls, id, **kwargs) -> Optional[object]:
-        pass
+        raise NotImplementedError
 
     @classmethod
     def find_by_slug(cls, slug, **kwargs) -> Optional[object]:

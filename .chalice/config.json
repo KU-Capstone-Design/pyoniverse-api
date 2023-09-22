@@ -12,13 +12,15 @@
         "dev_v1": {
             "api_gateway_stage": "dev",
             "environment_variables": {
-                "MONGO_DB": "service_dev"
+                "MONGO_DB": "service_dev",
+                "LOG_LEVEL": "DEBUG"
             }
         },
         "prod_v1": {
             "api_gateway_stage": "prod",
             "environment_variables": {
-                "MONGO_DB": "service_prod"
+                "MONGO_DB": "service_prod",
+                "LOG_LEVEL": "INFO"
             }
         }
     }

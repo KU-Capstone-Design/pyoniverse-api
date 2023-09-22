@@ -6,7 +6,6 @@ from chalicelib.dtos.serializer import JsonSerializer
 
 
 def handle_response(event: Request, get_response):
-    print("Response Handler Enter")
     encoded_header = {
         "Content-Type": "application/json",
         "Content-Encoding": "gzip",
