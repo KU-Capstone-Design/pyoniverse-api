@@ -9,8 +9,6 @@ class ApiBuilder:
         self._status_code = None
         self._status_message = None
         self._data = None
-        self._errors = None
-        self._pagination = None
 
     def with_status_code(self, status_code: str):
         self._status_code = status_code
@@ -24,21 +22,11 @@ class ApiBuilder:
         self._data = data
         return self
 
-    def with_errors(self, errors: List[str]):
-        self._errors = errors
-        return self
-
-    def with_pagination(self, pagination: Pagination):
-        self._pagination = pagination
-        return self
-
     def build(self):
         return Api(
             status_code=self._status_code,
             status_message=self._status_message,
             data=self._data,
-            errors=self._errors,
-            pagination=self._pagination,
         )
 
 
