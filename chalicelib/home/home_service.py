@@ -27,8 +27,10 @@ class HomeService(Service):
             case "events":
                 res = cls.repository.find(type="event")
                 for event in res:
-                    event["brand"] = IdConverter.convert_brand_id(event["brand"])
-                    event["image-alt"] = f"({event['brand']['name']}) {event['name']}"
+                    event["brand"] = IdConverter.convert_brand_id(event["brand"])[
+                        "name"
+                    ].upper()
+                    event["image-alt"] = f"({event['brand']}) {event['name']}"
                 return res
             case "products":
                 res = cls.repository.find(type="product")
