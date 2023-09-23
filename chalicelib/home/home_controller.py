@@ -25,11 +25,12 @@ class HomeController(Controller):
                 raise BadRequestError(
                     f"Invalid type: {type}. Valid types are: events, products"
                 )
-        stores = HomeController.service.get_list(type=type)
+        data = HomeController.service.get_list(type=type)
         res = {
-            "stores": stores,
-            "search": None,
+            type: data,
         }
+        if type == "stores":
+            res["search"] = None
         api = (
             ApiBuilder()
             .with_status_code("200 OK")

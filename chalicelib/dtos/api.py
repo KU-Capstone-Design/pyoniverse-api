@@ -9,5 +9,5 @@ class Api:
     status_code: str = field()
     status_message: str = field()
     data: dict = field()
-    errors: Optional[List[str]] = field(default=None)
-    pagination: Optional[Pagination] = field(default=None)
+    # errors: Optional[List[str]] = field(default=None)
+    # pagination: Optional[Pagination] = field(default=None)
