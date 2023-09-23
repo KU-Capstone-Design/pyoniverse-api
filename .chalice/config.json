@@ -1,12 +1,11 @@
 {
     "version": "2.0",
     "app_name": "pyoniverse-api",
+    "api_gateway_endpoint_type": "REGIONAL",
     "manage_iam_role": false,
-    "iam_role_arn": "arn:aws:iam::792939917746:role/pyoniverse-lambda",
     "automatic_layer": true,
     "environment_variables": {
-        "COUNTRY_CODE": "kr",
-        "MONGO_URI": "mongodb+srv://qkk2304:S2xyPm95OYYQmj7v@pyoniverse.poxug6k.mongodb.net"
+        "COUNTRY_CODE": "kr"
     },
     "stages": {
         "dev_v1": {
