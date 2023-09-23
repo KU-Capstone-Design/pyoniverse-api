@@ -26,7 +26,6 @@ def handle_errors(event: Request, get_response):
             raise ChaliceUnhandledError(response.body)
     except ChaliceUnhandledError as e:
         status_code = str(500)
-        status_message = None
         tb = traceback.format_exc()
         errors = str(tb)
         body = (
@@ -39,7 +38,6 @@ def handle_errors(event: Request, get_response):
         logger.error(errors)
     except ChaliceError as e:
         status_code = str(e.STATUS_CODE)
-        status_message = None
 
         tb = traceback.format_exc()
         errors = str(tb)
