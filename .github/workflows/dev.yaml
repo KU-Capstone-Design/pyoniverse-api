@@ -35,4 +35,5 @@ jobs:
           echo "MONGO_URI=$MONGO_URI" >> .env
           echo "IAM_ROLE_ARN=$IAM_ROLE_ARN" >> .env
 
+          python -m pytest -v
           python deploy.py --stage=dev_v1
