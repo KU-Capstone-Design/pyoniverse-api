@@ -39,22 +39,6 @@ class HomeService(Service):
                     product["events"] = None
                     product["image-alt"] = f"{product['name']} thumbnail"
                 return res
-                res = [
-                    {
-                        "id": 1,
-                        "name": "11가지찬많은도시락1편",
-                        "events": None,
-                        "image": "s3://pyoniverse-image/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                        "image-alt": "yyy",
-                    },
-                    {
-                        "id": 1,
-                        "name": "11가지찬많은도시락1편",
-                        "events": None,
-                        "image": "s3://pyoniverse-image/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                        "image-alt": "yyy",
-                    },
-                ]
             case _:
                 raise BadRequestError(
                     f"Invalid type: {type}. Valid types are: stores, events, products"
