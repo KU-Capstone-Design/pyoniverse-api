@@ -30,6 +30,7 @@ class HomeService(Service):
                     event["brand"] = IdConverter.convert_brand_id(event["brand"])[
                         "name"
                     ].upper()
+                    event["image"] = event["image"]["thumb"]
                     event["image-alt"] = f"({event['brand']}) {event['name']}"
                 return res
             case "products":

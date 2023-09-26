@@ -13,8 +13,8 @@
     {
       "name": "rest_api",
       "resource_type": "rest_api",
-      "rest_api_id": "g6nr4pj2q5",
-      "rest_api_url": "https://g6nr4pj2q5.execute-api.ap-northeast-2.amazonaws.com/prod/"
+      "rest_api_id": "q5h3rqk4xj",
+      "rest_api_url": "https://q5h3rqk4xj.execute-api.ap-northeast-2.amazonaws.com/prod/"
     }
   ],
   "schema_version": "2.0",
