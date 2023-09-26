@@ -28,11 +28,11 @@ class HomeMongoRepository(Repository):
                 res = cls.__constant_db["brands"].find(
                     projection={
                         "_id": False,
-                        "id": True,
                         "name": True,
                         "slug": True,
                         "image": True,
-                    }
+                    },
+                    hint=[("slug", 1)],
                 )
                 return list(res)
             case "event":
@@ -45,7 +45,8 @@ class HomeMongoRepository(Repository):
                             "name": True,
                             "brand": True,
                             "image": True,
-                        }
+                        },
+                        hint=[("id", 1)],
                     )
                     .limit(5)
                 )
@@ -59,7 +60,8 @@ class HomeMongoRepository(Repository):
                             "id": True,
                             "name": True,
                             "image": True,
-                        }
+                        },
+                        hint=[("id", 1)],
                     )
                     .limit(5)
                 )
