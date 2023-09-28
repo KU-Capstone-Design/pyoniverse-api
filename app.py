@@ -1,5 +1,7 @@
 from dotenv import load_dotenv
 
+from chalicelib.brand.brand_controller import BrandController
+
 
 load_dotenv()
 import os
@@ -21,6 +23,7 @@ app = CustomChalice(app_name="pyoniverse-api", debug=debug)
 app.api.binary_types.append("application/json")
 
 app.register_blueprint(HomeController.api, url_prefix="/v1")
+app.register_blueprint(BrandController.api, url_prefix="/v1")
 
 app.register_middleware(handle_response, "http")
 app.register_middleware(handle_errors, "http")
