@@ -1,5 +1,6 @@
 from typing import Type
 
+from chalicelib.brand.brand_repository import BrandMongoRepository
 from chalicelib.event.event_repository import EventMongoRepository
 from chalicelib.home.home_repository import HomeMongoRepository
 from chalicelib.interfaces.repository import Repository
@@ -16,5 +17,7 @@ class RepositoryFactory:
                 return EventMongoRepository
             case "home_mongo_repository":
                 return HomeMongoRepository
+            case "brand_mongo_repository":
+                return BrandMongoRepository
             case _:
                 raise RuntimeError(f"Repository {name} not found")
