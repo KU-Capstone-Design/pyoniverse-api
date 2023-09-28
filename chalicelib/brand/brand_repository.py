@@ -37,11 +37,54 @@ class BrandMongoRepository(Repository):
                     "image_alt": "(CU) cu 와인 라벨 패키지 공모전",
                 }
             ],
-            "products": [
-                {
-                    "event": "1+1",
-                    "category": "total",
-                    "items": [
+            "products": {
+                "events": ["1+1", "2+1"],
+                "1+1": {
+                    "total": [
+                        {
+                            "id": 0,
+                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
+                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
+                            "image_alt": "food",
+                            "name": "11가지찬많은도시락1편",
+                        },
+                        {
+                            "id": 0,
+                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
+                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
+                            "image_alt": "food",
+                            "name": "11가지찬많은도시락1편",
+                        },
+                        {
+                            "id": 0,
+                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
+                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
+                            "image_alt": "food",
+                            "name": "11가지찬많은도시락1편",
+                        },
+                        {
+                            "id": 0,
+                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
+                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
+                            "image_alt": "food",
+                            "name": "11가지찬많은도시락1편",
+                        },
+                        {
+                            "id": 0,
+                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
+                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
+                            "image_alt": "food",
+                            "name": "11가지찬많은도시락1편",
+                        },
+                        {
+                            "id": 0,
+                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
+                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
+                            "image_alt": "food",
+                            "name": "11가지찬많은도시락1편",
+                        },
+                    ],
+                    "food": [
                         {
                             "id": 0,
                             "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
@@ -86,10 +129,52 @@ class BrandMongoRepository(Repository):
                         },
                     ],
                 },
-                {
-                    "event": "2+1",
-                    "category": "snack",
-                    "items": [
+                "2+1": {
+                    "snack": [
+                        {
+                            "id": 0,
+                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
+                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
+                            "image_alt": "food",
+                            "name": "11가지찬많은도시락1편",
+                        },
+                        {
+                            "id": 0,
+                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
+                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
+                            "image_alt": "food",
+                            "name": "11가지찬많은도시락1편",
+                        },
+                        {
+                            "id": 0,
+                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
+                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
+                            "image_alt": "food",
+                            "name": "11가지찬많은도시락1편",
+                        },
+                        {
+                            "id": 0,
+                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
+                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
+                            "image_alt": "food",
+                            "name": "11가지찬많은도시락1편",
+                        },
+                        {
+                            "id": 0,
+                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
+                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
+                            "image_alt": "food",
+                            "name": "11가지찬많은도시락1편",
+                        },
+                        {
+                            "id": 0,
+                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
+                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
+                            "image_alt": "food",
+                            "name": "11가지찬많은도시락1편",
+                        },
+                    ],
+                    "food": [
                         {
                             "id": 0,
                             "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
@@ -134,53 +219,5 @@ class BrandMongoRepository(Repository):
                         },
                     ],
                 },
-                {
-                    "event": "2+1",
-                    "category": "food",
-                    "items": [
-                        {
-                            "id": 0,
-                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
-                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                            "image_alt": "food",
-                            "name": "11가지찬많은도시락1편",
-                        },
-                        {
-                            "id": 0,
-                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
-                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                            "image_alt": "food",
-                            "name": "11가지찬많은도시락1편",
-                        },
-                        {
-                            "id": 0,
-                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
-                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                            "image_alt": "food",
-                            "name": "11가지찬많은도시락1편",
-                        },
-                        {
-                            "id": 0,
-                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
-                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                            "image_alt": "food",
-                            "name": "11가지찬많은도시락1편",
-                        },
-                        {
-                            "id": 0,
-                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
-                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                            "image_alt": "food",
-                            "name": "11가지찬많은도시락1편",
-                        },
-                        {
-                            "id": 0,
-                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
-                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                            "image_alt": "food",
-                            "name": "11가지찬많은도시락1편",
-                        },
-                    ],
-                },
-            ],
+            },
         }

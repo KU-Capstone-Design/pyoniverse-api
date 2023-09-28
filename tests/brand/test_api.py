@@ -39,7 +39,7 @@ def headers():
     }
 
 
-def test_spec_store(env, headers):
+def test_spec_brand(env, headers):
     from app import app
     import json
     import gzip
