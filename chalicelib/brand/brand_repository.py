@@ -47,6 +47,7 @@ class BrandMongoRepository(Repository):
                             "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
                             "image_alt": "food",
                             "name": "11가지찬많은도시락1편",
+                            "price": 1000.0,
                         },
                         {
                             "id": 0,
@@ -54,6 +55,7 @@ class BrandMongoRepository(Repository):
                             "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
                             "image_alt": "food",
                             "name": "11가지찬많은도시락1편",
+                            "price": 1000.0,
                         },
                         {
                             "id": 0,
@@ -61,6 +63,7 @@ class BrandMongoRepository(Repository):
                             "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
                             "image_alt": "food",
                             "name": "11가지찬많은도시락1편",
+                            "price": 1000.0,
                         },
                         {
                             "id": 0,
@@ -68,6 +71,7 @@ class BrandMongoRepository(Repository):
                             "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
                             "image_alt": "food",
                             "name": "11가지찬많은도시락1편",
+                            "price": 1000.0,
                         },
                         {
                             "id": 0,
@@ -75,6 +79,7 @@ class BrandMongoRepository(Repository):
                             "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
                             "image_alt": "food",
                             "name": "11가지찬많은도시락1편",
+                            "price": 1000.0,
                         },
                         {
                             "id": 0,
@@ -82,6 +87,7 @@ class BrandMongoRepository(Repository):
                             "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
                             "image_alt": "food",
                             "name": "11가지찬많은도시락1편",
+                            "price": 1000.0,
                         },
                     ],
                     "food": [
@@ -91,6 +97,7 @@ class BrandMongoRepository(Repository):
                             "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
                             "image_alt": "food",
                             "name": "11가지찬많은도시락1편",
+                            "price": 1000.0,
                         },
                         {
                             "id": 0,
@@ -98,6 +105,7 @@ class BrandMongoRepository(Repository):
                             "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
                             "image_alt": "food",
                             "name": "11가지찬많은도시락1편",
+                            "price": 1000.0,
                         },
                         {
                             "id": 0,
@@ -105,6 +113,7 @@ class BrandMongoRepository(Repository):
                             "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
                             "image_alt": "food",
                             "name": "11가지찬많은도시락1편",
+                            "price": 1000.0,
                         },
                         {
                             "id": 0,
@@ -112,6 +121,7 @@ class BrandMongoRepository(Repository):
                             "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
                             "image_alt": "food",
                             "name": "11가지찬많은도시락1편",
+                            "price": 1000.0,
                         },
                         {
                             "id": 0,
@@ -119,6 +129,7 @@ class BrandMongoRepository(Repository):
                             "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
                             "image_alt": "food",
                             "name": "11가지찬많은도시락1편",
+                            "price": 1000.0,
                         },
                         {
                             "id": 0,
@@ -126,6 +137,7 @@ class BrandMongoRepository(Repository):
                             "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
                             "image_alt": "food",
                             "name": "11가지찬많은도시락1편",
+                            "price": 1000.0,
                         },
                     ],
                 },
@@ -137,6 +149,7 @@ class BrandMongoRepository(Repository):
                             "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
                             "image_alt": "food",
                             "name": "11가지찬많은도시락1편",
+                            "price": 1000.0,
                         },
                         {
                             "id": 0,
@@ -144,6 +157,7 @@ class BrandMongoRepository(Repository):
                             "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
                             "image_alt": "food",
                             "name": "11가지찬많은도시락1편",
+                            "price": 1000.0,
                         },
                         {
                             "id": 0,
@@ -151,6 +165,7 @@ class BrandMongoRepository(Repository):
                             "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
                             "image_alt": "food",
                             "name": "11가지찬많은도시락1편",
+                            "price": 1000.0,
                         },
                         {
                             "id": 0,
@@ -158,6 +173,7 @@ class BrandMongoRepository(Repository):
                             "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
                             "image_alt": "food",
                             "name": "11가지찬많은도시락1편",
+                            "price": 1000.0,
                         },
                         {
                             "id": 0,
@@ -165,6 +181,7 @@ class BrandMongoRepository(Repository):
                             "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
                             "image_alt": "food",
                             "name": "11가지찬많은도시락1편",
+                            "price": 1000.0,
                         },
                         {
                             "id": 0,
@@ -172,6 +189,7 @@ class BrandMongoRepository(Repository):
                             "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
                             "image_alt": "food",
                             "name": "11가지찬많은도시락1편",
+                            "price": 1000.0,
                         },
                     ],
                     "food": [
@@ -181,6 +199,7 @@ class BrandMongoRepository(Repository):
                             "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
                             "image_alt": "food",
                             "name": "11가지찬많은도시락1편",
+                            "price": 1000.0,
                         },
                         {
                             "id": 0,
@@ -188,6 +207,7 @@ class BrandMongoRepository(Repository):
                             "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
                             "image_alt": "food",
                             "name": "11가지찬많은도시락1편",
+                            "price": 1000.0,
                         },
                         {
                             "id": 0,
@@ -195,6 +215,7 @@ class BrandMongoRepository(Repository):
                             "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
                             "image_alt": "food",
                             "name": "11가지찬많은도시락1편",
+                            "price": 1000.0,
                         },
                         {
                             "id": 0,
@@ -202,6 +223,7 @@ class BrandMongoRepository(Repository):
                             "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
                             "image_alt": "food",
                             "name": "11가지찬많은도시락1편",
+                            "price": 1000.0,
                         },
                         {
                             "id": 0,
@@ -209,6 +231,7 @@ class BrandMongoRepository(Repository):
                             "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
                             "image_alt": "food",
                             "name": "11가지찬많은도시락1편",
+                            "price": 1000.0,
                         },
                         {
                             "id": 0,
@@ -216,6 +239,7 @@ class BrandMongoRepository(Repository):
                             "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
                             "image_alt": "food",
                             "name": "11가지찬많은도시락1편",
+                            "price": 1000.0,
                         },
                     ],
                 },

@@ -33,6 +33,7 @@ class _BrandDetailProductItemResponseSchema(Schema):
     name = fields.Str(required=True)
     image = fields.URL(required=True, allow_none=True)
     image_alt = fields.Str(required=True)
+    price = fields.Float(required=True)
 
 
 class _BrandDetailProductResponseSchema(Schema):
