@@ -7,6 +7,7 @@ class _HomeProductResponseSchema(Schema):
     name = fields.Str(required=True)
     id = fields.Int(required=True)
     events = fields.Str(validate=lambda x: x is None, required=True, allow_none=True)
+    price = fields.Float(required=True)
 
     class Meta:
         ordered = True

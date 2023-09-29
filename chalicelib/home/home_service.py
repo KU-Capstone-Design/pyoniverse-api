@@ -36,6 +36,10 @@ class HomeService(Service):
             case "products":
                 res = cls.repository.find(type="product")
                 for product in res:
+                    product["price"] = min(
+                        e["price"]["value"] for e in product["brands"]
+                    )
+                    del product["brands"]
                     product["events"] = None
                     product["image-alt"] = f"{product['name']} thumbnail"
                 return res

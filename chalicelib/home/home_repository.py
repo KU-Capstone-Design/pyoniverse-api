@@ -60,6 +60,7 @@ class HomeMongoRepository(Repository):
                             "id": True,
                             "name": True,
                             "image": True,
+                            "brands.price.value": True,
                         },
                         hint=[("id", 1)],
                     )
