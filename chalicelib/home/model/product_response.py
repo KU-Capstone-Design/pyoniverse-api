@@ -8,7 +8,7 @@ class _HomeProductResponseSchema(Schema):
     id = fields.Int(required=True)
     events = fields.List(fields.Str(), required=True)
     price = fields.Float(required=True)
-    event_price = fields.Float(required=True)
+    event_price = fields.Float(required=True, allow_none=True)
     event_brand = fields.Str(required=True)
 
     class Meta:

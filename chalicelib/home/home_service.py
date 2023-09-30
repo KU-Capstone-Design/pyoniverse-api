@@ -43,7 +43,11 @@ class HomeService(Service):
                     product["event_brand"] = IdConverter.convert_brand_id(
                         product["best"]["brand"]
                     )["name"].upper()
-                    product["event_price"] = product["best"]["price"]
+                    product["event_price"] = (
+                        product["best"]["price"]
+                        if product["best"]["price"] < product["price"]
+                        else None
+                    )
                     product["image-alt"] = f"{product['name']} thumbnail"
                     del product["best"]
                 return res
