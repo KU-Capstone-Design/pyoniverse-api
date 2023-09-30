@@ -60,11 +60,12 @@ class HomeMongoRepository(Repository):
                             "id": True,
                             "name": True,
                             "image": True,
-                            "brands.price.value": True,
+                            "price": True,
+                            "best": True,
                         },
                         hint=[("id", 1)],
                     )
-                    .limit(5)
+                    .limit(6)
                 )
                 return list(res)
             case _:

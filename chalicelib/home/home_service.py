@@ -36,12 +36,16 @@ class HomeService(Service):
             case "products":
                 res = cls.repository.find(type="product")
                 for product in res:
-                    product["price"] = min(
-                        e["price"]["value"] for e in product["brands"]
-                    )
-                    del product["brands"]
-                    product["events"] = None
+                    product["events"] = [
+                        IdConverter.convert_event_id(e)["name"]
+                        for e in product["best"]["events"]
+                    ]
+                    product["event_brand"] = IdConverter.convert_brand_id(
+                        product["best"]["brand"]
+                    )["name"].upper()
+                    product["event_price"] = product["best"]["price"]
                     product["image-alt"] = f"{product['name']} thumbnail"
+                    del product["best"]
                 return res
             case _:
                 raise BadRequestError(

@@ -6,8 +6,10 @@ class _HomeProductResponseSchema(Schema):
     image_alt = fields.Str(required=True)
     name = fields.Str(required=True)
     id = fields.Int(required=True)
-    events = fields.Str(validate=lambda x: x is None, required=True, allow_none=True)
+    events = fields.List(fields.Str(), required=True)
     price = fields.Float(required=True)
+    event_price = fields.Float(required=True)
+    event_brand = fields.Str(required=True)
 
     class Meta:
         ordered = True
