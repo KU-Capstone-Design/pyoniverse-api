@@ -35,6 +35,9 @@ class BrandMongoRepository(Repository):
                     "name": "cu 와인 라벨 패키지 공모전",
                     "id": 1,
                     "image_alt": "(CU) cu 와인 라벨 패키지 공모전",
+                    # TODO : DB 연동
+                    "start_at": "2023-10-01",
+                    "end_at": "2023-10-31",
                 }
             ],
             "products": {

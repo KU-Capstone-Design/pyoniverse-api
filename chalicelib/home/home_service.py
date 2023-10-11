@@ -32,6 +32,9 @@ class HomeService(Service):
                     ].upper()
                     event["image"] = event["image"]["thumb"]
                     event["image-alt"] = f"({event['brand']}) {event['name']}"
+                    # TODO : DB 연동
+                    event["start_at"] = "2023-10-01"
+                    event["end_at"] = "2023-10-31"
                 return res
             case "products":
                 res = cls.repository.find(type="product")
