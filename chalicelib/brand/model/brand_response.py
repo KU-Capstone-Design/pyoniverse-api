@@ -1,3 +1,5 @@
+import re
+
 from marshmallow import (
     EXCLUDE,
     INCLUDE,
@@ -22,6 +24,12 @@ class _BrandDetailEventResponseSchema(Schema):
     brand = fields.Str(required=True)
     image = fields.URL(required=True, allow_none=True)
     image_alt = fields.Str(required=True)
+    start_at = fields.Str(
+        required=True, validate=lambda x: re.match(r"\d{4}-\d{2}-\d{2}", x)
+    )
+    end_at = fields.Str(
+        required=True, validate=lambda x: re.match(r"\d{4}-\d{2}-\d{2}", x)
+    )
 
     class Meta:
         ordered = True
