@@ -3,7 +3,7 @@
     {
       "name": "managed-layer",
       "resource_type": "lambda_layer",
-      "layer_version_arn": "arn:aws:lambda:ap-northeast-2:792939917746:layer:pyoniverse-api-dev_v1-managed-layer:13"
+      "layer_version_arn": "arn:aws:lambda:ap-northeast-2:792939917746:layer:pyoniverse-api-dev_v1-managed-layer:25"
     },
     {
       "name": "api_handler",
@@ -15,6 +15,20 @@
       "resource_type": "rest_api",
       "rest_api_id": "q5h3rqk4xj",
       "rest_api_url": "https://q5h3rqk4xj.execute-api.ap-northeast-2.amazonaws.com/dev/"
+    },
+    {
+      "name": "api_gateway_custom_domain",
+      "resource_type": "domain_name",
+      "hosted_zone_id": "Z20JF4UZKIW1U8",
+      "alias_domain_name": "d-d8p8pt6kif.execute-api.ap-northeast-2.amazonaws.com",
+      "certificate_arn": "arn:aws:acm:ap-northeast-2:792939917746:certificate/641ca95c-0c82-40b8-a1b5-d8f1f9d395f5",
+      "security_policy": "TLS_1_2",
+      "domain_name": "dev-api.pyoniverse.kr",
+      "api_mapping": [
+        {
+          "key": "/"
+        }
+      ]
     }
   ],
   "schema_version": "2.0",
