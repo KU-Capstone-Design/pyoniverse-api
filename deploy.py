@@ -28,9 +28,18 @@ if __name__ == "__main__":
         # update config file
         config["manage_iam_role"] = False
         config["iam_role_arn"] = os.getenv("IAM_ROLE_ARN")
-        if "environment_variables" not in config:
-            config["environment_variables"] = {}
-        config["environment_variables"]["MONGO_URI"] = os.getenv("MONGO_URI")
+        if "environment_variables" not in config["stages"][args.stage]:
+            config["stages"][args.stage]["environment_variables"] = {}
+        config["stages"][args.stage]["environment_variables"]["MONGO_URI"] = os.getenv(
+            "MONGO_URI"
+        )
+        config["stages"][args.stage]["api_gateway_custom_domain"][
+            "domain_name"
+        ] = os.getenv("DOMAIN_NAME")
+        config["stages"][args.stage]["api_gateway_custom_domain"][
+            "certificate_arn"
+        ] = os.getenv("CERTIFICATE_ARN")
+
         # save config file
         with open(r".chalice/config.json", "w") as f:
             json.dump(config, f, indent=4, ensure_ascii=False)
