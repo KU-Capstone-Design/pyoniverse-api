@@ -13,8 +13,7 @@
             "api_gateway_custom_domain": {
                 "domain_name": "",
                 "certificate_arn": "",
-                "tls_version": "TLS_1_2|TLS_1_0",
-                "url_prefix": "",
+                "tls_version": "TLS_1_2",
                 "tags": {
                     "project": "pyoniverse",
                     "author": "yeongro",
