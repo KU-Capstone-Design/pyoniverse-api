@@ -40,211 +40,33 @@ class BrandMongoRepository(Repository):
                     "end_at": "2023-10-31",
                 }
             ],
-            "products": {
-                "events": ["1+1", "2+1"],
-                "1+1": {
-                    "total": [
-                        {
-                            "id": 0,
-                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
-                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                            "image_alt": "food",
-                            "name": "11가지찬많은도시락1편",
-                            "price": 1000.0,
-                        },
-                        {
-                            "id": 0,
-                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
-                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                            "image_alt": "food",
-                            "name": "11가지찬많은도시락1편",
-                            "price": 1000.0,
-                        },
-                        {
-                            "id": 0,
-                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
-                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                            "image_alt": "food",
-                            "name": "11가지찬많은도시락1편",
-                            "price": 1000.0,
-                        },
-                        {
-                            "id": 0,
-                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
-                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                            "image_alt": "food",
-                            "name": "11가지찬많은도시락1편",
-                            "price": 1000.0,
-                        },
-                        {
-                            "id": 0,
-                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
-                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                            "image_alt": "food",
-                            "name": "11가지찬많은도시락1편",
-                            "price": 1000.0,
-                        },
-                        {
-                            "id": 0,
-                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
-                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                            "image_alt": "food",
-                            "name": "11가지찬많은도시락1편",
-                            "price": 1000.0,
-                        },
-                    ],
-                    "food": [
-                        {
-                            "id": 0,
-                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
-                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                            "image_alt": "food",
-                            "name": "11가지찬많은도시락1편",
-                            "price": 1000.0,
-                        },
-                        {
-                            "id": 0,
-                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
-                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                            "image_alt": "food",
-                            "name": "11가지찬많은도시락1편",
-                            "price": 1000.0,
-                        },
-                        {
-                            "id": 0,
-                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
-                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                            "image_alt": "food",
-                            "name": "11가지찬많은도시락1편",
-                            "price": 1000.0,
-                        },
-                        {
-                            "id": 0,
-                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
-                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                            "image_alt": "food",
-                            "name": "11가지찬많은도시락1편",
-                            "price": 1000.0,
-                        },
-                        {
-                            "id": 0,
-                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
-                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                            "image_alt": "food",
-                            "name": "11가지찬많은도시락1편",
-                            "price": 1000.0,
-                        },
-                        {
-                            "id": 0,
-                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
-                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                            "image_alt": "food",
-                            "name": "11가지찬많은도시락1편",
-                            "price": 1000.0,
-                        },
-                    ],
+            "products": [
+                {
+                    "id": 0,
+                    "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
+                    "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
+                    "image_alt": "food",
+                    "name": "11가지찬많은도시락1편",
+                    "price": 1000.0,
+                    "good_count": 300,
                 },
-                "2+1": {
-                    "snack": [
-                        {
-                            "id": 0,
-                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
-                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                            "image_alt": "food",
-                            "name": "11가지찬많은도시락1편",
-                            "price": 1000.0,
-                        },
-                        {
-                            "id": 0,
-                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
-                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                            "image_alt": "food",
-                            "name": "11가지찬많은도시락1편",
-                            "price": 1000.0,
-                        },
-                        {
-                            "id": 0,
-                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
-                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                            "image_alt": "food",
-                            "name": "11가지찬많은도시락1편",
-                            "price": 1000.0,
-                        },
-                        {
-                            "id": 0,
-                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
-                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                            "image_alt": "food",
-                            "name": "11가지찬많은도시락1편",
-                            "price": 1000.0,
-                        },
-                        {
-                            "id": 0,
-                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
-                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                            "image_alt": "food",
-                            "name": "11가지찬많은도시락1편",
-                            "price": 1000.0,
-                        },
-                        {
-                            "id": 0,
-                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
-                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                            "image_alt": "food",
-                            "name": "11가지찬많은도시락1편",
-                            "price": 1000.0,
-                        },
-                    ],
-                    "food": [
-                        {
-                            "id": 0,
-                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
-                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                            "image_alt": "food",
-                            "name": "11가지찬많은도시락1편",
-                            "price": 1000.0,
-                        },
-                        {
-                            "id": 0,
-                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
-                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                            "image_alt": "food",
-                            "name": "11가지찬많은도시락1편",
-                            "price": 1000.0,
-                        },
-                        {
-                            "id": 0,
-                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
-                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                            "image_alt": "food",
-                            "name": "11가지찬많은도시락1편",
-                            "price": 1000.0,
-                        },
-                        {
-                            "id": 0,
-                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
-                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                            "image_alt": "food",
-                            "name": "11가지찬많은도시락1편",
-                            "price": 1000.0,
-                        },
-                        {
-                            "id": 0,
-                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
-                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                            "image_alt": "food",
-                            "name": "11가지찬많은도시락1편",
-                            "price": 1000.0,
-                        },
-                        {
-                            "id": 0,
-                            "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
-                            "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
-                            "image_alt": "food",
-                            "name": "11가지찬많은도시락1편",
-                            "price": 1000.0,
-                        },
-                    ],
+                {
+                    "id": 0,
+                    "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
+                    "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
+                    "image_alt": "food",
+                    "name": "11가지찬많은도시락1편",
+                    "price": 1000.0,
+                    "good_count": 200,
                 },
-            },
+                {
+                    "id": 0,
+                    "image": "https://pyoniverse-image.s3.ap-northeast-2.amazonaws.com"
+                    "/products/00646d43e6ac14744acb4aa49c1fa3947a5c4d09.webp",
+                    "image_alt": "food",
+                    "name": "11가지찬많은도시락1편",
+                    "price": 1000.0,
+                    "good_count": 100,
+                },
+            ],
         }
