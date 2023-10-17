@@ -1,10 +1,7 @@
 import pytest
 
-from chalicelib.brand.model.brand_response import BrandDetailResponseSchema
-from chalicelib.dtos.api import ApiSchema
-from chalicelib.home.model.event_response import HomeEventResponseSchema
-from chalicelib.home.model.product_response import HomeProductResponseSchema
-from chalicelib.home.model.store_response import HomeStoreResponseSchema
+from chalicelib.domain.brand.model.brand_response import BrandDetailResponseSchema
+from chalicelib.models.api import ApiSchema
 
 
 @pytest.fixture

@@ -1,7 +1,7 @@
 from typing import List
 
-from chalicelib.dtos.api import Api
-from chalicelib.dtos.pagination import Pagination
+from chalicelib.models.api import Api
+from chalicelib.models.pagination import Pagination
 
 
 class ApiBuilder:

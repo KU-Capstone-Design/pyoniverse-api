@@ -4,7 +4,7 @@ from typing import Optional
 from overrides import override
 from pymongo import MongoClient, ReadPreference
 
-from chalicelib.aops.time_checker import time_checker
+from chalicelib.aop.time_checker import time_checker
 from chalicelib.interfaces.repository import Repository
 
 

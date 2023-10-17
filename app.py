@@ -1,7 +1,5 @@
 from dotenv import load_dotenv
 
-from chalicelib.brand.brand_controller import BrandController
-
 
 load_dotenv()
 import os
@@ -9,7 +7,8 @@ import os
 from chalice import BadRequestError
 
 from chalicelib.chalice import CustomChalice
-from chalicelib.home.home_controller import HomeController
+from chalicelib.domain.home.home_controller import HomeController
+from chalicelib.domain.brand.brand_controller import BrandController
 from chalicelib.middlewares.error_handler import handle_errors
 from chalicelib.middlewares.response_handler import handle_response
 
