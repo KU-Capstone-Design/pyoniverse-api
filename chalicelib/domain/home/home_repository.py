@@ -1,7 +1,7 @@
 import os
 
 from overrides import override
-from pymongo import MongoClient, ReadPreference
+from pymongo import DESCENDING, MongoClient, ReadPreference
 
 from chalicelib.aop.time_checker import time_checker
 from chalicelib.interfaces.repository import Repository
@@ -62,9 +62,11 @@ class HomeMongoRepository(Repository):
                             "image": True,
                             "price": True,
                             "best": True,
+                            "good_count": True,
                         },
-                        hint=[("id", 1)],
+                        hint=[("good_count", 1)],
                     )
+                    .sort("good_count", DESCENDING)
                     .limit(6)
                 )
                 return list(res)
