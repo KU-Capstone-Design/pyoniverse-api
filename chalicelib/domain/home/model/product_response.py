@@ -10,6 +10,7 @@ class _HomeProductResponseSchema(Schema):
     price = fields.Float(required=True)
     event_price = fields.Float(required=True, allow_none=True)
     event_brand = fields.Str(required=True)
+    good_count: int = fields.Integer(required=True)
 
     class Meta:
         ordered = True

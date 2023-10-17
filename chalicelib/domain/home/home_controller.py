@@ -2,9 +2,9 @@ from typing import Type
 
 from chalice import BadRequestError, Blueprint
 
-from chalicelib.dtos.api import Api
-from chalicelib.dtos.builder import ApiBuilder
-from chalicelib.factories.service_factory import ServiceFactory
+from chalicelib.models.api import Api
+from chalicelib.models.builder import ApiBuilder
+from chalicelib.interfaces.factories.service_factory import ServiceFactory
 from chalicelib.interfaces.controller import Controller
 from chalicelib.interfaces.service import Service
 

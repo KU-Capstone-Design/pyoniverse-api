@@ -2,7 +2,7 @@ import gzip
 
 from chalice.app import ChaliceUnhandledError, Request, Response
 
-from chalicelib.dtos.serializer import JsonSerializer
+from chalicelib.models.serializer import JsonSerializer
 
 
 def handle_response(event: Request, get_response):

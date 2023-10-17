@@ -1,10 +1,10 @@
 from typing import Type
 
-from chalicelib.brand.brand_service import BrandService
-from chalicelib.event.event_service import EventService
-from chalicelib.home.home_service import HomeService
+from chalicelib.domain.brand.brand_service import BrandService
+from chalicelib.domain.event.event_service import EventService
+from chalicelib.domain.home.home_service import HomeService
 from chalicelib.interfaces.service import Service
-from chalicelib.product.product_service import ProductService
+from chalicelib.domain.product.product_service import ProductService
 
 
 class ServiceFactory:
