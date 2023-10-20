@@ -1,5 +1,7 @@
 from dotenv import load_dotenv
 
+from chalicelib.domain.event.event_controller import EventController
+
 
 load_dotenv()
 import os
@@ -23,6 +25,7 @@ app.api.binary_types.append("application/json")
 
 app.register_blueprint(HomeController.api, url_prefix="/v1")
 app.register_blueprint(BrandController.api, url_prefix="/v1")
+app.register_blueprint(EventController.api, url_prefix="/v1")
 
 app.register_middleware(handle_response, "http")
 app.register_middleware(handle_errors, "http")
