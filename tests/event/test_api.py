@@ -24,11 +24,11 @@ def test_spec_event_list(env, test_client, headers):
     import json
     import gzip
 
-    res = test_client.http.get("/v1/events/gs25", headers=headers)
+    res = test_client.http.get("/v1/events/cu", headers=headers)
     body = json.loads(gzip.decompress(res.body).decode("utf-8"))
     assert res.status_code == 200
     assert ApiSchema.get_schema(EventListResponseSchema).validate(body) == {}
-    assert res["data"]["brand_slug"] == "gs25"
+    assert body["data"]["brand_slug"] == "cu"
 
 
 def test_spec_event_detail(env, test_client, headers):

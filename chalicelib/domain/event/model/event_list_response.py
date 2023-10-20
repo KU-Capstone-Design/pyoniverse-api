@@ -12,9 +12,14 @@ class EventListItemSchema(Schema):
     good_count = fields.Integer(required=True)
 
 
+class EventListBrandSchema(Schema):
+    slug = fields.Str(required=True)
+    name = fields.Str(required=True)
+    image = fields.URL(required=True)
+
+
 class EventListResponseSchema(Schema):
-    brand_list = fields.List(fields.Str(), required=True)
-    brnad_slug = fields.Str(required=True)
+    brands = fields.Nested(EventListBrandSchema, required=True, many=True)
+    brand_slug = fields.Str(required=True)
     brand_name = fields.Str(required=True)
-    brand_image = fields.URL(required=True)
     events = fields.Nested(EventListItemSchema, required=True, many=True)

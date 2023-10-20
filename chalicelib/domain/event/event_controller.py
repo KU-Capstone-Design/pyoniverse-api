@@ -21,7 +21,7 @@ class EventController(Controller):
     @staticmethod
     @api.route("/events/{brand_slug}", methods=["GET", "HEAD"], cors=True)
     def get_list(brand_slug: str):
-        data = EventController.service.get_list(brand=brand_slug)
+        data = EventController.service.get_single(_type="list", id=brand_slug)
         api = (
             ApiBuilder()
             .with_status_code("200 OK")
@@ -33,8 +33,8 @@ class EventController(Controller):
 
     @staticmethod
     @api.route("/event/{id}", methods=["GET", "HEAD"], cors=True)
-    def get_single(self, id: str):
-        data = EventController.service.get_single(id=id)
+    def get_detail(id: str):
+        data = EventController.service.get_single(_type="detail", id=id)
         api = (
             ApiBuilder()
             .with_status_code("200 OK")
