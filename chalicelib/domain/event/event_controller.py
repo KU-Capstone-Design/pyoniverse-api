@@ -1,16 +1,14 @@
-from typing import Type
-
 from chalice import Blueprint
+from dependency_injector.wiring import Provide
 
-from chalicelib.interfaces.controller import Controller
-from chalicelib.interfaces.factories.service_factory import ServiceFactory
-from chalicelib.interfaces.service import Service
-from chalicelib.models.builder import ApiBuilder
+from chalicelib.common.model.builder import ApiBuilder
+from chalicelib.domain.event.event_service import EventService
+from chalicelib.interface.controller import Controller
 
 
 class EventController(Controller):
     api = Blueprint(__name__)
-    service: Type[Service] = ServiceFactory.create_service("event_service")
+    service: EventService = Provide["event_service"]
 
     @staticmethod
     @api.route("/events", methods=["GET", "HEAD"], cors=True)

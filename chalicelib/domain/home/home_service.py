@@ -1,31 +1,21 @@
-from typing import Type
-
 from chalice import BadRequestError
 from overrides import override
 
-from chalicelib.models.converter import IdConverter
-from chalicelib.interfaces.factories.repository_factory import RepositoryFactory
-from chalicelib.interfaces.repository import Repository
-from chalicelib.interfaces.service import Service
+from chalicelib.common.model.converter import IdConverter
+from chalicelib.interface.service import Service
 
 
 class HomeService(Service):
-    repository: Type[Repository] = RepositoryFactory.create_repository(
-        "home_mongo_repository"
-    )
-
-    @classmethod
-    @override
-    def get_list(cls, **kwargs) -> list:
+    def get_list(self, **kwargs) -> list:
         match kwargs["type"]:
             case "stores":
-                res = cls.repository.find(type="brand")
+                res = self._repository.find(type="brand")
                 for brand in res:
                     brand["brand"] = brand["name"].upper()
                     brand["image-alt"] = f"{brand['brand']} Logo"
 
             case "events":
-                res = cls.repository.find(type="event")
+                res = self._repository.find(type="event")
                 for event in res:
                     event["brand"] = IdConverter.convert_brand_id(event["brand"])[
                         "name"
@@ -37,7 +27,7 @@ class HomeService(Service):
                     event["end_at"] = "2023-10-31"
                 return res
             case "products":
-                res = cls.repository.find(type="product")
+                res = self._repository.find(type="product")
                 for product in res:
                     product["events"] = [
                         IdConverter.convert_event_id(e)["name"]
