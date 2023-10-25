@@ -9,7 +9,6 @@ def adaptor_injector(env):
 
     injector = DBAdaptorInjector()
     yield injector
-    injector.unwire()
 
 
 @pytest.fixture
@@ -18,7 +17,6 @@ def repository_injector(adaptor_injector):
 
     injector = RepositoryInjector(adaptor=adaptor_injector.mongo_adaptor())
     yield injector
-    injector.unwire()
 
 
 @pytest.fixture
@@ -32,4 +30,3 @@ def service_injector(repository_injector):
         product_repository=repository_injector.product_repository(),
     )
     yield injector
-    injector.unwire()

@@ -18,12 +18,11 @@ class ServiceContainer(DeclarativeContainer):
     brand_repository = Dependency(Repository)
     event_repository = Dependency(Repository)
     product_repository = Dependency(Repository)
-    # constant_repository = Dependency(Repository)
-
-    wiring_config = WiringConfiguration(packages=["chalicelib.service"])
 
 
 class ServiceInjector(ServiceContainer):
+    # in-class wiring_config는 현재 class의 provider에만 적용된다.
+    wiring_config = WiringConfiguration(packages=["chalicelib.domain"])
     home_service = ServiceProvider(
         HomeService, repository=ServiceContainer.home_repository
     )

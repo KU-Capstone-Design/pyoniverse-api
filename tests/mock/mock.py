@@ -27,7 +27,11 @@ def env():
 @pytest.fixture
 def test_client(env):
     from chalice.test import Client
+    from chalicelib.di.injector import MainInjector
     from app import app
+
+    main_injector = MainInjector()
+    main_injector.inject()
 
     with Client(app, stage_name="dev_v1") as client:
         yield client

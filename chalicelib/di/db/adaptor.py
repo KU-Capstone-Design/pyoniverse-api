@@ -1,16 +1,16 @@
 from dependency_injector.containers import DeclarativeContainer, WiringConfiguration
-from dependency_injector.providers import Configuration, Singleton
+from dependency_injector.providers import Configuration, Resource
 
 from chalicelib.db.adaptor.mongo import MongoAdaptor
 from chalicelib.interface.adaptor import DBAdaptor
 
 
-class DBAdaptorProvider(Singleton):
+class DBAdaptorProvider(Resource):
     provided_type = DBAdaptor
 
 
 class DBAdaptorContainer(DeclarativeContainer):
-    wiring_config = WiringConfiguration(packages=["chalicelib.db.adaptor"])
+    pass
 
 
 class DBAdaptorInjector(DBAdaptorContainer):

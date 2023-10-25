@@ -9,4 +9,5 @@ def test_spec_brand(env, test_client):
     res = test_client.http.get("/v1/brand/cu")
     body = json.loads(res.body)
     assert res.status_code == 200
+
     assert Api.validate(BrandDetailResponseSchema, body, many=False) == {}
