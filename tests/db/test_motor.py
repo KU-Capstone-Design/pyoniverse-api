@@ -35,10 +35,11 @@ async def do_find_many(db: AsyncIOMotorDatabase, cnt: int):
         .find({"id": {"$gt": cnt}}, {"_id": False, "id": True, "name": 1})
         .hint([("id", 1)])
         .sort("id", 1)
+        .limit(cnt)
     )
 
     st = time.time()
-    docs = await cursor.to_list(cnt)
+    docs = await cursor.to_list(None)
     et = time.time()
     elapsed = et - st
     logging.info(f"find_many({len(docs)}): {elapsed}")
