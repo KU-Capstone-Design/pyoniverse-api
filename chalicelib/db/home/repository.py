@@ -1,23 +1,22 @@
 import os
 
 from overrides import override
-from pymongo import DESCENDING, MongoClient, ReadPreference
+from pymongo import DESCENDING, ReadPreference
 
 from chalicelib.aop.time_checker import time_checker
+from chalicelib.db.adaptor.mongo import MongoAdaptor
 from chalicelib.interface.repository import Repository
 
 
 class HomeMongoRepository(Repository):
-    __client = MongoClient(os.getenv("MONGO_URI"))
-    __db = __client.get_database(
-        os.getenv("MONGO_DB"), read_preference=ReadPreference.SECONDARY_PREFERRED
-    )
-    __constant_db = __client.get_database(
-        "constant", read_preference=ReadPreference.SECONDARY_PREFERRED
-    )
-
-    def __init__(self, *args, **kwargs):
-        raise NotImplementedError("This class should not be instantiated")
+    def __init__(self, adaptor: MongoAdaptor):
+        self.__client = adaptor.client
+        self.__db = self.__client.get_database(
+            os.getenv("MONGO_DB"), read_preference=ReadPreference.SECONDARY_PREFERRED
+        )
+        self.__constant_db = self.__client.get_database(
+            "constant", read_preference=ReadPreference.SECONDARY_PREFERRED
+        )
 
     @classmethod
     @time_checker
