@@ -2,12 +2,15 @@ from chalicelib.db.brand.repository import BrandMongoRepository
 from chalicelib.db.event.repository import EventMongoRepository
 from chalicelib.db.home.repository import HomeMongoRepository
 from chalicelib.db.product.repository import ProductMongoRepository
-from tests.di.mock.injector import adaptor_injector, repository_injector
+from tests.dependency_injector.mock.injector import (
+    adaptor_injector,
+    repository_injector,
+)
 from tests.mock.mock import env
 
 
 def test_repository_dependency(env, adaptor_injector):
-    from chalicelib.di.db.repository import RepositoryInjector
+    from chalicelib.dependency_injector.db.repository import RepositoryInjector
 
     # given
     repository_injector = RepositoryInjector(adaptor=adaptor_injector.mongo_adaptor())

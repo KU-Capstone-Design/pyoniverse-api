@@ -5,7 +5,7 @@ from tests.mock.mock import env
 
 @pytest.fixture
 def adaptor_injector(env):
-    from chalicelib.di.db.adaptor import DBAdaptorInjector
+    from chalicelib.dependency_injector.db.adaptor import DBAdaptorInjector
 
     injector = DBAdaptorInjector()
     yield injector
@@ -13,7 +13,7 @@ def adaptor_injector(env):
 
 @pytest.fixture
 def repository_injector(adaptor_injector):
-    from chalicelib.di.db.repository import RepositoryInjector
+    from chalicelib.dependency_injector.db.repository import RepositoryInjector
 
     injector = RepositoryInjector(adaptor=adaptor_injector.mongo_adaptor())
     yield injector
@@ -21,7 +21,7 @@ def repository_injector(adaptor_injector):
 
 @pytest.fixture
 def service_injector(repository_injector):
-    from chalicelib.di.service.service import ServiceInjector
+    from chalicelib.dependency_injector.service.service import ServiceInjector
 
     injector = ServiceInjector(
         home_repository=repository_injector.home_repository(),

@@ -1,5 +1,5 @@
 from chalicelib.db.adaptor.mongo import MongoAdaptor
-from tests.di.mock.injector import adaptor_injector
+from tests.dependency_injector.mock.injector import adaptor_injector
 from tests.mock.mock import env
 
 

@@ -2,7 +2,7 @@ from chalicelib.domain.brand.brand_service import BrandService
 from chalicelib.domain.event.event_service import EventService
 from chalicelib.domain.home.home_service import HomeService
 from chalicelib.domain.product.product_service import ProductService
-from tests.di.mock.injector import (
+from tests.dependency_injector.mock.injector import (
     adaptor_injector,
     repository_injector,
     service_injector,
@@ -11,7 +11,7 @@ from tests.mock.mock import env
 
 
 def test_service_dependency(env, adaptor_injector, repository_injector):
-    from chalicelib.di.service.service import ServiceInjector
+    from chalicelib.dependency_injector.service.service import ServiceInjector
 
     # given
     service_injector = ServiceInjector(

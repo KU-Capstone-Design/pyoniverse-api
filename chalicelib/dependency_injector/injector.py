@@ -1,6 +1,6 @@
-from chalicelib.di.db.adaptor import DBAdaptorInjector
-from chalicelib.di.db.repository import RepositoryInjector
-from chalicelib.di.service.service import ServiceInjector
+from chalicelib.dependency_injector.db.adaptor import DBAdaptorInjector
+from chalicelib.dependency_injector.db.repository import RepositoryInjector
+from chalicelib.dependency_injector.service.service import ServiceInjector
 
 
 class MainInjector:

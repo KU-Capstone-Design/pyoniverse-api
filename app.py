@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 
-from chalicelib.di.injector import MainInjector
+from chalicelib.dependency_injector.injector import MainInjector
 
 
 load_dotenv()
