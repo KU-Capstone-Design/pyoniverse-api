@@ -8,10 +8,6 @@ from chalicelib.interface.service import Service
 
 
 class EventService(Service):
-    repository: Type[Repository] = RepositoryFactory.create_repository(
-        "event_mongo_repository"
-    )
-
     @classmethod
     def get_single(cls, **kwargs) -> object:
         """

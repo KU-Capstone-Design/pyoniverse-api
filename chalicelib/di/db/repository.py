@@ -4,7 +4,7 @@ from dependency_injector.providers import Dependency, Singleton
 from chalicelib.db.brand.repository import BrandMongoRepository
 from chalicelib.db.event.repository import EventMongoRepository
 from chalicelib.db.home.repository import HomeMongoRepository
-from chalicelib.db.interface.adaptor import DBAdaptor
+from chalicelib.interface.adaptor import DBAdaptor
 from chalicelib.db.product.repository import ProductMongoRepository
 from chalicelib.interface.repository import Repository
 

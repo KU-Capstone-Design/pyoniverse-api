@@ -2,7 +2,7 @@ from dependency_injector.containers import DeclarativeContainer, WiringConfigura
 from dependency_injector.providers import Configuration, Singleton
 
 from chalicelib.db.adaptor.mongo import MongoAdaptor
-from chalicelib.db.interface.adaptor import DBAdaptor
+from chalicelib.interface.adaptor import DBAdaptor
 
 
 class DBAdaptorProvider(Singleton):

@@ -2,21 +2,21 @@ from abc import ABCMeta
 from typing import Optional, Tuple
 
 from chalicelib.common.model.pagination import Pagination
+from chalicelib.interface.adaptor import DBAdaptor
 
 
 class Repository(metaclass=ABCMeta):
-    @classmethod
-    def find_by_id(cls, id, **kwargs) -> Optional[object]:
+    def __init__(self, adaptor: DBAdaptor):
+        self._adaptor = adaptor
+
+    def find_by_id(self, id, **kwargs) -> Optional[object]:
         raise NotImplementedError
 
-    @classmethod
-    def find_by_slug(cls, slug, **kwargs) -> Optional[object]:
+    def find_by_slug(self, slug, **kwargs) -> Optional[object]:
         raise NotImplementedError
 
-    @classmethod
-    def find(cls, **kwargs) -> list:
+    def find(self, **kwargs) -> list:
         raise NotImplementedError
 
-    @classmethod
-    def paginate(cls, **kwargs) -> Tuple[list, Pagination]:
+    def paginate(self, **kwargs) -> Tuple[list, Pagination]:
         raise NotImplementedError

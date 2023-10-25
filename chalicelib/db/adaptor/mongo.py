@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 
-from chalicelib.db.interface.adaptor import DBAdaptor
+from chalicelib.interface.adaptor import DBAdaptor
 
 
 class MongoAdaptor(DBAdaptor):

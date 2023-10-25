@@ -25,6 +25,11 @@ def repository_injector(adaptor_injector):
 def service_injector(repository_injector):
     from chalicelib.di.service.service import ServiceInjector
 
-    injector = ServiceInjector(repository_injector=repository_injector)
+    injector = ServiceInjector(
+        home_repository=repository_injector.home_repository(),
+        brand_repository=repository_injector.brand_repository(),
+        event_repository=repository_injector.event_repository(),
+        product_repository=repository_injector.product_repository(),
+    )
     yield injector
     injector.unwire()
