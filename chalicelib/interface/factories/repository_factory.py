@@ -1,10 +1,10 @@
 from typing import Type
 
-from chalicelib.domain.brand.brand_repository import BrandMongoRepository
-from chalicelib.domain.event.event_repository import EventMongoRepository
-from chalicelib.domain.home.home_repository import HomeMongoRepository
+from chalicelib.db.brand.repository import BrandMongoRepository
+from chalicelib.db.event.repository import EventMongoRepository
+from chalicelib.db.home.repository import HomeMongoRepository
+from chalicelib.db.product.repository import ProductMongoRepository
 from chalicelib.interface.repository import Repository
-from chalicelib.domain.product.product_repository import ProductMongoRepository
 
 
 class RepositoryFactory:
