@@ -1,31 +1,30 @@
 import os
 
 from overrides import override
-from pymongo import DESCENDING, MongoClient, ReadPreference
+from pymongo import DESCENDING, ReadPreference
 
 from chalicelib.aop.time_checker import time_checker
+from chalicelib.db.adaptor.mongo import MongoAdaptor
 from chalicelib.interface.repository import Repository
 
 
 class HomeMongoRepository(Repository):
-    __client = MongoClient(os.getenv("MONGO_URI"))
-    __db = __client.get_database(
-        os.getenv("MONGO_DB"), read_preference=ReadPreference.SECONDARY_PREFERRED
-    )
-    __constant_db = __client.get_database(
-        "constant", read_preference=ReadPreference.SECONDARY_PREFERRED
-    )
+    def __init__(self, adaptor: MongoAdaptor):
+        super().__init__(adaptor=adaptor)
+        self.__client = adaptor.client
+        self.__db = self.__client.get_database(
+            os.getenv("MONGO_DB"), read_preference=ReadPreference.SECONDARY_PREFERRED
+        )
+        self.__constant_db = self.__client.get_database(
+            "constant", read_preference=ReadPreference.SECONDARY_PREFERRED
+        )
 
-    def __init__(self, *args, **kwargs):
-        raise NotImplementedError("This class should not be instantiated")
-
-    @classmethod
     @time_checker
     @override
-    def find(cls, **kwargs) -> list:
+    def find(self, **kwargs) -> list:
         match kwargs["type"]:
             case "brand":
-                res = cls.__constant_db["brands"].find(
+                res = self.__constant_db["brands"].find(
                     projection={
                         "_id": False,
                         "name": True,
@@ -37,7 +36,7 @@ class HomeMongoRepository(Repository):
                 return list(res)
             case "event":
                 res = (
-                    cls.__db["events"]
+                    self.__db["events"]
                     .find(
                         projection={
                             "_id": False,
@@ -53,7 +52,7 @@ class HomeMongoRepository(Repository):
                 return list(res)
             case "product":
                 res = (
-                    cls.__db["products"]
+                    self.__db["products"]
                     .find(
                         projection={
                             "_id": False,

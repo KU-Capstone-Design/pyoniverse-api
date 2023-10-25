@@ -7,5 +7,5 @@ from chalicelib.interface.service import Service
 
 
 class Controller(metaclass=ABCMeta):
-    api: Blueprint = None
-    service: Type[Service] = None
+    api: Blueprint
+    service: Type[Service]

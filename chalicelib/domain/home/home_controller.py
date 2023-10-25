@@ -1,6 +1,7 @@
 from typing import Type
 
 from chalice import BadRequestError, Blueprint
+from dependency_injector.wiring import Provide
 
 from chalicelib.common.model.api import Api
 from chalicelib.common.model.builder import ApiBuilder
@@ -11,7 +12,7 @@ from chalicelib.interface.service import Service
 
 class HomeController(Controller):
     api = Blueprint(__name__)
-    service: Type[Service] = ServiceFactory.create_service("home_service")
+    service: Service = Provide["home_service"]
 
     @staticmethod
     @api.route("/home", methods=["GET", "HEAD"], cors=True)
