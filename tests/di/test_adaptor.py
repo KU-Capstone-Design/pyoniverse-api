@@ -6,7 +6,7 @@ from tests.mock.mock import env
 
 @pytest.fixture
 def adaptor_injector(env):
-    from chalicelib.di.repository import DBAdaptorInjector
+    from chalicelib.di.db.adaptor import DBAdaptorInjector
 
     injector = DBAdaptorInjector()
     yield injector
@@ -15,7 +15,7 @@ def adaptor_injector(env):
 
 def test_repository_injector(adaptor_injector):
     # given
-    adaptor_injector.config.db.mongo_uri.from_env("MONGO_URI")
+    # adaptor_injector.config.db.mongo_uri.from_env("MONGO_URI")
     # when
     mongo_adaptor = adaptor_injector.mongo_adaptor()
     # then
