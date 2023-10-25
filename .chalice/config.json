@@ -7,6 +7,7 @@
     "environment_variables": {
         "COUNTRY_CODE": "kr"
     },
+    "minimum_compression_size": 0,
     "stages": {
         "dev_v1": {
             "api_gateway_stage": "dev",

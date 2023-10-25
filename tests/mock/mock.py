@@ -31,12 +31,3 @@ def test_client(env):
 
     with Client(app, stage_name="dev_v1") as client:
         yield client
-
-
-@pytest.fixture()
-def headers():
-    return {
-        "Accept": "application/json",
-        "Content-Type": "application/json",
-        "Accept-Encoding": "gzip",
-    }
