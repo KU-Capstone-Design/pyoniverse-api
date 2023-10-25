@@ -1,31 +1,12 @@
-import pytest
-
 from chalicelib.db.brand.repository import BrandMongoRepository
 from chalicelib.db.event.repository import EventMongoRepository
 from chalicelib.db.home.repository import HomeMongoRepository
 from chalicelib.db.product.repository import ProductMongoRepository
+from tests.di.mock.injector import adaptor_injector, repository_injector
 from tests.mock.mock import env
 
 
-@pytest.fixture
-def adaptor_injector(env):
-    from chalicelib.di.db.adaptor import DBAdaptorInjector
-
-    injector = DBAdaptorInjector()
-    yield injector
-    injector.unwire()
-
-
-@pytest.fixture
-def repository_injector(adaptor_injector):
-    from chalicelib.di.db.repository import RepositoryInjector
-
-    injector = RepositoryInjector(adaptor=adaptor_injector.mongo_adaptor())
-    yield injector
-    injector.unwire()
-
-
-def test_repository_dependency(adaptor_injector):
+def test_repository_dependency(env, adaptor_injector):
     from chalicelib.di.db.repository import RepositoryInjector
 
     # given
@@ -39,7 +20,7 @@ def test_repository_dependency(adaptor_injector):
         assert True
 
 
-def test_repository_injector(repository_injector):
+def test_repository_injector(env, repository_injector):
     # given
     brand_repository = repository_injector.brand_repository()
     event_repository = repository_injector.event_repository()
