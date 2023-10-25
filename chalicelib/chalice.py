@@ -5,8 +5,8 @@ from typing import Any, Dict, Optional
 from chalice.app import Chalice, Request, Response, RestAPIEventHandler
 from overrides import override
 
-from chalicelib.model.builder import ApiBuilder
-from chalicelib.model.serializer import JsonSerializer
+from chalicelib.common.model.builder import ApiBuilder
+from chalicelib.common.model.serializer import JsonSerializer
 
 
 class CustomChalice(Chalice):

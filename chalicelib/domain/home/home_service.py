@@ -3,7 +3,7 @@ from typing import Type
 from chalice import BadRequestError
 from overrides import override
 
-from chalicelib.model.converter import IdConverter
+from chalicelib.common.model.converter import IdConverter
 from chalicelib.interface.factories.repository_factory import RepositoryFactory
 from chalicelib.interface.repository import Repository
 from chalicelib.interface.service import Service

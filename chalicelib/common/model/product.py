@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from typing import List, Optional
 
-from chalicelib.model.converter import IdConverter
+from chalicelib.common.model.converter import IdConverter
 from chalicelib.entity.product import (
     ProductBrandEntity,
     ProductEntity,

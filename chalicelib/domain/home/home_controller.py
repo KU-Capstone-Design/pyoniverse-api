@@ -2,8 +2,8 @@ from typing import Type
 
 from chalice import BadRequestError, Blueprint
 
-from chalicelib.model.api import Api
-from chalicelib.model.builder import ApiBuilder
+from chalicelib.common.model.api import Api
+from chalicelib.common.model.builder import ApiBuilder
 from chalicelib.interface.factories.service_factory import ServiceFactory
 from chalicelib.interface.controller import Controller
 from chalicelib.interface.service import Service

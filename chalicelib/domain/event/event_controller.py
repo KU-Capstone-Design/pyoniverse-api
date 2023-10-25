@@ -5,7 +5,7 @@ from chalice import Blueprint
 from chalicelib.interface.controller import Controller
 from chalicelib.interface.factories.service_factory import ServiceFactory
 from chalicelib.interface.service import Service
-from chalicelib.model.builder import ApiBuilder
+from chalicelib.common.model.builder import ApiBuilder
 
 
 class EventController(Controller):

@@ -2,8 +2,8 @@ import json
 
 import pytest
 
-from chalicelib.model.builder import ApiBuilder
-from chalicelib.model.serializer import JsonSerializer
+from chalicelib.common.model import ApiBuilder
+from chalicelib.common.model import JsonSerializer
 from chalicelib.entity.product import ProductEntity
 
 
