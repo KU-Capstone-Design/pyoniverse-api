@@ -1,17 +1,15 @@
-from typing import Type
-
 from chalice import Blueprint
+from dependency_injector.wiring import Provide
 
-from chalicelib.models.api import Api
-from chalicelib.models.builder import ApiBuilder
-from chalicelib.interfaces.factories.service_factory import ServiceFactory
-from chalicelib.interfaces.controller import Controller
-from chalicelib.interfaces.service import Service
+from chalicelib.common.model.api import Api
+from chalicelib.common.model.builder import ApiBuilder
+from chalicelib.domain.brand.brand_service import BrandService
+from chalicelib.interface.controller import Controller
 
 
 class BrandController(Controller):
     api = Blueprint(__name__)
-    service: Type[Service] = ServiceFactory.create_service("brand_service")
+    service: BrandService = Provide["brand_service"]
 
     @staticmethod
     @api.route("/brand/{slug}", methods=["GET", "HEAD"], cors=True)

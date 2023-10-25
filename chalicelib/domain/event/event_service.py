@@ -1,18 +1,9 @@
-from typing import Type
-
 from chalice import BadRequestError
 
-from chalicelib.interfaces.factories.repository_factory import RepositoryFactory
-from chalicelib.interfaces.repository import Repository
-from chalicelib.interfaces.service import Service
+from chalicelib.interface.service import Service
 
 
 class EventService(Service):
-    repository: Type[Repository] = RepositoryFactory.create_repository(
-        "event_mongo_repository"
-    )
-
-    @classmethod
     def get_single(cls, **kwargs) -> object:
         """
         _type: Literal[detail, list]
