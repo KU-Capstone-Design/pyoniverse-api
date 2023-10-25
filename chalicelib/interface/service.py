@@ -1,8 +1,8 @@
 from abc import ABCMeta
 from typing import Tuple, Type
 
-from chalicelib.models.pagination import Pagination
-from chalicelib.interfaces.repository import Repository
+from chalicelib.model.pagination import Pagination
+from chalicelib.interface.repository import Repository
 
 
 class Service(metaclass=ABCMeta):

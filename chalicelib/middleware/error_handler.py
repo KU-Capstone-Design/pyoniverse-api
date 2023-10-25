@@ -9,7 +9,7 @@ from chalice.app import (
     Response,
 )
 
-from chalicelib.models.builder import ApiBuilder
+from chalicelib.model.builder import ApiBuilder
 
 
 logger = logging.getLogger("pyoniverse-api")

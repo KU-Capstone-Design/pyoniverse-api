@@ -2,10 +2,10 @@ from typing import Type
 
 from chalice import Blueprint
 
-from chalicelib.interfaces.controller import Controller
-from chalicelib.interfaces.factories.service_factory import ServiceFactory
-from chalicelib.interfaces.service import Service
-from chalicelib.models.builder import ApiBuilder
+from chalicelib.interface.controller import Controller
+from chalicelib.interface.factories.service_factory import ServiceFactory
+from chalicelib.interface.service import Service
+from chalicelib.model.builder import ApiBuilder
 
 
 class EventController(Controller):

@@ -1,7 +1,7 @@
 from abc import ABCMeta
 from typing import Optional, Tuple
 
-from chalicelib.models.pagination import Pagination
+from chalicelib.model.pagination import Pagination
 
 
 class Repository(metaclass=ABCMeta):

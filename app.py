@@ -11,8 +11,8 @@ from chalice import BadRequestError
 from chalicelib.chalice import CustomChalice
 from chalicelib.domain.home.home_controller import HomeController
 from chalicelib.domain.brand.brand_controller import BrandController
-from chalicelib.middlewares.error_handler import handle_errors
-from chalicelib.middlewares.response_handler import handle_response
+from chalicelib.middleware.error_handler import handle_errors
+from chalicelib.middleware.response_handler import handle_response
 
 
 if os.getenv("LOG_LEVEL", "DEBUG") == "DEBUG":

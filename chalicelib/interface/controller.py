@@ -3,7 +3,7 @@ from typing import Type
 
 from chalice import Blueprint
 
-from chalicelib.interfaces.service import Service
+from chalicelib.interface.service import Service
 
 
 class Controller(metaclass=ABCMeta):

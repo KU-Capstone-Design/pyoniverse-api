@@ -3,7 +3,7 @@ from typing import Type
 from chalicelib.domain.brand.brand_service import BrandService
 from chalicelib.domain.event.event_service import EventService
 from chalicelib.domain.home.home_service import HomeService
-from chalicelib.interfaces.service import Service
+from chalicelib.interface.service import Service
 from chalicelib.domain.product.product_service import ProductService
 
 

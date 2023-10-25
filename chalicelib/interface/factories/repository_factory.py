@@ -3,7 +3,7 @@ from typing import Type
 from chalicelib.domain.brand.brand_repository import BrandMongoRepository
 from chalicelib.domain.event.event_repository import EventMongoRepository
 from chalicelib.domain.home.home_repository import HomeMongoRepository
-from chalicelib.interfaces.repository import Repository
+from chalicelib.interface.repository import Repository
 from chalicelib.domain.product.product_repository import ProductMongoRepository
 
 

@@ -4,7 +4,7 @@ from overrides import override
 from pymongo import DESCENDING, MongoClient, ReadPreference
 
 from chalicelib.aop.time_checker import time_checker
-from chalicelib.interfaces.repository import Repository
+from chalicelib.interface.repository import Repository
 
 
 class HomeMongoRepository(Repository):

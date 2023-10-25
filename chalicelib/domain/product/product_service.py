@@ -1,4 +1,4 @@
-from chalicelib.interfaces.service import Service
+from chalicelib.interface.service import Service
 
 
 class ProductService(Service):

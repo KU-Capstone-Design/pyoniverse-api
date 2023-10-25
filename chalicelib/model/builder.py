@@ -1,7 +1,7 @@
 from typing import List
 
-from chalicelib.models.api import Api
-from chalicelib.models.pagination import Pagination
+from chalicelib.model.api import Api
+from chalicelib.model.pagination import Pagination
 
 
 class ApiBuilder:

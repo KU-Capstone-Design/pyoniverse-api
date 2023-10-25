@@ -5,7 +5,7 @@ from chalicelib.domain.event.model.event_list_response import EventListResponseS
 from chalicelib.domain.home.model.event_response import HomeEventResponseSchema
 from chalicelib.domain.home.model.product_response import HomeProductResponseSchema
 from chalicelib.domain.home.model.store_response import HomeStoreResponseSchema
-from chalicelib.models.api import ApiSchema
+from chalicelib.model.api import ApiSchema
 from tests.mock.mock import test_client, env, headers
 
 

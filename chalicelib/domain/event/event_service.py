@@ -2,9 +2,9 @@ from typing import Type
 
 from chalice import BadRequestError
 
-from chalicelib.interfaces.factories.repository_factory import RepositoryFactory
-from chalicelib.interfaces.repository import Repository
-from chalicelib.interfaces.service import Service
+from chalicelib.interface.factories.repository_factory import RepositoryFactory
+from chalicelib.interface.repository import Repository
+from chalicelib.interface.service import Service
 
 
 class EventService(Service):
