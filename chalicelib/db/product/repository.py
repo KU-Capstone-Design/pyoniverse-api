@@ -2,7 +2,7 @@ import os
 
 from pymongo import ReadPreference
 
-from chalicelib.db.adaptor.mongo import MongoAdaptor
+from chalicelib.db.mongo.adaptor.mongo import MongoAdaptor
 from chalicelib.interface.repository import Repository
 
 

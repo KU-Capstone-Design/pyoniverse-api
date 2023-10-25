@@ -1,4 +1,4 @@
-from chalicelib.db.adaptor.mongo import MongoAdaptor
+from chalicelib.db.mongo.adaptor.mongo import MongoAdaptor
 from tests.dependency_injector.mock.injector import adaptor_injector
 from tests.mock.mock import env
 

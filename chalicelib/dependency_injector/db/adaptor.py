@@ -1,7 +1,7 @@
-from dependency_injector.containers import DeclarativeContainer, WiringConfiguration
+from dependency_injector.containers import DeclarativeContainer
 from dependency_injector.providers import Configuration, Resource
 
-from chalicelib.db.adaptor.mongo import MongoAdaptor
+from chalicelib.db.mongo.adaptor.mongo import MongoAdaptor
 from chalicelib.interface.adaptor import DBAdaptor
 
 
