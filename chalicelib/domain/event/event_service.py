@@ -1,14 +1,9 @@
-from typing import Type
-
 from chalice import BadRequestError
 
-from chalicelib.interface.factories.repository_factory import RepositoryFactory
-from chalicelib.interface.repository import Repository
 from chalicelib.interface.service import Service
 
 
 class EventService(Service):
-    @classmethod
     def get_single(cls, **kwargs) -> object:
         """
         _type: Literal[detail, list]

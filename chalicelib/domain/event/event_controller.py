@@ -2,13 +2,13 @@ from chalice import Blueprint
 from dependency_injector.wiring import Provide
 
 from chalicelib.common.model.builder import ApiBuilder
+from chalicelib.domain.event.event_service import EventService
 from chalicelib.interface.controller import Controller
-from chalicelib.interface.service import Service
 
 
 class EventController(Controller):
     api = Blueprint(__name__)
-    service: Service = Provide["event_service"]
+    service: EventService = Provide["event_service"]
 
     @staticmethod
     @api.route("/events", methods=["GET", "HEAD"], cors=True)

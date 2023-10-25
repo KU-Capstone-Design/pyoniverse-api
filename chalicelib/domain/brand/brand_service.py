@@ -5,7 +5,6 @@ from chalicelib.interface.service import Service
 
 
 class BrandService(Service):
-    @override
     def get_single(self, **kwargs) -> object:
         brand = self._repository.find_by_slug(kwargs["slug"])
         if not brand:

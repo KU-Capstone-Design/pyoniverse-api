@@ -1,10 +1,10 @@
 from chalice import Blueprint
 from dependency_injector.wiring import Provide
 
+from chalicelib.domain.product.product_service import ProductService
 from chalicelib.interface.controller import Controller
-from chalicelib.interface.service import Service
 
 
 class ProductController(Controller):
     api = Blueprint(__name__)
-    service: Service = Provide["product_service"]
+    service: ProductService = Provide["product_service"]

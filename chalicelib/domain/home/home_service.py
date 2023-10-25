@@ -6,7 +6,6 @@ from chalicelib.interface.service import Service
 
 
 class HomeService(Service):
-    @override
     def get_list(self, **kwargs) -> list:
         match kwargs["type"]:
             case "stores":

@@ -1,19 +1,12 @@
 from abc import ABCMeta
-from typing import Tuple
+from typing import TypeVar
 
-from chalicelib.common.model.pagination import Pagination
-from chalicelib.interface.repository import Repository
+from chalicelib.interface.repository import RepositoryType
 
 
 class Service(metaclass=ABCMeta):
-    def __init__(self, repository: Repository):
+    def __init__(self, repository: RepositoryType):
         self._repository = repository
 
-    def get_single(self, **kwargs) -> object:
-        raise NotImplementedError
 
-    def get_list(self, **kwargs) -> list:
-        raise NotImplementedError
-
-    def get_paginated(self, **kwargs) -> Tuple[list, Pagination]:
-        raise NotImplementedError
+ServiceType = TypeVar("ServiceType", bound=Service)

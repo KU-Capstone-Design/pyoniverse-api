@@ -1,18 +1,15 @@
-from typing import Type
-
 from chalice import BadRequestError, Blueprint
 from dependency_injector.wiring import Provide
 
 from chalicelib.common.model.api import Api
 from chalicelib.common.model.builder import ApiBuilder
-from chalicelib.interface.factories.service_factory import ServiceFactory
+from chalicelib.domain.home.home_service import HomeService
 from chalicelib.interface.controller import Controller
-from chalicelib.interface.service import Service
 
 
 class HomeController(Controller):
     api = Blueprint(__name__)
-    service: Service = Provide["home_service"]
+    service: HomeService = Provide["home_service"]
 
     @staticmethod
     @api.route("/home", methods=["GET", "HEAD"], cors=True)

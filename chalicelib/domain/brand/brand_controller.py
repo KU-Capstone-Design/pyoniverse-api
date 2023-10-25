@@ -3,13 +3,13 @@ from dependency_injector.wiring import Provide
 
 from chalicelib.common.model.api import Api
 from chalicelib.common.model.builder import ApiBuilder
+from chalicelib.domain.brand.brand_service import BrandService
 from chalicelib.interface.controller import Controller
-from chalicelib.interface.service import Service
 
 
 class BrandController(Controller):
     api = Blueprint(__name__)
-    service: Service = Provide["brand_service"]
+    service: BrandService = Provide["brand_service"]
 
     @staticmethod
     @api.route("/brand/{slug}", methods=["GET", "HEAD"], cors=True)
