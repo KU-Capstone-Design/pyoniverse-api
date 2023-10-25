@@ -5,7 +5,7 @@ from overrides import override
 from pymongo import ReadPreference
 
 from chalicelib.aop.time_checker import time_checker
-from chalicelib.db.mongo.adaptor.mongo import MongoAdaptor
+from chalicelib.db.mongo.adaptor import MongoAdaptor
 from chalicelib.interface.repository import Repository
 
 
