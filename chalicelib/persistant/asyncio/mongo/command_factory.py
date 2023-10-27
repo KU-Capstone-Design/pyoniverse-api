@@ -42,10 +42,12 @@ class AsyncMongoCommandFactory(CommandFactoryIfs):
         )
 
     def get_select_all_command(
-        self, db_name: str, rel_name: str
+        self, db_name: str, rel_name: str, key: str, value: Any
     ) -> SelectAllCommandIfs:
         return AsyncMongoSelectAllCommand(
             client=self.__client,
             db_name=db_name,
             rel_name=rel_name,
+            key=key,
+            value=value,
         )

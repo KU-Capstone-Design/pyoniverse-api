@@ -8,7 +8,7 @@ from chalicelib.service.interface.command_factory import CommandFactoryIfs
 from chalicelib.service.interface.invoker import InvokerIfs
 
 
-class AsyncBrandService(ConstantBrandServiceIfs):
+class AsyncConstantBrandService(ConstantBrandServiceIfs):
     def __init__(self, invoker: InvokerIfs, command_factory: CommandFactoryIfs):
         self.__invoker = invoker
         self.__command_factory = command_factory
@@ -20,6 +20,8 @@ class AsyncBrandService(ConstantBrandServiceIfs):
             self.__command_factory.get_select_all_command(
                 db_name=self.__db_name,
                 rel_name=self.__rel_name,
+                key="id",
+                value=1,  # ascending
             )
         )
         result = (await self.__invoker.invoke())[0]

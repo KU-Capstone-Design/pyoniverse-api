@@ -37,7 +37,8 @@ class SortByLimit10CommandIfs(CommandIfs):
 
 class SelectAllCommandIfs(CommandIfs):
     """
-    key, value: 사용되지 않음
+    key: sort_key
+    value: 1(ascending) or -1(descending)
     """
 
     pass

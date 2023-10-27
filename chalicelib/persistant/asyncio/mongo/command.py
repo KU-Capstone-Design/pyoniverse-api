@@ -92,8 +92,8 @@ class AsyncMongoSelectAllCommand(SelectAllCommandIfs):
         self,
         client: AsyncIOMotorClient,
         rel_name: str,
-        key: str = None,
-        value: Any = None,
+        key: str,
+        value: Any,
         db_name: Literal["constant", "service"] = "service",
     ):
         super().__init__(rel_name=rel_name, key=key, value=value, db_name=db_name)
@@ -101,6 +101,8 @@ class AsyncMongoSelectAllCommand(SelectAllCommandIfs):
 
         assert isinstance(self._client, AsyncIOMotorClient)
         assert isinstance(self._rel_name, str)
+        assert isinstance(self._key, str)
+        assert self._value in [-1, +1]
         assert self._db_name in ["constant", "service"]
         if self._db_name == "service":
             db_name = os.getenv("MONGO_DB")
@@ -111,7 +113,12 @@ class AsyncMongoSelectAllCommand(SelectAllCommandIfs):
         )
 
     async def execute(self) -> Sequence[EntityType]:
-        result = await self._db[self._rel_name].find().to_list(length=None)
+        result = (
+            await self._db[self._rel_name]
+            .find()
+            .sort(self._key, self._value)
+            .to_list(length=None)
+        )
         if result:
             return [
                 ENTITY_MAP[self._db_name][self._rel_name].from_dict(r) for r in result

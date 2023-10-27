@@ -23,6 +23,10 @@ class CommandFactoryIfs(metaclass=ABCMeta):
 
     @abstractmethod
     def get_select_all_command(
-        self, db_name: str, rel_name: str
+        self,
+        db_name: str,
+        rel_name: str,
+        key: str,
+        value: Any,
     ) -> SelectAllCommandIfs:
         pass

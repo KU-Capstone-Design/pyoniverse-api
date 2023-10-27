@@ -1,6 +1,8 @@
 from abc import ABCMeta, abstractmethod
+from typing import Literal, Sequence
 
 from chalicelib.entity.brand import BrandEntity
+from chalicelib.entity.event import EventEntity
 
 
 class ServiceIfs(metaclass=ABCMeta):
@@ -12,7 +14,11 @@ class ProductServiceIfs(ServiceIfs):
 
 
 class EventServiceIfs(ServiceIfs):
-    pass
+    @abstractmethod
+    def find_chunk(
+        self, sort_key: str, direction: Literal["asc", "desc"], chunk_size: int
+    ) -> Sequence[EventEntity]:
+        pass
 
 
 class BrandServiceIfs(ServiceIfs):
