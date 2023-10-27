@@ -45,7 +45,7 @@ class ProductEntity(BaseEntity):
     description: str = field(default=None)
     image: str = field(default=None)
     name: str = field(default=None)
-    price: str = field(default=None)
+    price: float = field(default=None)
     recommendation: ProductRecommendationEntity = field(
         default_factory=ProductRecommendationEntity
     )

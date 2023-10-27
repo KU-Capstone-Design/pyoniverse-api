@@ -25,11 +25,6 @@ class HomeView:
                 )
         request = HomeRequestDto(type=_type)
         response = HomeView.business.get_list(request)
-        # res = {
-        #     _type: data,
-        # }
-        # if _type == "stores":
-        #     res["search"] = None
         api = (
             ApiBuilder()
             .with_status_code("200 OK")

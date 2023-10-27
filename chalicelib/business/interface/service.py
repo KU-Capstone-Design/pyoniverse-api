@@ -2,6 +2,7 @@ from abc import ABCMeta, abstractmethod
 from typing import Literal, Sequence
 
 from chalicelib.entity.brand import BrandEntity
+from chalicelib.entity.constant_brand import ConstantBrandEntity
 from chalicelib.entity.event import EventEntity
 
 
@@ -32,4 +33,6 @@ class BrandServiceIfs(ServiceIfs):
 
 
 class ConstantBrandServiceIfs(ServiceIfs):
-    pass
+    @abstractmethod
+    def find_all(self) -> Sequence[ConstantBrandEntity]:
+        pass
