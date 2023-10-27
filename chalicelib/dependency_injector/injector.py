@@ -43,7 +43,7 @@ class TmpMainInjector:
 
     def inject(self):
         logging.info("Inject Dependencies")
-        client = AsyncIOMotorClient(os.getenv("MONGO_URI"))
+        client = self.__get_client()
         self.injectors["persistent"] = PersistentInjector(client=client)
         self.injectors["persistent"].check_dependencies()
 
@@ -71,3 +71,8 @@ class TmpMainInjector:
         :return:
         """
         dotenv.load_dotenv()
+
+    def __get_client(self):
+        client = AsyncIOMotorClient(os.getenv("MONGO_URI"))
+        client.get_io_loop().run_until_complete(client.admin.command("ping"))
+        return client

@@ -5,6 +5,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 
 from chalicelib.business.brand.business import AsyncBrandBusiness
 from chalicelib.business.brand.converter import BrandConverter
+from chalicelib.business.home.converter import HomeConverter
 from chalicelib.dependency_injector.business import BusinessInjector
 from chalicelib.dependency_injector.persistant import PersistentInjector
 from chalicelib.dependency_injector.tmp_service import ServiceInjector
@@ -50,7 +51,11 @@ def test_business_injector(service_injector, loop):
     # given
     injector = BusinessInjector(
         brand_service=service_injector.brand_service(),
+        constant_brand_service=service_injector.constant_brand_service(),
+        event_service=service_injector.event_service(),
+        product_service=service_injector.product_service(),
         brand_converter=BrandConverter(),
+        home_converter=HomeConverter(),
         loop=loop,
     )
     # when & then
