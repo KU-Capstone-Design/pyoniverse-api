@@ -12,7 +12,11 @@ class ProductBusinessIfs(BusinessIfs):
 
 
 class EventBusinessIfs(BusinessIfs):
-    pass
+    def get_list(self, request: DtoType) -> DtoType:
+        pass
+
+    def get_detail(self, request: DtoType) -> DtoType:
+        pass
 
 
 class BrandBusinessIfs(BusinessIfs):

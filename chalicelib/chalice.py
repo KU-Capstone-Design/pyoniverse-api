@@ -7,6 +7,7 @@ from overrides import override
 
 from chalicelib.common.model.builder import ApiBuilder
 from chalicelib.common.model.serializer import JsonSerializer
+from chalicelib.view.event_view import EventView
 
 
 class CustomChalice(Chalice):
@@ -43,11 +44,12 @@ class CustomChalice(Chalice):
 
         self.register_blueprint(HomeController.api, url_prefix=prefix)
         self.register_blueprint(BrandController.api, url_prefix=prefix)
-        self.register_blueprint(EventController.api, url_prefix=prefix)
+        # self.register_blueprint(EventController.api, url_prefix=prefix)
         self.register_blueprint(ProductController.api, url_prefix=prefix)
 
         # self.register_blueprint(BrandView.api, url_prefix=prefix)
         # self.register_blueprint(HomeView.api, url_prefix=prefix)
+        self.register_blueprint(EventView.api, url_prefix=prefix)
 
 
 class CustomRestAPIEventHandler(RestAPIEventHandler):

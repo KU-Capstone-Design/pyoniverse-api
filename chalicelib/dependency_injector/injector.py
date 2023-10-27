@@ -5,6 +5,7 @@ import dotenv
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from chalicelib.business.brand.converter import BrandConverter
+from chalicelib.business.event.converter import EventConverter
 from chalicelib.business.home.converter import HomeConverter
 from chalicelib.dependency_injector.business import BusinessInjector
 from chalicelib.dependency_injector.db.adaptor import DBAdaptorInjector
@@ -49,7 +50,10 @@ class TmpMainInjector:
 
         self.injectors["service"] = TmpServiceInjector(
             command_factory=self.injectors["persistent"].command_factory(),
-            invoker=self.injectors["persistent"].invoker(),
+            brand_invoker=self.injectors["persistent"].invoker(),
+            constant_brand_invoker=self.injectors["persistent"].invoker(),
+            product_invoker=self.injectors["persistent"].invoker(),
+            event_invoker=self.injectors["persistent"].invoker(),
         )
         self.injectors["service"].check_dependencies()
 
@@ -57,6 +61,7 @@ class TmpMainInjector:
             loop=client.get_io_loop(),
             home_converter=HomeConverter(),
             brand_converter=BrandConverter(),
+            event_converter=EventConverter(),
             brand_service=self.injectors["service"].brand_service(),
             constant_brand_service=self.injectors["service"].constant_brand_service(),
             event_service=self.injectors["service"].event_service(),

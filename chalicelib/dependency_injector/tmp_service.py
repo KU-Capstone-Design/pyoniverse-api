@@ -16,27 +16,30 @@ class ServiceProvider(Singleton):
 
 class ServiceContainer(DeclarativeContainer):
     command_factory = Dependency(CommandFactoryIfs)
-    invoker = Dependency(InvokerIfs)
+    brand_invoker = Dependency(InvokerIfs)
+    constant_brand_invoker = Dependency(InvokerIfs)
+    product_invoker = Dependency(InvokerIfs)
+    event_invoker = Dependency(InvokerIfs)
 
 
 class ServiceInjector(ServiceContainer):
     brand_service = ServiceProvider(
         AsyncBrandService,
-        invoker=ServiceContainer.invoker,
+        invoker=ServiceContainer.brand_invoker,
         command_factory=ServiceContainer.command_factory,
     )
     constant_brand_service = ServiceProvider(
         AsyncConstantBrandService,
-        invoker=ServiceContainer.invoker,
+        invoker=ServiceContainer.constant_brand_invoker,
         command_factory=ServiceContainer.command_factory,
     )
     product_service = ServiceProvider(
         AsyncProductService,
-        invoker=ServiceContainer.invoker,
+        invoker=ServiceContainer.product_invoker,
         command_factory=ServiceContainer.command_factory,
     )
     event_service = ServiceProvider(
         AsyncEventService,
-        invoker=ServiceContainer.invoker,
+        invoker=ServiceContainer.event_invoker,
         command_factory=ServiceContainer.command_factory,
     )

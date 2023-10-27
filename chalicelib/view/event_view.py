@@ -33,7 +33,7 @@ class EventView:
     @staticmethod
     @api.route("/event/{id}", methods=["GET", "HEAD"], cors=True)
     def get_detail(id: int):
-        request = EventRequestDto(id=id)
+        request = EventRequestDto(id=int(id))
         data = EventView.business.get_detail(request)
         api = (
             ApiBuilder()
