@@ -1,4 +1,6 @@
-from abc import ABCMeta
+from abc import ABCMeta, abstractmethod
+
+from chalicelib.entity.brand import BrandEntity
 
 
 class ServiceIfs(metaclass=ABCMeta):
@@ -14,4 +16,6 @@ class EventServiceIfs(ServiceIfs):
 
 
 class BrandServiceIfs(ServiceIfs):
-    pass
+    @abstractmethod
+    def find_by_id(self, _id: int) -> BrandEntity:
+        pass

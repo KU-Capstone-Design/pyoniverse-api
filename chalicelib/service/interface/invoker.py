@@ -16,12 +16,5 @@ class InvokerIfs(metaclass=ABCMeta):
         return self._commands.pop()
 
     @abstractmethod
-    def invoke(
-        self,
-    ) -> (
-        Sequence[EntityType]
-        | EntityType
-        | None
-        | Sequence[Sequence[EntityType] | EntityType | None]
-    ):
+    def invoke(self) -> Sequence[Sequence[EntityType] | EntityType | None]:
         pass
