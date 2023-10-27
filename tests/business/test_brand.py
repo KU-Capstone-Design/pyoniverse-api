@@ -46,7 +46,7 @@ def test_brand_business(brand_service, loop):
         brand_service=brand_service, converter=BrandConverter(), loop=loop
     )
     # when
-    result = business.get_detail_page(request=BrandRequestDto(id=1))
+    result = business.get_detail_page(request=BrandRequestDto(slug="cu"))
     # then
     assert isinstance(result, BrandResponseDto)
 
@@ -54,10 +54,10 @@ def test_brand_business(brand_service, loop):
 def test_brand_converter():
     # given
     converter = BrandConverter()
-    request = BrandRequestDto(id=1)
+    request = BrandRequestDto(slug="cu")
     # when & then
     entity = converter.convert_to_entity(request)
-    assert isinstance(entity, BrandEntity) and entity.id == request.id
+    assert isinstance(entity, BrandEntity) and entity.slug == request.slug
 
     response = converter.convert_to_dto(entity)
     assert isinstance(response, BrandResponseDto)

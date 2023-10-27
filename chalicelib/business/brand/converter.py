@@ -57,5 +57,5 @@ class BrandConverter(ConverterIfs):
         if not isinstance(dto, BrandRequestDto):
             raise BadRequestError("dto must be BrandRequestDto")
         return BrandEntity(
-            id=dto.id,
+            slug=dto.slug,
         )
