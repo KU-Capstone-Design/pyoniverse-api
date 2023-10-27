@@ -3,8 +3,8 @@ from dependency_injector.wiring import Provide
 
 from chalicelib.business.brand.dto.request import BrandRequestDto
 from chalicelib.business.interface.business import BrandBusinessIfs
-from chalicelib.extern.common.model.api import Api
-from chalicelib.extern.common.model.builder import ApiBuilder
+from chalicelib.view.model.api import Api
+from chalicelib.view.model.builder import ApiBuilder
 
 
 class BrandView:

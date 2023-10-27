@@ -3,7 +3,7 @@ from dependency_injector.wiring import Provide
 
 from chalicelib.business.event.dto.request import EventRequestDto
 from chalicelib.business.interface.business import EventBusinessIfs
-from chalicelib.extern.common.model.builder import ApiBuilder
+from chalicelib.view.model.builder import ApiBuilder
 
 
 class EventView:

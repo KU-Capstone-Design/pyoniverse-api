@@ -1,6 +1,6 @@
 from chalice.app import Request, Response
 
-from chalicelib.extern.common.model.serializer import JsonSerializer
+from chalicelib.view.model.serializer import JsonSerializer
 
 
 def handle_response(event: Request, get_response):

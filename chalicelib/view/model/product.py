@@ -1,12 +1,12 @@
 from dataclasses import dataclass, field
 from typing import List, Optional
 
-from chalicelib.extern.common.model.converter import IdConverter
 from chalicelib.entity.product import (
     ProductBrandEntity,
     ProductEntity,
     ProductPriceEntity,
 )
+from chalicelib.entity.util import ConstantConverter
 
 
 @dataclass
@@ -17,7 +17,7 @@ class ProductEventDto:
 
     @classmethod
     def from_dict(cls, data: int):
-        event_info = IdConverter.convert_event_id(data)
+        event_info = ConstantConverter.convert_event_id(data)
         return cls(
             id=data,
             name=event_info["name"],
@@ -33,7 +33,7 @@ class ProductPriceDto:
 
     @classmethod
     def from_dict(cls, data: ProductPriceEntity):
-        currency_info = IdConverter.convert_currency(data.currency)
+        currency_info = ConstantConverter.convert_currency(data.currency)
         return cls(
             value=data.value,
             currency=currency_info["slug"],
@@ -51,7 +51,7 @@ class ProductBrandDto:
 
     @classmethod
     def from_dict(cls, data: ProductBrandEntity):
-        brand_info = IdConverter.convert_brand_id(data.id)
+        brand_info = ConstantConverter.convert_brand_id(data.id)
         return cls(
             id=data.id,
             slug=brand_info["slug"],
@@ -69,7 +69,7 @@ class ProductCategoryDto:
 
     @classmethod
     def from_dict(cls, data: int):
-        category_info = IdConverter.convert_category_id(data)
+        category_info = ConstantConverter.convert_category_id(data)
         return cls(
             id=data,
             name=category_info["name"],

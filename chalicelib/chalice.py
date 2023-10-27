@@ -5,11 +5,11 @@ from typing import Any, Dict, Literal, Optional
 from chalice.app import Chalice, Request, Response, RestAPIEventHandler
 from overrides import override
 
-from chalicelib.extern.common.model.builder import ApiBuilder
-from chalicelib.extern.common.model.serializer import JsonSerializer
 from chalicelib.view.brand_view import BrandView
 from chalicelib.view.event_view import EventView
 from chalicelib.view.home_view import HomeView
+from chalicelib.view.model.builder import ApiBuilder
+from chalicelib.view.model.serializer import JsonSerializer
 
 
 class CustomChalice(Chalice):

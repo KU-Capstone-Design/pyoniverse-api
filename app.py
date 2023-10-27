@@ -1,12 +1,7 @@
-from dotenv import load_dotenv
-
-from chalicelib.extern.dependency_injector.injector import MainInjector
-
-
-load_dotenv()
 import os
 
 from chalicelib.chalice import CustomChalice
+from chalicelib.extern.dependency_injector.injector import MainInjector
 from chalicelib.extern.middleware.error_handler import handle_errors
 from chalicelib.extern.middleware.response_handler import handle_response
 

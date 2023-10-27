@@ -1,5 +1,5 @@
-from chalicelib.extern.common.model.api import Api
-from chalicelib.extern.common.model.pagination import Pagination
+from chalicelib.view.model.api import Api
+from chalicelib.view.model.pagination import Pagination
 
 
 class ApiBuilder:

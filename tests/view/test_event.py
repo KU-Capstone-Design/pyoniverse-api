@@ -1,6 +1,6 @@
 import pytest
 
-from chalicelib.extern.common.model.api import Api
+from chalicelib.view.model.api import Api
 from chalicelib.extern.dependency_injector.injector import MainInjector
 from tests.mock.mock import env, test_client
 from tests.schema.event.event_detail_response import EventDetailResponseSchema

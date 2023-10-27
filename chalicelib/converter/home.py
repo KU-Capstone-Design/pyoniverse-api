@@ -11,11 +11,11 @@ from chalicelib.business.home.dto.response import (
 )
 from chalicelib.business.interface.converter import ConverterIfs
 from chalicelib.business.interface.dto import DtoType
-from chalicelib.extern.common.model.converter import IdConverter
 from chalicelib.entity.base import EntityType
 from chalicelib.entity.constant_brand import ConstantBrandEntity
 from chalicelib.entity.event import EventEntity
 from chalicelib.entity.product import ProductEntity
+from chalicelib.entity.util import ConstantConverter
 
 
 class HomeConverter(ConverterIfs):
@@ -36,7 +36,7 @@ class HomeConverter(ConverterIfs):
                 slug=entity.slug,
             )
         elif isinstance(entity, EventEntity):
-            brand = IdConverter.convert_brand_id(entity.brand)["name"].upper()
+            brand = ConstantConverter.convert_brand_id(entity.brand)["name"].upper()
             start_at = datetime.fromtimestamp(entity.start_at).strftime("%Y-%m-%d")
             end_at = datetime.fromtimestamp(entity.end_at).strftime("%Y-%m-%d")
             return HomeEventResponseDto(
@@ -50,9 +50,10 @@ class HomeConverter(ConverterIfs):
             )
         elif isinstance(entity, ProductEntity):
             events = [
-                IdConverter.convert_event_id(e)["name"] for e in entity.best.events
+                ConstantConverter.convert_event_id(e)["name"]
+                for e in entity.best.events
             ]
-            event_brand = IdConverter.convert_brand_id(entity.best.brand)[
+            event_brand = ConstantConverter.convert_brand_id(entity.best.brand)[
                 "name"
             ].upper()
             event_price = (

@@ -3,8 +3,8 @@ from dependency_injector.wiring import Provide
 
 from chalicelib.business.home.dto.request import HomeRequestDto
 from chalicelib.business.interface.business import HomeBusinessIfs
-from chalicelib.extern.common.model.api import Api
-from chalicelib.extern.common.model.builder import ApiBuilder
+from chalicelib.view.model.api import Api
+from chalicelib.view.model.builder import ApiBuilder
 
 
 class HomeView:
