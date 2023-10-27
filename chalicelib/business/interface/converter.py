@@ -1,4 +1,5 @@
 from abc import ABCMeta, abstractmethod
+from typing import Type
 
 from chalicelib.business.interface.dto import DtoType
 from chalicelib.entity.base import EntityType

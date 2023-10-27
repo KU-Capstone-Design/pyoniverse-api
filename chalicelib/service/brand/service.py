@@ -1,4 +1,4 @@
-from chalice import BadRequestError
+from chalice import BadRequestError, NotFoundError
 
 from chalicelib.business.interface.service import BrandServiceIfs
 from chalicelib.entity.brand import BrandEntity
@@ -13,15 +13,23 @@ class AsyncBrandService(BrandServiceIfs):
         self.__rel_name = "brands"
         self.__db_name = "service"
 
-    async def find_by_id(self, _id: int) -> BrandEntity:
-        if not isinstance(_id, int):
-            raise BadRequestError(f"{_id} should be int type")
+    async def find_by_id(self, entity: BrandEntity) -> BrandEntity:
+        if not isinstance(entity, BrandEntity):
+            raise BadRequestError("Entity should be BrandEntity")
+        if not isinstance(entity.id, int):
+            raise BadRequestError(f"{entity.id} should be int type")
         self.__invoker.add_command(
             self.__command_factory.get_equal_command(
                 db_name=self.__db_name,
                 rel_name=self.__rel_name,
                 key="id",
-                value=_id,
+                value=entity.id,
             )
         )
-        return await self.__invoker.invoke()
+        result = (await self.__invoker.invoke())[0]
+        if not result:
+            raise NotFoundError(
+                f"{entity.id} not in {self.__db_name}.{self.__rel_name}"
+            )
+        else:
+            return result
