@@ -1,11 +1,20 @@
+import pytest
+
 from chalicelib.common.model.api import Api
+from chalicelib.dependency_injector.injector import TmpMainInjector
 from chalicelib.domain.home.model.event_response import HomeEventResponseSchema
 from chalicelib.domain.home.model.product_response import HomeProductResponseSchema
 from chalicelib.domain.home.model.store_response import HomeStoreResponseSchema
 from tests.mock.mock import env, test_client
 
 
-def test_spec_products(env, test_client):
+@pytest.fixture
+def injector(env):
+    injector = TmpMainInjector()
+    injector.inject()
+
+
+def test_spec_products(env, test_client, injector):
     import json
 
     res = test_client.http.get("/v1/home?type=products")
@@ -14,7 +23,7 @@ def test_spec_products(env, test_client):
     assert Api.validate(HomeProductResponseSchema, body, many=False) == {}
 
 
-def test_spec_events(env, test_client):
+def test_spec_events(env, test_client, injector):
     import json
 
     res = test_client.http.get("/v1/home?type=events")
@@ -23,7 +32,7 @@ def test_spec_events(env, test_client):
     assert Api.validate(HomeEventResponseSchema, body, many=False) == {}
 
 
-def test_spec_brands(env, test_client):
+def test_spec_brands(env, test_client, injector):
     import json
 
     res = test_client.http.get("/v1/home")

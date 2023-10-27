@@ -43,11 +43,11 @@ class CustomChalice(Chalice):
 
         self.register_blueprint(HomeController.api, url_prefix=prefix)
         self.register_blueprint(BrandController.api, url_prefix=prefix)
-        # from chalicelib.view.brand_view import BrandView
-
-        # self.register_blueprint(BrandView.api, url_prefix=prefix)
         self.register_blueprint(EventController.api, url_prefix=prefix)
         self.register_blueprint(ProductController.api, url_prefix=prefix)
+
+        # self.register_blueprint(BrandView.api, url_prefix=prefix)
+        # self.register_blueprint(HomeView.api, url_prefix=prefix)
 
 
 class CustomRestAPIEventHandler(RestAPIEventHandler):
