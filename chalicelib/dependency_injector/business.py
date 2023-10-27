@@ -20,7 +20,7 @@ class BusinessContainer(DeclarativeContainer):
 
 
 class BusinessInjector(BusinessContainer):
-    wiring_config = WiringConfiguration(modules=["chalicelib.view"])
+    wiring_config = WiringConfiguration(packages=["chalicelib.view"])
 
     brand_business = BusinessProvider(
         AsyncBrandBusiness,
