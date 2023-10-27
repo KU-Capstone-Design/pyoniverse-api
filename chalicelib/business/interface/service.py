@@ -17,5 +17,5 @@ class EventServiceIfs(ServiceIfs):
 
 class BrandServiceIfs(ServiceIfs):
     @abstractmethod
-    def find_by_id(self, _id: int) -> BrandEntity:
+    def find_by_id(self, entity: BrandEntity) -> BrandEntity:
         pass
