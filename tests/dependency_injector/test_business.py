@@ -9,7 +9,7 @@ from chalicelib.converter.home import HomeConverter
 from chalicelib.converter.brand import BrandConverter
 from chalicelib.dependency_injector.business import BusinessInjector
 from chalicelib.dependency_injector.persistant import PersistentInjector
-from chalicelib.dependency_injector.tmp_service import ServiceInjector
+from chalicelib.dependency_injector.service import ServiceInjector
 from tests.mock.mock import env
 
 

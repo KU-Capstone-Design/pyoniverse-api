@@ -7,7 +7,9 @@ from overrides import override
 
 from chalicelib.common.model.builder import ApiBuilder
 from chalicelib.common.model.serializer import JsonSerializer
+from chalicelib.view.brand_view import BrandView
 from chalicelib.view.event_view import EventView
+from chalicelib.view.home_view import HomeView
 
 
 class CustomChalice(Chalice):
@@ -35,20 +37,10 @@ class CustomChalice(Chalice):
         :param version: v1
         :return:
         """
-        from chalicelib.domain.brand.brand_controller import BrandController
-        from chalicelib.domain.event.event_controller import EventController
-        from chalicelib.domain.home.home_controller import HomeController
-        from chalicelib.domain.product.product_controller import ProductController
-
         prefix = f"/{version}"
 
-        self.register_blueprint(HomeController.api, url_prefix=prefix)
-        self.register_blueprint(BrandController.api, url_prefix=prefix)
-        # self.register_blueprint(EventController.api, url_prefix=prefix)
-        self.register_blueprint(ProductController.api, url_prefix=prefix)
-
-        # self.register_blueprint(BrandView.api, url_prefix=prefix)
-        # self.register_blueprint(HomeView.api, url_prefix=prefix)
+        self.register_blueprint(BrandView.api, url_prefix=prefix)
+        self.register_blueprint(HomeView.api, url_prefix=prefix)
         self.register_blueprint(EventView.api, url_prefix=prefix)
 
 

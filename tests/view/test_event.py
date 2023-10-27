@@ -1,7 +1,7 @@
 import pytest
 
 from chalicelib.common.model.api import Api
-from chalicelib.dependency_injector.injector import TmpMainInjector
+from chalicelib.dependency_injector.injector import MainInjector
 from chalicelib.domain.event.model.event_detail_response import (
     EventDetailResponseSchema,
 )
@@ -11,7 +11,7 @@ from tests.mock.mock import env, test_client
 
 @pytest.fixture
 def injector(env):
-    injector = TmpMainInjector()
+    injector = MainInjector()
     injector.inject()
 
 

@@ -8,36 +8,13 @@ from chalicelib.converter.brand import BrandConverter
 from chalicelib.converter.event import EventConverter
 from chalicelib.converter.home import HomeConverter
 from chalicelib.dependency_injector.business import BusinessInjector
-from chalicelib.dependency_injector.db.adaptor import DBAdaptorInjector
-from chalicelib.dependency_injector.db.repository import RepositoryInjector
 from chalicelib.dependency_injector.persistant import PersistentInjector
-from chalicelib.dependency_injector.service.service import ServiceInjector
-from chalicelib.dependency_injector.tmp_service import (
+from chalicelib.dependency_injector.service import (
     ServiceInjector as TmpServiceInjector,
 )
 
 
 class MainInjector:
-    def __init__(self):
-        self.injectors = {}
-
-    def inject(self):
-        adaptor_injector = DBAdaptorInjector()
-        repository_injector = RepositoryInjector(
-            adaptor=adaptor_injector.mongo_adaptor()
-        )
-        service_injector = ServiceInjector(
-            home_repository=repository_injector.home_repository(),
-            brand_repository=repository_injector.brand_repository(),
-            event_repository=repository_injector.event_repository(),
-            product_repository=repository_injector.product_repository(),
-        )
-        self.injectors["adaptor"] = adaptor_injector
-        self.injectors["repository"] = repository_injector
-        self.injectors["service"] = service_injector
-
-
-class TmpMainInjector:
     def __init__(self):
         self.__configure()
         self.injectors = {}
