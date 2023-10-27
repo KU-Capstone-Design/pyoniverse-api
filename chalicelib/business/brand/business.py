@@ -27,9 +27,11 @@ class AsyncBrandBusiness(BusinessIfs):
     def get_detail_page(self, request: BrandRequestDto) -> BrandResponseDto:
         if not isinstance(request, BrandRequestDto):
             raise BadRequestError(f"{request} should be BrandRequestDto type")
-        if not isinstance(request.id, int):
-            raise BadRequestError(f"{request.id} should be int type")
+        if not isinstance(request.slug, str):
+            raise BadRequestError(f"{request.slug} should be str type")
         entity = self.__converter.convert_to_entity(request)
-        entity = self.__loop.run_until_complete(self.__brand_service.find_by_id(entity))
+        entity = self.__loop.run_until_complete(
+            self.__brand_service.find_by_slug(entity)
+        )
         response = self.__converter.convert_to_dto(entity)
         return response

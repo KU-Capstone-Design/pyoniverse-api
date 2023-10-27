@@ -32,11 +32,11 @@ def test_brand_service(client, factory, invoker):
     loop = client.get_io_loop()
     # when & then
     try:
-        loop.run_until_complete(service.find_by_id(None))
+        loop.run_until_complete(service.find_by_slug(None))
     except BadRequestError:
         assert True
     else:
         assert False
 
-    result = loop.run_until_complete(service.find_by_id(BrandEntity(id=1)))
+    result = loop.run_until_complete(service.find_by_slug(BrandEntity(slug="cu")))
     assert isinstance(result, BrandEntity)

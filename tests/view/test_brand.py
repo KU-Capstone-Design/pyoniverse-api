@@ -6,13 +6,13 @@ from motor.motor_asyncio import AsyncIOMotorClient
 
 from chalicelib.business.brand.business import AsyncBrandBusiness
 from chalicelib.business.brand.converter import BrandConverter
-from chalicelib.business.brand.dto.request import BrandRequestDto
-from chalicelib.business.brand.dto.response import BrandResponseDto
-from chalicelib.entity.brand import BrandEntity
+from chalicelib.common.model.api import Api
+from chalicelib.domain.brand.model.brand_response import BrandDetailResponseSchema
 from chalicelib.persistant.asyncio.invoker import AsyncInvoker
 from chalicelib.persistant.asyncio.mongo.command_factory import AsyncMongoCommandFactory
 from chalicelib.service.brand.service import AsyncBrandService
-from tests.mock.mock import env
+from chalicelib.view.brand_view import BrandView
+from tests.mock.mock import env, test_client
 
 
 @pytest.fixture
@@ -40,24 +40,19 @@ def brand_service(factory, invoker):
     return AsyncBrandService(command_factory=factory, invoker=invoker)
 
 
-def test_brand_business(brand_service, loop):
-    # given
-    business = AsyncBrandBusiness(
-        brand_service=brand_service, converter=BrandConverter(), loop=loop
+@pytest.fixture
+def brand_business(brand_service, loop):
+    return AsyncBrandBusiness(
+        brand_service=brand_service, loop=loop, converter=BrandConverter()
     )
-    # when
-    result = business.get_detail_page(request=BrandRequestDto(slug="cu"))
-    # then
-    assert isinstance(result, BrandResponseDto)
 
 
-def test_brand_converter():
-    # given
-    converter = BrandConverter()
-    request = BrandRequestDto(slug="cu")
-    # when & then
-    entity = converter.convert_to_entity(request)
-    assert isinstance(entity, BrandEntity) and entity.slug == request.slug
+def test_spec_brand(env, test_client, brand_business):
+    import json
 
-    response = converter.convert_to_dto(entity)
-    assert isinstance(response, BrandResponseDto)
+    BrandView.business = brand_business
+    res = test_client.http.get("/v1/brand/cu")
+    body = json.loads(res.body)
+    assert res.status_code == 200
+
+    assert Api.validate(BrandDetailResponseSchema, body, many=False) == {}
