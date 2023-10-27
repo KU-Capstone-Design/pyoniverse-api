@@ -4,9 +4,9 @@ import os
 import dotenv
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from chalicelib.business.brand.converter import BrandConverter
-from chalicelib.business.event.converter import EventConverter
-from chalicelib.business.home.converter import HomeConverter
+from chalicelib.converter.brand import BrandConverter
+from chalicelib.converter.event import EventConverter
+from chalicelib.converter.home import HomeConverter
 from chalicelib.dependency_injector.business import BusinessInjector
 from chalicelib.dependency_injector.db.adaptor import DBAdaptorInjector
 from chalicelib.dependency_injector.db.repository import RepositoryInjector

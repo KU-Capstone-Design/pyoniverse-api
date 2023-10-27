@@ -35,7 +35,10 @@ def test_service_injector(persistent_injector):
     # given
     injector = ServiceInjector(
         command_factory=persistent_injector.command_factory(),
-        invoker=persistent_injector.invoker(),
+        brand_invoker=persistent_injector.invoker(),
+        constant_brand_invoker=persistent_injector.invoker(),
+        product_invoker=persistent_injector.invoker(),
+        event_invoker=persistent_injector.invoker(),
     )
     # when & then
     assert isinstance(injector.brand_service(), AsyncBrandService)

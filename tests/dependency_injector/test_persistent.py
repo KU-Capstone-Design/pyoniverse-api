@@ -33,4 +33,4 @@ def test_persistent_injector(client):
     assert isinstance(injector.command_factory(), AsyncMongoCommandFactory)
     assert isinstance(injector.invoker(), AsyncInvoker)
     assert injector.command_factory() is injector.command_factory()
-    assert injector.invoker() is injector.invoker()
+    assert injector.invoker() is not injector.invoker()

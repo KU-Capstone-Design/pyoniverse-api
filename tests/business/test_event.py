@@ -5,7 +5,7 @@ import pytest
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from chalicelib.business.event.business import AsyncEventBusiness
-from chalicelib.business.event.converter import EventConverter
+from chalicelib.converter.event import EventConverter
 from chalicelib.business.event.dto.request import EventRequestDto
 from chalicelib.business.event.dto.response import (
     EventDetailResponseDto,

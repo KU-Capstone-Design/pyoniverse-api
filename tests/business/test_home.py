@@ -4,11 +4,11 @@ from asyncio import AbstractEventLoop
 import pytest
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from chalicelib.business.brand.converter import BrandConverter
+from chalicelib.converter.brand import BrandConverter
 from chalicelib.business.brand.dto.request import BrandRequestDto
 from chalicelib.business.brand.dto.response import BrandResponseDto
 from chalicelib.business.home.business import AsyncHomeBusiness
-from chalicelib.business.home.converter import HomeConverter
+from chalicelib.converter.home import HomeConverter
 from chalicelib.business.home.dto.request import HomeRequestDto
 from chalicelib.business.home.dto.response import (
     HomeBrandsResponseDto,

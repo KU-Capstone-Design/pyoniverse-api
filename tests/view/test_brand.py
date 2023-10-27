@@ -5,7 +5,7 @@ import pytest
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from chalicelib.business.brand.business import AsyncBrandBusiness
-from chalicelib.business.brand.converter import BrandConverter
+from chalicelib.converter.brand import BrandConverter
 from chalicelib.common.model.api import Api
 from chalicelib.domain.brand.model.brand_response import BrandDetailResponseSchema
 from chalicelib.persistant.asyncio.invoker import AsyncInvoker
