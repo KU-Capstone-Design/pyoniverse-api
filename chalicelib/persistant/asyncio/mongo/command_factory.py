@@ -11,7 +11,13 @@ class AsyncMongoCommandFactory(CommandFactoryIfs):
     def __init__(self, client: AsyncIOMotorClient):
         self.__client = client
 
-    def get_equal_command(self, rel_name: str, key: str, value: Any) -> EqualCommandIfs:
+    def get_equal_command(
+        self, db_name: str, rel_name: str, key: str, value: Any
+    ) -> EqualCommandIfs:
         return AsyncMongoEqualCommand(
-            client=self.__client, rel_name=rel_name, key=key, value=value
+            client=self.__client,
+            db_name=db_name,
+            rel_name=rel_name,
+            key=key,
+            value=value,
         )
