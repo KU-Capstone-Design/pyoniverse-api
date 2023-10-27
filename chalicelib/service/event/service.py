@@ -48,3 +48,32 @@ class AsyncEventService(EventServiceIfs):
             raise NotFoundError(f"{self.__db_name}.{self.__rel_name} is empty")
         else:
             return result[:chunk_size]
+
+    async def find_by_id(self, entity: EventEntity) -> EventEntity:
+        self.__invoker.add_command(
+            self.__command_factory.get_equal_command(
+                db_name=self.__db_name,
+                rel_name=self.__rel_name,
+                key="id",
+                value=entity.id,
+            )
+        )
+        result = (await self.__invoker.invoke())[0]
+        if not result:
+            raise NotFoundError(
+                f"id={entity.id} not in {self.__db_name}.{self.__rel_name}"
+            )
+        else:
+            return result
+
+    async def find_all_by_brand(self, id: int) -> Sequence[EventEntity]:
+        self.__invoker.add_command(
+            self.__command_factory.get_select_all_by_command(
+                db_name=self.__db_name, rel_name=self.__rel_name, key="brand", value=id
+            )
+        )
+        result = (await self.__invoker.invoke())[0]
+        if not result:
+            raise NotFoundError(f"brand={id} not in {self.__db_name}.{self.__rel_name}")
+        else:
+            return result

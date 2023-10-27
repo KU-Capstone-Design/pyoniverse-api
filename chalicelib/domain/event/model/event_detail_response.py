@@ -12,4 +12,3 @@ class EventDetailResponseSchema(Schema):
     image_alt = fields.Str(required=True)
     start_at = fields.Date(required=True, format="iso")
     end_at = fields.Date(required=True, format="iso")
-    link = fields.URL(required=True)

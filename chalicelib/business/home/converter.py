@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Type
 
 from chalice import BadRequestError
 
@@ -9,6 +10,7 @@ from chalicelib.business.home.dto.response import (
     HomeProductResponseDto,
 )
 from chalicelib.business.interface.converter import ConverterIfs
+from chalicelib.business.interface.dto import DtoType
 from chalicelib.common.model.converter import IdConverter
 from chalicelib.entity.base import EntityType
 from chalicelib.entity.constant_brand import ConstantBrandEntity
@@ -21,7 +23,9 @@ class HomeConverter(ConverterIfs):
         raise NotImplementedError
 
     def convert_to_dto(
-        self, entity: ConstantBrandEntity | ProductEntity | EventEntity
+        self,
+        entity: ConstantBrandEntity | ProductEntity | EventEntity,
+        dto_type: Type[DtoType] = None,
     ) -> HomeBrandResponseDto | HomeProductResponseDto | HomeEventResponseDto:
         if isinstance(entity, ConstantBrandEntity):
             return HomeBrandResponseDto(

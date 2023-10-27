@@ -11,5 +11,5 @@ class ConverterIfs(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def convert_to_dto(self, entity: EntityType) -> DtoType:
+    def convert_to_dto(self, entity: EntityType, dto_type: Type[DtoType]) -> DtoType:
         pass

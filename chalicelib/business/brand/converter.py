@@ -1,3 +1,5 @@
+from typing import Type
+
 from chalice import BadRequestError
 
 from chalicelib.business.brand.dto.request import BrandRequestDto
@@ -8,11 +10,14 @@ from chalicelib.business.brand.dto.response import (
     BrandResponseDto,
 )
 from chalicelib.business.interface.converter import ConverterIfs
+from chalicelib.business.interface.dto import DtoType
 from chalicelib.entity.brand import BrandEntity
 
 
 class BrandConverter(ConverterIfs):
-    def convert_to_dto(self, entity: BrandEntity) -> BrandResponseDto:
+    def convert_to_dto(
+        self, entity: BrandEntity, dto_type: Type[DtoType] = BrandResponseDto
+    ) -> BrandResponseDto:
         if not isinstance(entity, BrandEntity):
             raise BadRequestError("Entity must be BrandEntity")
         return BrandResponseDto(

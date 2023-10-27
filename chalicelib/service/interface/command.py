@@ -42,3 +42,12 @@ class SelectAllCommandIfs(CommandIfs):
     """
 
     pass
+
+
+class SelectAllByCommandIfs(CommandIfs):
+    """
+    key: filter_key
+    value: Any
+    """
+
+    pass
