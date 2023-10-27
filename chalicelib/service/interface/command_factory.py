@@ -3,6 +3,7 @@ from typing import Any
 
 from chalicelib.service.interface.command import (
     EqualCommandIfs,
+    SelectAllCommandIfs,
     SortByLimit10CommandIfs,
 )
 
@@ -18,4 +19,10 @@ class CommandFactoryIfs(metaclass=ABCMeta):
     def get_sort_by_limit10_command(
         self, db_name: str, rel_name: str, key: str, value: Any
     ) -> SortByLimit10CommandIfs:
+        pass
+
+    @abstractmethod
+    def get_select_all_command(
+        self, db_name: str, rel_name: str
+    ) -> SelectAllCommandIfs:
         pass

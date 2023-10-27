@@ -33,3 +33,11 @@ class SortByLimit10CommandIfs(CommandIfs):
     """
 
     pass
+
+
+class SelectAllCommandIfs(CommandIfs):
+    """
+    key, value: 사용되지 않음
+    """
+
+    pass
