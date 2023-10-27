@@ -1,5 +1,4 @@
 from abc import ABCMeta, abstractmethod
-from asyncio import Future
 from typing import List, Sequence
 
 from chalicelib.entity.base import EntityType
@@ -17,5 +16,12 @@ class InvokerIfs(metaclass=ABCMeta):
         return self._commands.pop()
 
     @abstractmethod
-    def invoke(self) -> Sequence[EntityType] | EntityType | None | Future:
+    def invoke(
+        self,
+    ) -> (
+        Sequence[EntityType]
+        | EntityType
+        | None
+        | Sequence[Sequence[EntityType] | EntityType | None]
+    ):
         pass
