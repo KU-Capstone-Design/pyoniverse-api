@@ -42,15 +42,20 @@ class TmpMainInjector:
     def inject(self):
         client = AsyncIOMotorClient(os.getenv("MONGO_URI"))
         self.injectors["persistent"] = PersistentInjector(client=client)
+        self.injectors["persistent"].check_dependencies()
+
         self.injectors["service"] = TmpServiceInjector(
             command_factory=self.injectors["persistent"].command_factory(),
             invoker=self.injectors["persistent"].invoker(),
         )
+        self.injectors["service"].check_dependencies()
+
         self.injectors["business"] = BusinessInjector(
             loop=client.get_io_loop(),
             brand_converter=BrandConverter(),
             brand_service=self.injectors["service"].brand_service(),
         )
+        self.injectors["business"].check_dependencies()
         return self.injectors
 
     def __configure(self):

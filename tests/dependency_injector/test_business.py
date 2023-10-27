@@ -36,9 +36,9 @@ def loop(client):
 
 def test_business_injector_without_dependency(service_injector, loop):
     # given
-    injector = BusinessInjector()
     # when & then
     try:
+        injector = BusinessInjector()
         injector.check_dependencies()
     except Exception:
         assert True
