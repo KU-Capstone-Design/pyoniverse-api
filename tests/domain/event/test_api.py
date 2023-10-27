@@ -1,9 +1,7 @@
 from chalicelib.common.model.api import Api
-from chalicelib.domain.event.model.event_detail_response import (
-    EventDetailResponseSchema,
-)
-from chalicelib.domain.event.model.event_list_response import EventListResponseSchema
 from tests.mock.mock import env, test_client
+from tests.schema.event.event_detail_response import EventDetailResponseSchema
+from tests.schema.event.event_list_response import EventListResponseSchema
 
 
 def test_spec_default_event_list(env, test_client):

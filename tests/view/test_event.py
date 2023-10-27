@@ -2,11 +2,9 @@ import pytest
 
 from chalicelib.common.model.api import Api
 from chalicelib.dependency_injector.injector import MainInjector
-from chalicelib.domain.event.model.event_detail_response import (
-    EventDetailResponseSchema,
-)
-from chalicelib.domain.event.model.event_list_response import EventListResponseSchema
 from tests.mock.mock import env, test_client
+from tests.schema.event.event_detail_response import EventDetailResponseSchema
+from tests.schema.event.event_list_response import EventListResponseSchema
 
 
 @pytest.fixture
