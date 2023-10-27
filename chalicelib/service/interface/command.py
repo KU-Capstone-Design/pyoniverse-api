@@ -24,3 +24,12 @@ class CommandIfs(metaclass=ABCMeta):
 
 class EqualCommandIfs(CommandIfs):
     pass
+
+
+class SortByLimit10CommandIfs(CommandIfs):
+    """
+    key: sort_key
+    value: 1(ascending) or -1(descending)
+    """
+
+    pass

@@ -4,8 +4,10 @@ from asyncio import AbstractEventLoop
 import pytest
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from chalicelib.entity.constant_brand import ConstantBrandEntity
-from chalicelib.persistant.asyncio.mongo.command import AsyncMongoEqualCommand
+from chalicelib.persistant.asyncio.mongo.command import (
+    AsyncMongoEqualCommand,
+    AsyncMongoSortByLimit10Command,
+)
 from tests.mock.mock import env
 
 
@@ -63,10 +65,17 @@ def test_equal_command(client):
     key = "id"
     value = 1
     # when
-    command = AsyncMongoEqualCommand(
+    command = AsyncMongoSortByLimit10Command(
         rel_name=rel_name, db_name=db_name, key=key, value=value, client=client
     )
     loop: AbstractEventLoop = client.get_io_loop()
     result = loop.run_until_complete(command.execute())
     # then
-    assert isinstance(result, ConstantBrandEntity)
+    assert len(result) <= 10
+    assert sorted(result, key=lambda x: x.id) == result
+
+
+def test_sort_by_good_count_desc_limit_10(client):
+    # given
+    rel_name = "brands"
+    db_name = "service_dev"

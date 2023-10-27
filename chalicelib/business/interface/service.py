@@ -19,3 +19,7 @@ class BrandServiceIfs(ServiceIfs):
     @abstractmethod
     def find_by_slug(self, entity: BrandEntity) -> BrandEntity:
         pass
+
+
+class ConstantBrandServiceIfs(ServiceIfs):
+    pass
