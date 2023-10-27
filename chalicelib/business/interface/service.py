@@ -25,6 +25,14 @@ class EventServiceIfs(ServiceIfs):
     ) -> Sequence[EventEntity]:
         pass
 
+    @abstractmethod
+    def find_by_id(self, entity: EventEntity) -> EventEntity:
+        pass
+
+    @abstractmethod
+    def find_all_by_brand(self, id: int) -> Sequence[EventEntity]:
+        pass
+
 
 class BrandServiceIfs(ServiceIfs):
     @abstractmethod

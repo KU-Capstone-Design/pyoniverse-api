@@ -4,11 +4,12 @@ import pytest
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from chalicelib.business.brand.business import AsyncBrandBusiness
-from chalicelib.business.brand.converter import BrandConverter
-from chalicelib.business.home.converter import HomeConverter
-from chalicelib.dependency_injector.business import BusinessInjector
-from chalicelib.dependency_injector.persistant import PersistentInjector
-from chalicelib.dependency_injector.tmp_service import ServiceInjector
+from chalicelib.converter.event import EventConverter
+from chalicelib.converter.home import HomeConverter
+from chalicelib.converter.brand import BrandConverter
+from chalicelib.extern.dependency_injector.business import BusinessInjector
+from chalicelib.extern.dependency_injector.persistant import PersistentInjector
+from chalicelib.extern.dependency_injector.service import ServiceInjector
 from tests.mock.mock import env
 
 
@@ -24,10 +25,14 @@ def persistent_injector(client):
 
 @pytest.fixture
 def service_injector(persistent_injector):
-    return ServiceInjector(
+    injector = ServiceInjector(
         command_factory=persistent_injector.command_factory(),
-        invoker=persistent_injector.invoker(),
+        brand_invoker=persistent_injector.invoker(),
+        constant_brand_invoker=persistent_injector.invoker(),
+        product_invoker=persistent_injector.invoker(),
+        event_invoker=persistent_injector.invoker(),
     )
+    return injector
 
 
 @pytest.fixture
@@ -56,6 +61,7 @@ def test_business_injector(service_injector, loop):
         product_service=service_injector.product_service(),
         brand_converter=BrandConverter(),
         home_converter=HomeConverter(),
+        event_converter=EventConverter(),
         loop=loop,
     )
     # when & then

@@ -4,11 +4,13 @@ from motor.motor_asyncio import AsyncIOMotorClient
 
 from chalicelib.persistant.asyncio.mongo.command import (
     AsyncMongoEqualCommand,
+    AsyncMongoSelectAllByCommand,
     AsyncMongoSelectAllCommand,
     AsyncMongoSortByLimit10Command,
 )
 from chalicelib.service.interface.command import (
     EqualCommandIfs,
+    SelectAllByCommandIfs,
     SelectAllCommandIfs,
     SortByLimit10CommandIfs,
 )
@@ -45,6 +47,21 @@ class AsyncMongoCommandFactory(CommandFactoryIfs):
         self, db_name: str, rel_name: str, key: str, value: Any
     ) -> SelectAllCommandIfs:
         return AsyncMongoSelectAllCommand(
+            client=self.__client,
+            db_name=db_name,
+            rel_name=rel_name,
+            key=key,
+            value=value,
+        )
+
+    def get_select_all_by_command(
+        self,
+        db_name: str,
+        rel_name: str,
+        key: str,
+        value: Any,
+    ) -> SelectAllByCommandIfs:
+        return AsyncMongoSelectAllByCommand(
             client=self.__client,
             db_name=db_name,
             rel_name=rel_name,

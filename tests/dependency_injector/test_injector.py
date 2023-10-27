@@ -5,9 +5,9 @@ from tests.mock.mock import env
 
 def test_injector(env):
     # given
-    from chalicelib.dependency_injector.injector import TmpMainInjector
+    from chalicelib.extern.dependency_injector.injector import MainInjector
 
-    main_injector = TmpMainInjector()
+    main_injector = MainInjector()
     # when
     main_injector.inject()
     # then

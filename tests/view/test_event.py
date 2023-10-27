@@ -1,10 +1,19 @@
+import pytest
+
 from chalicelib.view.model.api import Api
+from chalicelib.extern.dependency_injector.injector import MainInjector
 from tests.mock.mock import env, test_client
 from tests.schema.event.event_detail_response import EventDetailResponseSchema
 from tests.schema.event.event_list_response import EventListResponseSchema
 
 
-def test_spec_default_event_list(env, test_client):
+@pytest.fixture
+def injector(env):
+    injector = MainInjector()
+    injector.inject()
+
+
+def test_spec_default_event_list(test_client, injector):
     import json
 
     res = test_client.http.get("/v1/events")
@@ -14,7 +23,7 @@ def test_spec_default_event_list(env, test_client):
     assert body["data"]["brand_slug"] == "cu"
 
 
-def test_spec_event_list(env, test_client):
+def test_spec_event_list(test_client, injector):
     import json
 
     res = test_client.http.get("/v1/events/cu")
@@ -24,7 +33,7 @@ def test_spec_event_list(env, test_client):
     assert body["data"]["brand_slug"] == "cu"
 
 
-def test_spec_event_detail(env, test_client):
+def test_spec_event_detail(test_client, injector):
     import json
 
     res = test_client.http.get("/v1/event/1")
