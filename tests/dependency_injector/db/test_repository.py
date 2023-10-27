@@ -1,7 +1,7 @@
-from chalicelib.db.mongo.brand_repository import BrandMongoRepository
-from chalicelib.db.mongo.event_repository import EventMongoRepository
-from chalicelib.db.mongo.home_repository import HomeMongoRepository
-from chalicelib.db.mongo.product_repository import ProductMongoRepository
+from chalicelib.persistant.mongo.brand_repository import BrandMongoRepository
+from chalicelib.persistant.mongo.event_repository import EventMongoRepository
+from chalicelib.persistant.mongo.home_repository import HomeMongoRepository
+from chalicelib.persistant.mongo.product_repository import ProductMongoRepository
 from tests.dependency_injector.mock.injector import (
     adaptor_injector,
     repository_injector,
