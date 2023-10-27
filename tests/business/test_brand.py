@@ -1,4 +1,5 @@
 import os
+from asyncio import AbstractEventLoop
 
 import pytest
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -20,6 +21,11 @@ def client(env):
 
 
 @pytest.fixture
+def loop(client) -> AbstractEventLoop:
+    return client.get_io_loop()
+
+
+@pytest.fixture
 def factory(client):
     return AsyncMongoCommandFactory(client)
 
@@ -34,11 +40,13 @@ def brand_service(factory, invoker):
     return AsyncBrandService(command_factory=factory, invoker=invoker)
 
 
-def test_brand_business(brand_service):
+def test_brand_business(brand_service, loop):
     # given
-    business = AsyncBrandBusiness(brand_service=brand_service)
+    business = AsyncBrandBusiness(
+        brand_service=brand_service, converter=BrandConverter(), loop=loop
+    )
     # when
-    result = business.get_detail_page(id=1)
+    result = business.get_detail_page(request=BrandRequestDto(id=1))
     # then
     assert isinstance(result, BrandResponseDto)
 

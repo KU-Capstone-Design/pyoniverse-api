@@ -39,4 +39,4 @@ def test_brand_service(client, factory, invoker):
         assert False
 
     result = loop.run_until_complete(service.find_by_id(BrandEntity(id=1)))
-    assert isinstance(result[0], BrandEntity)
+    assert isinstance(result, BrandEntity)

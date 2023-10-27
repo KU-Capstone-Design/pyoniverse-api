@@ -1,4 +1,4 @@
-from chalice import BadRequestError
+from chalice import BadRequestError, NotFoundError
 
 from chalicelib.business.interface.service import BrandServiceIfs
 from chalicelib.entity.brand import BrandEntity
@@ -26,4 +26,10 @@ class AsyncBrandService(BrandServiceIfs):
                 value=entity.id,
             )
         )
-        return await self.__invoker.invoke()
+        result = (await self.__invoker.invoke())[0]
+        if not result:
+            raise NotFoundError(
+                f"{entity.id} not in {self.__db_name}.{self.__rel_name}"
+            )
+        else:
+            return result
