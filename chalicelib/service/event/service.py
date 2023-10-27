@@ -23,7 +23,7 @@ class AsyncEventService(EventServiceIfs):
         if direction not in {"asc", "desc"}:
             raise BadRequestError(f"{direction} should be in ['asc', 'desc']")
         if not isinstance(chunk_size, int) or chunk_size <= 0:
-            raise BadRequestError(f"{chunk_size} shoudl be int type and >=0")
+            raise BadRequestError(f"{chunk_size} should be int type and >=0")
 
         if chunk_size <= 10:
             self.__invoker.add_command(

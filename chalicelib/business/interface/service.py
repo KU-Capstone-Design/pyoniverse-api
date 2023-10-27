@@ -10,7 +10,11 @@ class ServiceIfs(metaclass=ABCMeta):
 
 
 class ProductServiceIfs(ServiceIfs):
-    pass
+    @abstractmethod
+    def find_chunk(
+        self, sort_key: str, direction: Literal["asc", "desc"], chunk_size: int
+    ) -> Sequence[EventEntity]:
+        pass
 
 
 class EventServiceIfs(ServiceIfs):
