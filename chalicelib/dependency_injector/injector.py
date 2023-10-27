@@ -1,9 +1,11 @@
+import logging
 import os
 
 import dotenv
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from chalicelib.business.brand.converter import BrandConverter
+from chalicelib.business.home.converter import HomeConverter
 from chalicelib.dependency_injector.business import BusinessInjector
 from chalicelib.dependency_injector.db.adaptor import DBAdaptorInjector
 from chalicelib.dependency_injector.db.repository import RepositoryInjector
@@ -40,7 +42,8 @@ class TmpMainInjector:
         self.injectors = {}
 
     def inject(self):
-        client = AsyncIOMotorClient(os.getenv("MONGO_URI"))
+        logging.info("Inject Dependencies")
+        client = self.__get_client()
         self.injectors["persistent"] = PersistentInjector(client=client)
         self.injectors["persistent"].check_dependencies()
 
@@ -52,8 +55,12 @@ class TmpMainInjector:
 
         self.injectors["business"] = BusinessInjector(
             loop=client.get_io_loop(),
+            home_converter=HomeConverter(),
             brand_converter=BrandConverter(),
             brand_service=self.injectors["service"].brand_service(),
+            constant_brand_service=self.injectors["service"].constant_brand_service(),
+            event_service=self.injectors["service"].event_service(),
+            product_service=self.injectors["service"].product_service(),
         )
         self.injectors["business"].check_dependencies()
         return self.injectors
@@ -64,3 +71,8 @@ class TmpMainInjector:
         :return:
         """
         dotenv.load_dotenv()
+
+    def __get_client(self):
+        client = AsyncIOMotorClient(os.getenv("MONGO_URI"))
+        client.get_io_loop().run_until_complete(client.admin.command("ping"))
+        return client

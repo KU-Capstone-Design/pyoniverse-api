@@ -1,4 +1,4 @@
-from abc import ABCMeta
+from abc import ABCMeta, abstractmethod
 
 from chalicelib.business.interface.dto import DtoType
 
@@ -16,9 +16,12 @@ class EventBusinessIfs(BusinessIfs):
 
 
 class BrandBusinessIfs(BusinessIfs):
+    @abstractmethod
     def get_detail_page(self, request: DtoType) -> DtoType:
         pass
 
 
 class HomeBusinessIfs(BusinessIfs):
-    pass
+    @abstractmethod
+    def get_list(self, request: DtoType) -> DtoType:
+        pass

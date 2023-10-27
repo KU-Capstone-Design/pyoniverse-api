@@ -4,9 +4,15 @@ from dependency_injector.containers import DeclarativeContainer, WiringConfigura
 from dependency_injector.providers import Dependency, Singleton
 
 from chalicelib.business.brand.business import AsyncBrandBusiness
+from chalicelib.business.home.business import AsyncHomeBusiness
 from chalicelib.business.interface.business import BusinessIfs
 from chalicelib.business.interface.converter import ConverterIfs
-from chalicelib.business.interface.service import BrandServiceIfs
+from chalicelib.business.interface.service import (
+    BrandServiceIfs,
+    ConstantBrandServiceIfs,
+    EventServiceIfs,
+    ProductServiceIfs,
+)
 
 
 class BusinessProvider(Singleton):
@@ -16,6 +22,12 @@ class BusinessProvider(Singleton):
 class BusinessContainer(DeclarativeContainer):
     brand_service = Dependency(BrandServiceIfs)
     brand_converter = Dependency(ConverterIfs)
+
+    constant_brand_service = Dependency(ConstantBrandServiceIfs)
+    event_service = Dependency(EventServiceIfs)
+    product_service = Dependency(ProductServiceIfs)
+    home_converter = Dependency(ConverterIfs)
+
     loop = Dependency(AbstractEventLoop)
 
 
@@ -26,5 +38,13 @@ class BusinessInjector(BusinessContainer):
         AsyncBrandBusiness,
         brand_service=BusinessContainer.brand_service,
         converter=BusinessContainer.brand_converter,
+        loop=BusinessContainer.loop,
+    )
+    home_business = BusinessProvider(
+        AsyncHomeBusiness,
+        constant_brand_service=BusinessContainer.constant_brand_service,
+        event_service=BusinessContainer.event_service,
+        product_service=BusinessContainer.product_service,
+        converter=BusinessContainer.home_converter,
         loop=BusinessContainer.loop,
     )

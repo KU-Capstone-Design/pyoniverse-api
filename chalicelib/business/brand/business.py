@@ -4,12 +4,12 @@ from chalice import BadRequestError
 
 from chalicelib.business.brand.dto.request import BrandRequestDto
 from chalicelib.business.brand.dto.response import BrandResponseDto
-from chalicelib.business.interface.business import BusinessIfs
+from chalicelib.business.interface.business import BrandBusinessIfs
 from chalicelib.business.interface.converter import ConverterIfs
 from chalicelib.business.interface.service import BrandServiceIfs
 
 
-class AsyncBrandBusiness(BusinessIfs):
+class AsyncBrandBusiness(BrandBusinessIfs):
     def __init__(
         self,
         brand_service: BrandServiceIfs,
