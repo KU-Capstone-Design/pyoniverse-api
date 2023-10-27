@@ -1,14 +1,14 @@
 from dotenv import load_dotenv
 
-from chalicelib.dependency_injector.injector import MainInjector
+from chalicelib.extern.dependency_injector.injector import MainInjector
 
 
 load_dotenv()
 import os
 
 from chalicelib.chalice import CustomChalice
-from chalicelib.middleware.error_handler import handle_errors
-from chalicelib.middleware.response_handler import handle_response
+from chalicelib.extern.middleware.error_handler import handle_errors
+from chalicelib.extern.middleware.response_handler import handle_response
 
 
 if os.getenv("LOG_LEVEL", "DEBUG") == "DEBUG":

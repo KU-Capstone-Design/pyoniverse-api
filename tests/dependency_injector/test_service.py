@@ -3,8 +3,8 @@ import os
 import pytest
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from chalicelib.dependency_injector.persistant import PersistentInjector
-from chalicelib.dependency_injector.service import ServiceInjector
+from chalicelib.extern.dependency_injector.persistant import PersistentInjector
+from chalicelib.extern.dependency_injector.service import ServiceInjector
 from chalicelib.service.brand.service import AsyncBrandService
 from tests.mock.mock import env
 

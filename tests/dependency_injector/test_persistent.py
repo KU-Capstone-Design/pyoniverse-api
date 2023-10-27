@@ -3,7 +3,7 @@ import os
 import pytest
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from chalicelib.dependency_injector.persistant import PersistentInjector
+from chalicelib.extern.dependency_injector.persistant import PersistentInjector
 from chalicelib.persistant.asyncio.invoker import AsyncInvoker
 from chalicelib.persistant.asyncio.mongo.command_factory import AsyncMongoCommandFactory
 from tests.mock.mock import env

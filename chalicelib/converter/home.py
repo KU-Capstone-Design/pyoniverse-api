@@ -11,7 +11,7 @@ from chalicelib.business.home.dto.response import (
 )
 from chalicelib.business.interface.converter import ConverterIfs
 from chalicelib.business.interface.dto import DtoType
-from chalicelib.common.model.converter import IdConverter
+from chalicelib.extern.common.model.converter import IdConverter
 from chalicelib.entity.base import EntityType
 from chalicelib.entity.constant_brand import ConstantBrandEntity
 from chalicelib.entity.event import EventEntity

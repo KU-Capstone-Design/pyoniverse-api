@@ -5,7 +5,7 @@ from motor.motor_asyncio import AsyncIOMotorDatabase
 from overrides import override
 from pymongo import DESCENDING, ReadPreference
 
-from chalicelib.aop.time_checker import time_checker
+from chalicelib.extern.aop.time_checker import time_checker
 from chalicelib.persistant.mongo.adaptor import MongoAdaptor
 from chalicelib.interface.repository import Repository
 

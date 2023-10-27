@@ -7,9 +7,9 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from chalicelib.converter.brand import BrandConverter
 from chalicelib.converter.event import EventConverter
 from chalicelib.converter.home import HomeConverter
-from chalicelib.dependency_injector.business import BusinessInjector
-from chalicelib.dependency_injector.persistant import PersistentInjector
-from chalicelib.dependency_injector.service import (
+from chalicelib.extern.dependency_injector.business import BusinessInjector
+from chalicelib.extern.dependency_injector.persistant import PersistentInjector
+from chalicelib.extern.dependency_injector.service import (
     ServiceInjector as TmpServiceInjector,
 )
 

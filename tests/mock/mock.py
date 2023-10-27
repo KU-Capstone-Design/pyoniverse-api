@@ -27,7 +27,7 @@ def env():
 @pytest.fixture
 def test_client(env):
     from chalice.test import Client
-    from chalicelib.dependency_injector.injector import MainInjector
+    from chalicelib.extern.dependency_injector.injector import MainInjector
     from app import app
 
     main_injector = MainInjector()
