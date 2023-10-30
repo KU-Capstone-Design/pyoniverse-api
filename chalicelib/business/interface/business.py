@@ -35,3 +35,7 @@ class SearchBusinessIfs(BusinessIfs):
     @abstractmethod
     def get_index(self) -> DtoType:
         pass
+
+    @abstractmethod
+    def get_result(self, request: DtoType) -> DtoType:
+        pass
