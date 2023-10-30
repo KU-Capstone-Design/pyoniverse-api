@@ -14,6 +14,7 @@ from chalicelib.business.interface.service import (
     EventServiceIfs,
     ProductServiceIfs,
 )
+from chalicelib.business.search.business import AsyncSearchBusiness
 
 
 class BusinessProvider(Singleton):
@@ -30,6 +31,7 @@ class BusinessContainer(DeclarativeContainer):
     brand_converter = Dependency(ConverterIfs)
     home_converter = Dependency(ConverterIfs)
     event_converter = Dependency(ConverterIfs)
+    search_converter = Dependency(ConverterIfs)
     # loop
     loop = Dependency(AbstractEventLoop)
 
@@ -56,5 +58,12 @@ class BusinessInjector(BusinessContainer):
         event_service=BusinessContainer.event_service,
         constant_brand_service=BusinessContainer.constant_brand_service,
         converter=BusinessContainer.event_converter,
+        loop=BusinessContainer.loop,
+    )
+    search_business = BusinessProvider(
+        AsyncSearchBusiness,
+        constant_brand_service=BusinessContainer.constant_brand_service,
+        product_service=BusinessContainer.product_service,
+        converter=BusinessContainer.search_converter,
         loop=BusinessContainer.loop,
     )

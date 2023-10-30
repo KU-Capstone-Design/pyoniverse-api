@@ -1,7 +1,6 @@
 import re
 
 from marshmallow import (
-    EXCLUDE,
     Schema,
     fields,
 )
@@ -9,10 +8,6 @@ from marshmallow import (
 
 class _BrandDetailMetaResponseSchema(Schema):
     description = fields.Str(required=True)
-
-    class Meta:
-        ordered = True
-        unknown = EXCLUDE
 
 
 class _BrandDetailEventResponseSchema(Schema):
@@ -28,10 +23,6 @@ class _BrandDetailEventResponseSchema(Schema):
         required=True, validate=lambda x: re.match(r"\d{4}-\d{2}-\d{2}", x)
     )
 
-    class Meta:
-        ordered = True
-        unknown = EXCLUDE
-
 
 class _BrandDetailProductResponseSchema(Schema):
     id = fields.Int(required=True)
@@ -40,9 +31,6 @@ class _BrandDetailProductResponseSchema(Schema):
     image_alt = fields.Str(required=True)
     price = fields.Float(required=True)
     good_count: int = fields.Integer(required=True)
-
-    class Meta:
-        unknown = EXCLUDE
 
 
 class BrandDetailResponseSchema(Schema):
@@ -55,7 +43,3 @@ class BrandDetailResponseSchema(Schema):
     products = fields.Nested(
         _BrandDetailProductResponseSchema, required=True, many=True
     )
-
-    class Meta:
-        ordered = True
-        unknown = EXCLUDE

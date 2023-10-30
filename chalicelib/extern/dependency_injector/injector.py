@@ -7,6 +7,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from chalicelib.converter.brand import BrandConverter
 from chalicelib.converter.event import EventConverter
 from chalicelib.converter.home import HomeConverter
+from chalicelib.converter.search import SearchConverter
 from chalicelib.extern.dependency_injector.business import BusinessInjector
 from chalicelib.extern.dependency_injector.persistant import PersistentInjector
 from chalicelib.extern.dependency_injector.service import (
@@ -15,11 +16,24 @@ from chalicelib.extern.dependency_injector.service import (
 
 
 class MainInjector:
+    __instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if not cls.__instance:
+            cls.__instance = super().__new__(cls, *args, **kwargs)
+            # is_injected를 init에서 초기화하면 객체가 싱글톤이어도 init은 계속 호출되기 때문에 초기화가 매번 발생된다.
+            cls.__instance.__is_injected = False
+        return cls.__instance
+
     def __init__(self):
         self.__configure()
         self.injectors = {}
 
     def inject(self):
+        if self.__is_injected:
+            logging.info("Dependencies are already injected")
+            return
+        self.__is_injected = True
         logging.info("Inject Dependencies")
         client = self.__get_client()
         self.injectors["persistent"] = PersistentInjector(client=client)
@@ -39,6 +53,7 @@ class MainInjector:
             home_converter=HomeConverter(),
             brand_converter=BrandConverter(),
             event_converter=EventConverter(),
+            search_converter=SearchConverter(),
             brand_service=self.injectors["service"].brand_service(),
             constant_brand_service=self.injectors["service"].constant_brand_service(),
             event_service=self.injectors["service"].event_service(),

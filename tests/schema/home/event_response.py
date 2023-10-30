@@ -1,6 +1,6 @@
 import re
 
-from marshmallow import EXCLUDE, Schema, fields
+from marshmallow import Schema, fields
 
 
 class _HomeEventResponseSchema(Schema):
@@ -16,14 +16,6 @@ class _HomeEventResponseSchema(Schema):
         required=True, validate=lambda x: re.match(r"\d{4}-\d{2}-\d{2}", x)
     )
 
-    class Meta:
-        ordered = True
-        unknown = EXCLUDE
-
 
 class HomeEventResponseSchema(Schema):
     events = fields.Nested(_HomeEventResponseSchema, required=True, many=True)
-
-    class Meta:
-        ordered = True
-        unknown = EXCLUDE

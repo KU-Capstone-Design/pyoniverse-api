@@ -4,9 +4,10 @@ import pytest
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from chalicelib.business.brand.business import AsyncBrandBusiness
+from chalicelib.converter.brand import BrandConverter
 from chalicelib.converter.event import EventConverter
 from chalicelib.converter.home import HomeConverter
-from chalicelib.converter.brand import BrandConverter
+from chalicelib.converter.search import SearchConverter
 from chalicelib.extern.dependency_injector.business import BusinessInjector
 from chalicelib.extern.dependency_injector.persistant import PersistentInjector
 from chalicelib.extern.dependency_injector.service import ServiceInjector
@@ -62,6 +63,7 @@ def test_business_injector(service_injector, loop):
         brand_converter=BrandConverter(),
         home_converter=HomeConverter(),
         event_converter=EventConverter(),
+        search_converter=SearchConverter(),
         loop=loop,
     )
     # when & then

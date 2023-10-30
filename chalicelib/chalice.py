@@ -10,6 +10,7 @@ from chalicelib.view.event_view import EventView
 from chalicelib.view.home_view import HomeView
 from chalicelib.view.model.builder import ApiBuilder
 from chalicelib.view.model.serializer import JsonSerializer
+from chalicelib.view.search_view import SearchView
 
 
 class CustomChalice(Chalice):
@@ -42,6 +43,7 @@ class CustomChalice(Chalice):
         self.register_blueprint(BrandView.api, url_prefix=prefix)
         self.register_blueprint(HomeView.api, url_prefix=prefix)
         self.register_blueprint(EventView.api, url_prefix=prefix)
+        self.register_blueprint(SearchView.api, url_prefix=prefix)
 
 
 class CustomRestAPIEventHandler(RestAPIEventHandler):
