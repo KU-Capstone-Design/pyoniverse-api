@@ -37,8 +37,10 @@ class HomeConverter(ConverterIfs):
             )
         elif isinstance(entity, EventEntity):
             brand = ConstantConverter.convert_brand_id(entity.brand)["name"].upper()
-            start_at = datetime.fromtimestamp(entity.start_at).strftime("%Y-%m-%d")
-            end_at = datetime.fromtimestamp(entity.end_at).strftime("%Y-%m-%d")
+            # start_at = datetime.fromtimestamp(entity.start_at).strftime("%Y-%m-%d")
+            # end_at = datetime.fromtimestamp(entity.end_at).strftime("%Y-%m-%d")
+            start_at = datetime.fromtimestamp(entity.start_at).strftime("%m/%d")
+            end_at = datetime.fromtimestamp(entity.end_at).strftime("%m/%d")
             return HomeEventResponseDto(
                 image=entity.image.thumb,
                 image_alt=f"({brand}) {entity.name}",
