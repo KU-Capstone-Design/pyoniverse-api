@@ -11,6 +11,7 @@ if os.getenv("LOG_LEVEL", "DEBUG") == "DEBUG":
 else:
     debug = False
 
+
 main_injector = MainInjector()
 main_injector.inject()
 

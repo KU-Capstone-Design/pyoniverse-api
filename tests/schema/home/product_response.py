@@ -1,4 +1,4 @@
-from marshmallow import EXCLUDE, Schema, fields
+from marshmallow import Schema, fields
 
 
 class _HomeProductResponseSchema(Schema):
@@ -12,14 +12,6 @@ class _HomeProductResponseSchema(Schema):
     event_brand = fields.Str(required=True)
     good_count: int = fields.Integer(required=True)
 
-    class Meta:
-        ordered = True
-        unknown = EXCLUDE
-
 
 class HomeProductResponseSchema(Schema):
     products = fields.Nested(_HomeProductResponseSchema, required=True, many=True)
-
-    class Meta:
-        ordered = True
-        unknown = EXCLUDE

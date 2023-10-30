@@ -29,3 +29,13 @@ class HomeBusinessIfs(BusinessIfs):
     @abstractmethod
     def get_list(self, request: DtoType) -> DtoType:
         pass
+
+
+class SearchBusinessIfs(BusinessIfs):
+    @abstractmethod
+    def get_index(self) -> DtoType:
+        pass
+
+    @abstractmethod
+    def get_result(self, request: DtoType) -> DtoType:
+        pass
