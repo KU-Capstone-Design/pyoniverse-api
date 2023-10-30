@@ -27,7 +27,7 @@ class ConstantConverter:
     __brand_map = {
         1: {"name": "GS25", "slug": "gs25"},
         2: {"name": "CU", "slug": "cu"},
-        3: {"name": "Seven Eleven", "slug": "seven-eleven"},
+        3: {"name": "7-Eleven", "slug": "seven-eleven"},
         4: {"name": "Emart24", "slug": "emart24"},
         5: {"name": "CSpace", "slug": "c-space"},
     }
