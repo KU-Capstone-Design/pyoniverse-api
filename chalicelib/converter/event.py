@@ -24,8 +24,10 @@ class EventConverter(ConverterIfs):
         self, entity: EventEntity, dto_type: Type[DtoType]
     ) -> EventDetailResponseDto | EventSimpleResponseDto:
         if dto_type is EventSimpleResponseDto:
-            start_at = datetime.fromtimestamp(entity.start_at).strftime("%Y-%m-%d")
-            end_at = datetime.fromtimestamp(entity.end_at).strftime("%Y-%m-%d")
+            # start_at = datetime.fromtimestamp(entity.start_at).strftime("%Y-%m-%d")
+            # end_at = datetime.fromtimestamp(entity.end_at).strftime("%Y-%m-%d")
+            start_at = datetime.fromtimestamp(entity.start_at).strftime("%m/%d")
+            end_at = datetime.fromtimestamp(entity.end_at).strftime("%m/%d")
             image_alt = f"{entity.name} thumbnail"
             return EventSimpleResponseDto(
                 id=entity.id,
@@ -39,8 +41,10 @@ class EventConverter(ConverterIfs):
             )
         elif dto_type is EventDetailResponseDto:
             brand_info = ConstantConverter.convert_brand_id(entity.brand)
-            start_at = datetime.fromtimestamp(entity.start_at).strftime("%Y-%m-%d")
-            end_at = datetime.fromtimestamp(entity.end_at).strftime("%Y-%m-%d")
+            # start_at = datetime.fromtimestamp(entity.start_at).strftime("%Y-%m-%d")
+            # end_at = datetime.fromtimestamp(entity.end_at).strftime("%Y-%m-%d")
+            start_at = datetime.fromtimestamp(entity.start_at).strftime("%m/%d")
+            end_at = datetime.fromtimestamp(entity.end_at).strftime("%m/%d")
             image_alt = f"{entity.name} images"
             return EventDetailResponseDto(
                 id=entity.id,
