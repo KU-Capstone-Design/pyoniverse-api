@@ -3,7 +3,6 @@ import os
 import pytest
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from chalicelib.entity.event import EventEntity
 from chalicelib.entity.product import ProductEntity
 from chalicelib.persistant.asyncio.invoker import AsyncInvoker
 from chalicelib.persistant.asyncio.mongo.command_factory import AsyncMongoCommandFactory
@@ -26,7 +25,7 @@ def invoker():
     return AsyncInvoker()
 
 
-def test_product_service(client, factory, invoker):
+def test_product_service_find_chunk(client, factory, invoker):
     # given
     service = AsyncProductService(command_factory=factory, invoker=invoker)
     loop = client.get_io_loop()
@@ -41,3 +40,14 @@ def test_product_service(client, factory, invoker):
     assert 0 < len(result) <= 2
     assert all(isinstance(r, ProductEntity) for r in result)
     assert sorted(result, key=lambda x: x.good_count, reverse=True) == result
+
+
+def test_product_service_find_one(client, factory, invoker):
+    # given
+    service = AsyncProductService(command_factory=factory, invoker=invoker)
+    loop = client.get_io_loop()
+    entity = ProductEntity(id=1)
+    # when & then
+    result = loop.run_until_complete(service.find_one(entity))
+    assert isinstance(result, ProductEntity)
+    assert result.id == entity.id

@@ -29,7 +29,7 @@ class AsyncBrandService(BrandServiceIfs):
         result = (await self.__invoker.invoke())[0]
         if not result:
             raise NotFoundError(
-                f"{entity.id} not in {self.__db_name}.{self.__rel_name}"
+                f"{entity.slug} not in {self.__db_name}.{self.__rel_name}"
             )
         else:
             return result
