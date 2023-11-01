@@ -8,7 +8,9 @@ class BusinessIfs(metaclass=ABCMeta):
 
 
 class ProductBusinessIfs(BusinessIfs):
-    pass
+    @abstractmethod
+    def get_detail(self, request: DtoType) -> DtoType:
+        pass
 
 
 class EventBusinessIfs(BusinessIfs):
