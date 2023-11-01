@@ -7,6 +7,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from chalicelib.converter.brand import BrandConverter
 from chalicelib.converter.event import EventConverter
 from chalicelib.converter.home import HomeConverter
+from chalicelib.converter.product import ProductConverter
 from chalicelib.converter.search import SearchConverter
 from chalicelib.extern.dependency_injector.business import BusinessInjector
 from chalicelib.extern.dependency_injector.persistant import PersistentInjector
@@ -54,6 +55,7 @@ class MainInjector:
             brand_converter=BrandConverter(),
             event_converter=EventConverter(),
             search_converter=SearchConverter(),
+            product_converter=ProductConverter(),
             brand_service=self.injectors["service"].brand_service(),
             constant_brand_service=self.injectors["service"].constant_brand_service(),
             event_service=self.injectors["service"].event_service(),

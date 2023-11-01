@@ -2,8 +2,9 @@ from typing import Literal, Sequence
 
 from chalice import BadRequestError, NotFoundError
 
-from chalicelib.business.interface.service import EventServiceIfs, ProductServiceIfs
+from chalicelib.business.interface.service import ProductServiceIfs
 from chalicelib.entity.event import EventEntity
+from chalicelib.entity.product import ProductEntity
 from chalicelib.service.interface.command_factory import CommandFactoryIfs
 from chalicelib.service.interface.invoker import InvokerIfs
 
@@ -48,3 +49,24 @@ class AsyncProductService(ProductServiceIfs):
             raise NotFoundError(f"{self.__db_name}.{self.__rel_name} is empty")
         else:
             return result[:chunk_size]
+
+    async def find_one(self, entity: ProductEntity) -> ProductEntity:
+        if not isinstance(entity, ProductEntity):
+            raise BadRequestError("Entity should be ProductEntity")
+        if not isinstance(entity.id, int):
+            raise BadRequestError(f"{entity.id} should be int type")
+        self.__invoker.add_command(
+            self.__command_factory.get_equal_command(
+                db_name=self.__db_name,
+                rel_name=self.__rel_name,
+                key="id",
+                value=entity.id,
+            )
+        )
+        result = (await self.__invoker.invoke())[0]
+        if not result:
+            raise NotFoundError(
+                f"{entity.id} not in {self.__db_name}.{self.__rel_name}"
+            )
+        else:
+            return result
