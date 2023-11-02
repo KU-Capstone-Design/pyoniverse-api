@@ -64,7 +64,7 @@ class MetricView:
         return api
 
     @staticmethod
-    @api.route("/metric/good", methods=["POST"], cors=True)
+    @api.route("/metric/good", methods=["PATCH"], cors=True)
     def update_good_count() -> Api:
         body: dict = MetricView.api.current_request.json_body
         request = MetricRequestDto(
@@ -94,7 +94,7 @@ class MetricView:
         return api
 
     @staticmethod
-    @api.route("/metric/view", methods=["POST"], cors=True)
+    @api.route("/metric/view", methods=["PATCH"], cors=True)
     def update_view_count() -> Api:
         body: dict = MetricView.api.current_request.json_body
         request = MetricRequestDto(

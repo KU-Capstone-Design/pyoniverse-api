@@ -33,7 +33,7 @@ def test_spec_get_view_count(env, test_client, injector):
 def test_spec_update_good_count(env, test_client, injector):
     import json
 
-    res = test_client.http.post(
+    res = test_client.http.patch(
         "/v1/metric/good",
         headers={"Content-Type": "application/json"},
         body=json.dumps({"domain": "product", "id": 1, "value": 0}),
@@ -46,7 +46,7 @@ def test_spec_update_good_count(env, test_client, injector):
 def test_spec_update_view_count(env, test_client, injector):
     import json
 
-    res = test_client.http.post(
+    res = test_client.http.patch(
         "/v1/metric/view",
         headers={"Content-Type": "application/json"},
         body=json.dumps({"domain": "product", "id": 1, "value": 0}),
