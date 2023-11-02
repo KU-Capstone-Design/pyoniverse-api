@@ -74,7 +74,51 @@ class AsyncMetricBusiness(MetricBusinessIfs):
         return result
 
     def update_good_count(self, request: MetricRequestDto) -> MetricResponseDto:
-        self.__check_domain(request.domain)
+        if not isinstance(request.value, int):
+            raise BadRequestError(f"{request.value} should be int type")
+        match request.domain:
+            case "product":
+                entity = ProductEntity(id=request.id)
+                entity: ProductEntity = self.__loop.run_until_complete(
+                    self.__product_service.find_one(entity)
+                )
+            case "event":
+                entity = ProductEntity(id=request.id)
+                entity: ProductEntity = self.__loop.run_until_complete(
+                    self.__product_service.find_one(entity)
+                )
+            case _:
+                raise BadRequestError(
+                    f"{request.domain} should be in ['product', 'event']"
+                )
+        # TODO : Message Queue 연결
+        updated_good_count = entity.good_count + request.value
+        result = MetricResponseDto(
+            id=entity.id, domain=request.domain, value=updated_good_count
+        )
+        return result
 
     def update_view_count(self, request: MetricRequestDto) -> MetricResponseDto:
-        self.__check_domain(request.domain)
+        if not isinstance(request.value, int):
+            raise BadRequestError(f"{request.value} should be int type")
+        match request.domain:
+            case "product":
+                entity = ProductEntity(id=request.id)
+                entity: ProductEntity = self.__loop.run_until_complete(
+                    self.__product_service.find_one(entity)
+                )
+            case "event":
+                entity = ProductEntity(id=request.id)
+                entity: ProductEntity = self.__loop.run_until_complete(
+                    self.__product_service.find_one(entity)
+                )
+            case _:
+                raise BadRequestError(
+                    f"{request.domain} should be in ['product', 'event']"
+                )
+        # TODO : Message Queue 연결
+        updated_view_count = entity.view_count + request.value
+        result = MetricResponseDto(
+            id=entity.id, domain=request.domain, value=updated_view_count
+        )
+        return result

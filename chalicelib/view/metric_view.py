@@ -18,18 +18,14 @@ class MetricView:
         request = MetricRequestDto(
             id=params.get("id"),
             domain=params.get("domain"),
-            count=params.get("count"),
         )
         try:
             request.id = int(request.id)
-            request.count = int(request.count)
         except ValueError:
-            raise BadRequestError(
-                f"{request.id} and {request.count} should be int type"
-            )
+            raise BadRequestError(f"{request.id} should be int type")
 
         if not request.domain:
-            raise BadRequestError(f"{request.doain} should be in ['product', 'event']")
+            raise BadRequestError(f"{request.domain} should be in ['product', 'event']")
 
         response = MetricView.business.get_good_count(request)
         api = (
@@ -55,7 +51,7 @@ class MetricView:
             raise BadRequestError(f"{request.id} should be int type")
 
         if not request.domain:
-            raise BadRequestError(f"{request.doain} should be in ['product', 'event']")
+            raise BadRequestError(f"{request.domain} should be in ['product', 'event']")
 
         response = MetricView.business.get_view_count(request)
         api = (
@@ -98,13 +94,13 @@ class MetricView:
         return api
 
     @staticmethod
-    @api.route("/metric/good", methods=["POST"], cors=True)
+    @api.route("/metric/view", methods=["POST"], cors=True)
     def update_view_count() -> Api:
         body: dict = MetricView.api.current_request.json_body
         request = MetricRequestDto(
             id=body.get("id"),
             domain=body.get("domain"),
-            value=body.get("count"),
+            value=body.get("value"),
         )
         try:
             request.id = int(request.id)
