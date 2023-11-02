@@ -41,3 +41,21 @@ class SearchBusinessIfs(BusinessIfs):
     @abstractmethod
     def get_result(self, request: DtoType) -> DtoType:
         pass
+
+
+class MetricBusinessIfs(BusinessIfs):
+    @abstractmethod
+    def get_good_count(self, request: DtoType) -> DtoType:
+        pass
+
+    @abstractmethod
+    def get_view_count(self, request: DtoType) -> DtoType:
+        pass
+
+    @abstractmethod
+    def update_good_count(self, request: DtoType) -> DtoType:
+        pass
+
+    @abstractmethod
+    def update_view_count(self, request: DtoType) -> DtoType:
+        pass
