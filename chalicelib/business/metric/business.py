@@ -53,7 +53,25 @@ class AsyncMetricBusiness(MetricBusinessIfs):
         return result
 
     def get_view_count(self, request: MetricRequestDto) -> MetricResponseDto:
-        self.__check_domain(request.domain)
+        match request.domain:
+            case "product":
+                entity = ProductEntity(id=request.id)
+                entity: ProductEntity = self.__loop.run_until_complete(
+                    self.__product_service.find_one(entity)
+                )
+            case "event":
+                entity = ProductEntity(id=request.id)
+                entity: ProductEntity = self.__loop.run_until_complete(
+                    self.__product_service.find_one(entity)
+                )
+            case _:
+                raise BadRequestError(
+                    f"{request.domain} should be in ['product', 'event']"
+                )
+        result = MetricResponseDto(
+            id=entity.id, domain=request.domain, value=entity.view_count
+        )
+        return result
 
     def update_good_count(self, request: MetricRequestDto) -> MetricResponseDto:
         self.__check_domain(request.domain)
