@@ -7,6 +7,7 @@ from chalicelib.business.brand.business import AsyncBrandBusiness
 from chalicelib.converter.brand import BrandConverter
 from chalicelib.converter.event import EventConverter
 from chalicelib.converter.home import HomeConverter
+from chalicelib.converter.metric import MetricConverter
 from chalicelib.converter.product import ProductConverter
 from chalicelib.converter.search import SearchConverter
 from chalicelib.extern.dependency_injector.business import BusinessInjector
@@ -66,6 +67,7 @@ def test_business_injector(service_injector, loop):
         event_converter=EventConverter(),
         search_converter=SearchConverter(),
         product_converter=ProductConverter(),
+        metric_converter=MetricConverter(),
         loop=loop,
     )
     # when & then
