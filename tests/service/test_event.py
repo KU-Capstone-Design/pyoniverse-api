@@ -4,8 +4,8 @@ import pytest
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from chalicelib.entity.event import EventEntity
-from chalicelib.persistant.asyncio.invoker import AsyncInvoker
 from chalicelib.persistant.asyncio.command_factory import AsyncCommandFactory
+from chalicelib.persistant.asyncio.invoker import AsyncInvoker
 from chalicelib.service.event.service import AsyncEventService
 from tests.mock.mock import env
 
@@ -40,3 +40,18 @@ def test_event_service(client, factory, invoker):
     assert 0 < len(result) <= 2
     assert all(isinstance(r, EventEntity) for r in result)
     assert sorted(result, key=lambda x: x.good_count, reverse=True) == result
+
+
+def test_product_service_add_values(client, factory, invoker):
+    # given
+    service = AsyncEventService(command_factory=factory, invoker=invoker)
+    loop = client.get_io_loop()
+    entity = EventEntity(id=1, good_count=1, view_count=2)
+    # when
+    prv_entity: EventEntity = loop.run_until_complete(service.find_by_id(entity))
+    result: EventEntity = loop.run_until_complete(service.add_values(entity))
+    # then
+    assert isinstance(result, EventEntity)
+    assert result.id == entity.id
+    assert result.good_count == prv_entity.good_count + entity.good_count
+    assert result.view_count == prv_entity.view_count + entity.view_count
