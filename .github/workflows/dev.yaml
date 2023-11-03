@@ -37,6 +37,7 @@ jobs:
           echo "IAM_ROLE_ARN=$IAM_ROLE_ARN" >> .env
           echo "DOMAIN_NAME=$DOMAIN_NAME" >> .env
           echo "CERTIFICATE_ARN=${{ secrets.CERTIFICATE_ARN }}" >> .env
+          echo "DB_QUEUE_NAME=${{ secrets.DB_SQS_NAME_DEV }}" >> .env
 
           python -m pytest -v
           python deploy.py --stage=dev_v1

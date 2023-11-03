@@ -17,7 +17,7 @@ from chalicelib.service.interface.command import (
 from chalicelib.service.interface.command_factory import CommandFactoryIfs
 
 
-class AsyncMongoCommandFactory(CommandFactoryIfs):
+class AsyncCommandFactory(CommandFactoryIfs):
     def __init__(self, client: AsyncIOMotorClient):
         self.__client = client
 

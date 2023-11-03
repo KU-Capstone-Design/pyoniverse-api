@@ -9,7 +9,7 @@ from chalicelib.business.product.dto.request import ProductRequestDto
 from chalicelib.business.product.dto.response import ProductResponseDto
 from chalicelib.converter.product import ProductConverter
 from chalicelib.persistant.asyncio.invoker import AsyncInvoker
-from chalicelib.persistant.asyncio.mongo.command_factory import AsyncMongoCommandFactory
+from chalicelib.persistant.asyncio.command_factory import AsyncCommandFactory
 from chalicelib.service.constant_brand.service import AsyncConstantBrandService
 from chalicelib.service.product.service import AsyncProductService
 from tests.mock.mock import env
@@ -27,7 +27,7 @@ def loop(client) -> AbstractEventLoop:
 
 @pytest.fixture
 def factory(client):
-    return AsyncMongoCommandFactory(client)
+    return AsyncCommandFactory(client)
 
 
 @pytest.fixture
