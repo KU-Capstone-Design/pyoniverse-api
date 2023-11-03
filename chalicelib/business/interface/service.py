@@ -22,6 +22,10 @@ class ProductServiceIfs(ServiceIfs):
     def find_one(self, entity: ProductEntity) -> ProductEntity:
         pass
 
+    @abstractmethod
+    def add_values(self, entity: ProductEntity) -> ProductEntity:
+        pass
+
 
 class EventServiceIfs(ServiceIfs):
     @abstractmethod
@@ -36,6 +40,10 @@ class EventServiceIfs(ServiceIfs):
 
     @abstractmethod
     def find_all_by_brand(self, id: int) -> Sequence[EventEntity]:
+        pass
+
+    @abstractmethod
+    def add_values(self, entity: ProductEntity) -> ProductEntity:
         pass
 
 

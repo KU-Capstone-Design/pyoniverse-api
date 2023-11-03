@@ -7,7 +7,7 @@ from chalicelib.persistant.asyncio.mongo.command import (
     AsyncMongoEqualCommand,
     AsyncMongoSortByLimit10Command,
 )
-from chalicelib.persistant.asyncio.mongo.command_factory import AsyncMongoCommandFactory
+from chalicelib.persistant.asyncio.command_factory import AsyncCommandFactory
 from tests.mock.mock import env
 
 
@@ -18,7 +18,7 @@ def client(env):
 
 def test_factory(client):
     # given
-    factory = AsyncMongoCommandFactory(client)
+    factory = AsyncCommandFactory(client)
     # when
     eq_command = factory.get_equal_command(
         db_name="constant", rel_name="test_rel", key="test_key", value="test_value"

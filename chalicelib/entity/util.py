@@ -16,6 +16,11 @@ ENTITY_MAP: Dict[str, Dict[str, Type[BaseEntity]]] = {
         "events": EventEntity,
         "products": ProductEntity,
     },
+    "test": {
+        "brands": BrandEntity,
+        "events": EventEntity,
+        "products": ProductEntity,
+    },
 }
 
 

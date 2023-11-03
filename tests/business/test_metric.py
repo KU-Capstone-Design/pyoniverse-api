@@ -9,7 +9,7 @@ from chalicelib.business.metric.model.request import MetricRequestDto
 from chalicelib.business.metric.model.response import MetricResponseDto
 from chalicelib.converter.metric import MetricConverter
 from chalicelib.persistant.asyncio.invoker import AsyncInvoker
-from chalicelib.persistant.asyncio.mongo.command_factory import AsyncMongoCommandFactory
+from chalicelib.persistant.asyncio.command_factory import AsyncCommandFactory
 from chalicelib.service.event.service import AsyncEventService
 from chalicelib.service.product.service import AsyncProductService
 from tests.mock.mock import env
@@ -27,7 +27,7 @@ def loop(client) -> AbstractEventLoop:
 
 @pytest.fixture
 def factory(client):
-    return AsyncMongoCommandFactory(client)
+    return AsyncCommandFactory(client)
 
 
 @pytest.fixture
@@ -121,9 +121,9 @@ def test_product_business_update_good_count(product_service, event_service, loop
         loop=loop,
     )
     request1 = MetricRequestDto(id=1, domain="product", value=1)
-    request2 = MetricRequestDto(id=2, domain="event", value=-1)
+    request2 = MetricRequestDto(id=1, domain="event", value=-1)
     invalid_request1 = MetricRequestDto(id=1, domain="invalid", value=3)
-    invalid_request2 = MetricRequestDto(id=2, domain="invalid", value=None)
+    invalid_request2 = MetricRequestDto(id=1, domain="event", value=None)
     # when
     prv_good_count1 = business.get_good_count(request1).value
     prv_good_count2 = business.get_good_count(request2).value
@@ -166,9 +166,9 @@ def test_product_business_update_view_count(product_service, event_service, loop
         loop=loop,
     )
     request1 = MetricRequestDto(id=1, domain="product", value=1)
-    request2 = MetricRequestDto(id=2, domain="event", value=-1)
+    request2 = MetricRequestDto(id=1, domain="event", value=-1)
     invalid_request1 = MetricRequestDto(id=1, domain="invalid", value=3)
-    invalid_request2 = MetricRequestDto(id=2, domain="invalid", value=None)
+    invalid_request2 = MetricRequestDto(id=1, domain="event", value=None)
     # when
     prv_good_count1 = business.get_view_count(request1).value
     prv_good_count2 = business.get_view_count(request2).value

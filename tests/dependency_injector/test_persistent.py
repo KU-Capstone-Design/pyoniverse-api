@@ -5,7 +5,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 
 from chalicelib.extern.dependency_injector.persistant import PersistentInjector
 from chalicelib.persistant.asyncio.invoker import AsyncInvoker
-from chalicelib.persistant.asyncio.mongo.command_factory import AsyncMongoCommandFactory
+from chalicelib.persistant.asyncio.command_factory import AsyncCommandFactory
 from tests.mock.mock import env
 
 
@@ -30,7 +30,7 @@ def test_persistent_injector(client):
     # given
     injector = PersistentInjector(client=client)
     # when & then
-    assert isinstance(injector.command_factory(), AsyncMongoCommandFactory)
+    assert isinstance(injector.command_factory(), AsyncCommandFactory)
     assert isinstance(injector.invoker(), AsyncInvoker)
     assert injector.command_factory() is injector.command_factory()
     assert injector.invoker() is not injector.invoker()
