@@ -2,6 +2,7 @@ from abc import ABCMeta, abstractmethod
 from typing import Any
 
 from chalicelib.service.interface.command import (
+    AddModifyEqualCommandIfs,
     EqualCommandIfs,
     SelectAllByCommandIfs,
     SelectAllCommandIfs,
@@ -40,4 +41,10 @@ class CommandFactoryIfs(metaclass=ABCMeta):
         key: str,
         value: Any,
     ) -> SelectAllByCommandIfs:
+        pass
+
+    @abstractmethod
+    def get_add_modify_equal_command(
+        self, db_name: str, rel_name: str, key: str, value: Any, data: dict
+    ) -> AddModifyEqualCommandIfs:
         pass

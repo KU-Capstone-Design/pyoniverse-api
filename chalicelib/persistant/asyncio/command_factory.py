@@ -1,5 +1,6 @@
 from typing import Any
 
+import boto3
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from chalicelib.persistant.asyncio.mongo.command import (
@@ -8,6 +9,7 @@ from chalicelib.persistant.asyncio.mongo.command import (
     AsyncMongoSelectAllCommand,
     AsyncMongoSortByLimit10Command,
 )
+from chalicelib.persistant.asyncio.sqs.command import AsyncSqsAddModifyEqualCommand
 from chalicelib.service.interface.command import (
     EqualCommandIfs,
     SelectAllByCommandIfs,
@@ -67,4 +69,16 @@ class AsyncCommandFactory(CommandFactoryIfs):
             rel_name=rel_name,
             key=key,
             value=value,
+        )
+
+    def get_add_modify_equal_command(
+        self, db_name: str, rel_name: str, key: str, value: Any, data: dict
+    ) -> AsyncSqsAddModifyEqualCommand:
+        return AsyncSqsAddModifyEqualCommand(
+            client=boto3.client("sqs"),
+            db_name=db_name,
+            rel_name=rel_name,
+            key=key,
+            value=value,
+            data=data,
         )

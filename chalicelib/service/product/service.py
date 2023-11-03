@@ -1,3 +1,4 @@
+from dataclasses import asdict
 from typing import Literal, Sequence
 
 from chalice import BadRequestError, NotFoundError
@@ -70,3 +71,53 @@ class AsyncProductService(ProductServiceIfs):
             )
         else:
             return result
+
+    async def add_values(self, entity: ProductEntity) -> ProductEntity:
+        """
+        filter: {"id": entity.id}
+        data: {good_count: ..., view_count: ...}
+        해당 값만큼 필드를 증감한다.
+        Ex) good_count: 2, prv_good_count: 1 -> cur_good_count: 3
+        """
+        if not isinstance(entity, ProductEntity):
+            raise BadRequestError("Entity should be ProductEntity")
+        if not isinstance(entity.id, int):
+            raise BadRequestError(f"{entity.id} should be int type")
+        tmp = asdict(entity)
+        data = {}
+        for key, val in tmp.items():
+            if key in ["good_count", "view_count"] and val is not None:
+                data[key] = val
+
+        # find prv count - committed value가 아닐 수 있다.
+        self.__invoker.add_command(
+            self.__command_factory.get_equal_command(
+                db_name=self.__db_name,
+                rel_name=self.__rel_name,
+                key="id",
+                value=entity.id,
+            )
+        )
+        result: ProductEntity = (await self.__invoker.invoke())[0]
+        if not result:
+            raise NotFoundError(
+                f"{entity.id} not in {self.__db_name}.{self.__rel_name}"
+            )
+        # add value
+        self.__invoker.add_command(
+            self.__command_factory.get_add_modify_equal_command(
+                db_name=self.__db_name,
+                rel_name=self.__rel_name,
+                key="id",
+                value=entity.id,
+                data=data,
+            )
+        )
+        await self.__invoker.invoke()
+
+        # 이 값은 실제 DB에 업데이트 된 값과 다를 수 있다(다른 유저가 동시에 요청한 경우)
+        if "good_count" in data:
+            result.good_count += data["good_count"]
+        if "view_count" in data:
+            result.view_count += data["view_count"]
+        return result

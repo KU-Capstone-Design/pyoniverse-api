@@ -1,11 +1,12 @@
 import os
+from asyncio import gather
 
 import pytest
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from chalicelib.entity.product import ProductEntity
-from chalicelib.persistant.asyncio.invoker import AsyncInvoker
 from chalicelib.persistant.asyncio.command_factory import AsyncCommandFactory
+from chalicelib.persistant.asyncio.invoker import AsyncInvoker
 from chalicelib.service.product.service import AsyncProductService
 from tests.mock.mock import env
 
@@ -51,3 +52,18 @@ def test_product_service_find_one(client, factory, invoker):
     result = loop.run_until_complete(service.find_one(entity))
     assert isinstance(result, ProductEntity)
     assert result.id == entity.id
+
+
+def test_product_service_add_values(client, factory, invoker):
+    # given
+    service = AsyncProductService(command_factory=factory, invoker=invoker)
+    loop = client.get_io_loop()
+    entity = ProductEntity(id=1, good_count=1, view_count=2)
+    # when
+    prv_entity: ProductEntity = loop.run_until_complete(service.find_one(entity))
+    result: ProductEntity = loop.run_until_complete(service.add_values(entity))
+    # then
+    assert isinstance(result, ProductEntity)
+    assert result.id == entity.id
+    assert result.good_count == prv_entity.good_count + entity.good_count
+    assert result.view_count == prv_entity.view_count + entity.view_count
