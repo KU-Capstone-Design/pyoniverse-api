@@ -18,7 +18,7 @@ def test_add_message(client):
     # given
     command = AsyncSqsAddModifyEqualCommand(
         client=client,
-        db_name="test",
+        db_name="service",
         rel_name="products",
         key="id",
         value=1,
@@ -26,7 +26,8 @@ def test_add_message(client):
     )
     # when & then
     try:
-        asyncio.run(command.execute())
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(command.execute())
         assert True
     except Exception:
         assert False

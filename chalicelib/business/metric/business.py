@@ -10,6 +10,7 @@ from chalicelib.business.interface.service import (
 )
 from chalicelib.business.metric.model.request import MetricRequestDto
 from chalicelib.business.metric.model.response import MetricResponseDto
+from chalicelib.entity.event import EventEntity
 from chalicelib.entity.product import ProductEntity
 
 
@@ -39,9 +40,9 @@ class AsyncMetricBusiness(MetricBusinessIfs):
                     self.__product_service.find_one(entity)
                 )
             case "event":
-                entity = ProductEntity(id=request.id)
-                entity: ProductEntity = self.__loop.run_until_complete(
-                    self.__product_service.find_one(entity)
+                entity = EventEntity(id=request.id)
+                entity: EventEntity = self.__loop.run_until_complete(
+                    self.__event_service.find_by_id(entity)
                 )
             case _:
                 raise BadRequestError(
@@ -60,9 +61,9 @@ class AsyncMetricBusiness(MetricBusinessIfs):
                     self.__product_service.find_one(entity)
                 )
             case "event":
-                entity = ProductEntity(id=request.id)
-                entity: ProductEntity = self.__loop.run_until_complete(
-                    self.__product_service.find_one(entity)
+                entity: EventEntity = EventEntity(id=request.id)
+                entity: EventEntity = self.__loop.run_until_complete(
+                    self.__event_service.find_by_id(entity)
                 )
             case _:
                 raise BadRequestError(
@@ -78,23 +79,25 @@ class AsyncMetricBusiness(MetricBusinessIfs):
             raise BadRequestError(f"{request.value} should be int type")
         match request.domain:
             case "product":
-                entity = ProductEntity(id=request.id)
-                entity: ProductEntity = self.__loop.run_until_complete(
-                    self.__product_service.find_one(entity)
+                entity: ProductEntity = ProductEntity(
+                    id=request.id, good_count=request.value
+                )
+                entity = self.__loop.run_until_complete(
+                    self.__product_service.add_values(entity)
                 )
             case "event":
-                entity = ProductEntity(id=request.id)
-                entity: ProductEntity = self.__loop.run_until_complete(
-                    self.__product_service.find_one(entity)
+                entity: EventEntity = EventEntity(
+                    id=request.id, good_count=request.value
+                )
+                entity = self.__loop.run_until_complete(
+                    self.__event_service.add_values(entity)
                 )
             case _:
                 raise BadRequestError(
                     f"{request.domain} should be in ['product', 'event']"
                 )
-        # TODO : Message Queue 연결
-        updated_good_count = entity.good_count + request.value
         result = MetricResponseDto(
-            id=entity.id, domain=request.domain, value=updated_good_count
+            id=entity.id, domain=request.domain, value=entity.good_count
         )
         return result
 
@@ -103,22 +106,24 @@ class AsyncMetricBusiness(MetricBusinessIfs):
             raise BadRequestError(f"{request.value} should be int type")
         match request.domain:
             case "product":
-                entity = ProductEntity(id=request.id)
-                entity: ProductEntity = self.__loop.run_until_complete(
-                    self.__product_service.find_one(entity)
+                entity: ProductEntity = ProductEntity(
+                    id=request.id, view_count=request.value
+                )
+                entity = self.__loop.run_until_complete(
+                    self.__product_service.add_values(entity)
                 )
             case "event":
-                entity = ProductEntity(id=request.id)
-                entity: ProductEntity = self.__loop.run_until_complete(
-                    self.__product_service.find_one(entity)
+                entity: EventEntity = EventEntity(
+                    id=request.id, view_count=request.value
+                )
+                entity = self.__loop.run_until_complete(
+                    self.__event_service.add_values(entity)
                 )
             case _:
                 raise BadRequestError(
                     f"{request.domain} should be in ['product', 'event']"
                 )
-        # TODO : Message Queue 연결
-        updated_view_count = entity.view_count + request.value
         result = MetricResponseDto(
-            id=entity.id, domain=request.domain, value=updated_view_count
+            id=entity.id, domain=request.domain, value=entity.view_count
         )
         return result

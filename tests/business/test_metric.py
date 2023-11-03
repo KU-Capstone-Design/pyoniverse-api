@@ -121,9 +121,9 @@ def test_product_business_update_good_count(product_service, event_service, loop
         loop=loop,
     )
     request1 = MetricRequestDto(id=1, domain="product", value=1)
-    request2 = MetricRequestDto(id=2, domain="event", value=-1)
+    request2 = MetricRequestDto(id=1, domain="event", value=-1)
     invalid_request1 = MetricRequestDto(id=1, domain="invalid", value=3)
-    invalid_request2 = MetricRequestDto(id=2, domain="invalid", value=None)
+    invalid_request2 = MetricRequestDto(id=1, domain="event", value=None)
     # when
     prv_good_count1 = business.get_good_count(request1).value
     prv_good_count2 = business.get_good_count(request2).value
@@ -166,9 +166,9 @@ def test_product_business_update_view_count(product_service, event_service, loop
         loop=loop,
     )
     request1 = MetricRequestDto(id=1, domain="product", value=1)
-    request2 = MetricRequestDto(id=2, domain="event", value=-1)
+    request2 = MetricRequestDto(id=1, domain="event", value=-1)
     invalid_request1 = MetricRequestDto(id=1, domain="invalid", value=3)
-    invalid_request2 = MetricRequestDto(id=2, domain="invalid", value=None)
+    invalid_request2 = MetricRequestDto(id=1, domain="event", value=None)
     # when
     prv_good_count1 = business.get_view_count(request1).value
     prv_good_count2 = business.get_view_count(request2).value

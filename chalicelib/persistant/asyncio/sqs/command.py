@@ -23,7 +23,7 @@ class AsyncSqsAddModifyEqualCommand(AddModifyEqualCommandIfs):
         key: str,
         value: Any,
         data: dict,
-        db_name: Literal["service", "test"] = "service",
+        db_name: Literal["service"] = "service",
     ):
         super().__init__(
             rel_name=rel_name, key=key, value=value, db_name=db_name, data=data
@@ -34,9 +34,7 @@ class AsyncSqsAddModifyEqualCommand(AddModifyEqualCommandIfs):
         assert isinstance(self._rel_name, str)
         assert isinstance(self._key, str)
         assert isinstance(self._data, dict)
-        assert self._db_name in ["service", "test"]
-        if self._db_name == "service":
-            self._db_name = os.getenv("MONGO_DB")
+        assert self._db_name in ["service"]
 
     async def execute(self) -> EntityType:
         """
@@ -55,8 +53,10 @@ class AsyncSqsAddModifyEqualCommand(AddModifyEqualCommandIfs):
             sqs_queue_url: str = self._client.get_queue_url(
                 QueueName=os.getenv("DB_QUEUE_NAME")
             )["QueueUrl"]
+            if self._db_name == "service":
+                db_name = os.getenv("MONGO_DB")
             message = Message(
-                db_name=self._db_name,
+                db_name=db_name,
                 rel_name=self._rel_name,
                 origin="api",
                 action="ADD",
