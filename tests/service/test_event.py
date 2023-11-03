@@ -42,7 +42,7 @@ def test_event_service(client, factory, invoker):
     assert sorted(result, key=lambda x: x.good_count, reverse=True) == result
 
 
-def test_product_service_add_values(client, factory, invoker):
+def test_event_service_add_values(client, factory, invoker):
     # given
     service = AsyncEventService(command_factory=factory, invoker=invoker)
     loop = client.get_io_loop()

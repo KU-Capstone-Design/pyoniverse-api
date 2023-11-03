@@ -73,9 +73,3 @@ def test_equal_command(client):
     # then
     assert len(result) <= 10
     assert sorted(result, key=lambda x: x.id) == result
-
-
-def test_sort_by_good_count_desc_limit_10(client):
-    # given
-    rel_name = "brands"
-    db_name = "service_dev"

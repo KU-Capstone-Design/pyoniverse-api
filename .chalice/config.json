@@ -32,6 +32,13 @@
                 "MONGO_DB": "service_prod",
                 "LOG_LEVEL": "INFO"
             }
+        },
+        "test": {
+            "api_gateway_stage": "test",
+            "environment_variables": {
+                "MONGO_DB": "test",
+                "LOG_LEVEL": "INFO"
+            }
         }
     }
 }

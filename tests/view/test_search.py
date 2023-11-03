@@ -1,16 +1,7 @@
-import pytest
-
-from chalicelib.extern.dependency_injector.injector import MainInjector
 from chalicelib.view.model.api import Api
-from tests.mock.mock import env, test_client
+from tests.mock.mock import env, injector, test_client
 from tests.schema.search.search_home_response import SearchHomeResponseSchema
 from tests.schema.search.search_result_response import SearchResultResponseSchema
-
-
-@pytest.fixture
-def injector(env):
-    injector = MainInjector()
-    injector.inject()
 
 
 def test_spec_search_home(env, test_client, injector):
