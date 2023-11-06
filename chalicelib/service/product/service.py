@@ -121,3 +121,30 @@ class AsyncProductService(ProductServiceIfs):
         if "view_count" in data:
             result.view_count += data["view_count"]
         return result
+
+    async def find_chunk_by(
+        self,
+        filter_key: str,
+        filter_value: str,
+        sort_key: str,
+        direction: Literal["asc", "desc"],
+        chunk_size: int,
+    ):
+        self.__invoker.add_command(
+            self.__command_factory.get_select_by_sort_by_command(
+                db_name=self.__db_name,
+                rel_name=self.__rel_name,
+                key=filter_key,
+                value=filter_value,
+                sort_key="good_count",
+                sort_value="desc",
+                chunk_size=3,
+            )
+        )
+        result = (await self.__invoker.invoke())[0]
+        if not result:
+            raise NotFoundError(
+                f"brands.id={id} not in {self.__db_name}.{self.__rel_name}"
+            )
+        else:
+            return result

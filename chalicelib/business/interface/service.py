@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from typing import Literal, Sequence
+from typing import Any, Literal, Sequence
 
 from chalicelib.entity.brand import BrandEntity
 from chalicelib.entity.constant_brand import ConstantBrandEntity
@@ -22,7 +22,7 @@ class ProductServiceIfs(ServiceIfs):
     def find_chunk_by(
         self,
         filter_key: str,
-        filter_value: str,
+        filter_value: Any,
         sort_key: str,
         direction: Literal["asc", "desc"],
         chunk_size: int,
@@ -49,7 +49,7 @@ class EventServiceIfs(ServiceIfs):
     def find_chunk_by(
         self,
         filter_key: str,
-        filter_value: str,
+        filter_value: Any,
         sort_key: str,
         direction: Literal["asc", "desc"],
         chunk_size: int,

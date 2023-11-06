@@ -46,7 +46,6 @@ class AsyncBrandBusiness(BrandBusinessIfs):
         assert isinstance(self.__loop, AbstractEventLoop)
 
     def get_detail_page(self, request: BrandRequestDto) -> BrandResponseDto:
-        # TODO : 배치를 미리 만들지 않기
         if not isinstance(request, BrandRequestDto):
             raise BadRequestError(f"{request} should be BrandRequestDto type")
         if not isinstance(request.slug, str):
@@ -73,9 +72,7 @@ class AsyncBrandBusiness(BrandBusinessIfs):
             chunk_size=3,
         )
         # await
-        constant_brand, products, events = self.__loop.run_until_complete(
-            gather(products, events)
-        )
+        products, events = self.__loop.run_until_complete(gather(products, events))
         # make
         product_responses = []
         for product in products:

@@ -1,4 +1,5 @@
 import os
+from typing import Sequence
 
 import pytest
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -55,3 +56,19 @@ def test_event_service_add_values(client, factory, invoker):
     assert result.id == entity.id
     assert result.good_count == prv_entity.good_count + entity.good_count
     assert result.view_count == prv_entity.view_count + entity.view_count
+
+
+def test_event_find_chunk_by(client, factory, invoker):
+    # given
+    service = AsyncEventService(command_factory=factory, invoker=invoker)
+    loop = client.get_io_loop()
+    # when
+    coroutine = service.find_chunk_by(
+        filter_key="brand",
+        filter_value=1,
+        sort_key="good_count",
+        direction="asc",
+        chunk_size=3,
+    )
+    result: Sequence[EventEntity] = loop.run_until_complete(coroutine)
+    assert isinstance(result, list)

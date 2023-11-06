@@ -1,5 +1,5 @@
 from dataclasses import asdict
-from typing import Literal, Sequence
+from typing import Any, Literal, Sequence
 
 from chalice import BadRequestError, NotFoundError
 
@@ -129,12 +129,27 @@ class AsyncEventService(EventServiceIfs):
             result.view_count += data["view_count"]
         return result
 
-    def find_chunk_by(
+    async def find_chunk_by(
         self,
         filter_key: str,
-        filter_value: str,
+        filter_value: Any,
         sort_key: str,
         direction: Literal["asc", "desc"],
         chunk_size: int,
     ):
-        pass
+        self.__invoker.add_command(
+            self.__command_factory.get_select_by_sort_by_command(
+                db_name=self.__db_name,
+                rel_name=self.__rel_name,
+                key=filter_key,
+                value=filter_value,
+                sort_key="good_count",
+                sort_value="desc",
+                chunk_size=3,
+            )
+        )
+        result = (await self.__invoker.invoke())[0]
+        if not result:
+            raise NotFoundError(f"brand={id} not in {self.__db_name}.{self.__rel_name}")
+        else:
+            return result
