@@ -37,7 +37,7 @@
             "api_gateway_stage": "test",
             "environment_variables": {
                 "MONGO_DB": "test",
-                "LOG_LEVEL": "INFO"
+                "LOG_LEVEL": "DEBUG"
             }
         }
     }
