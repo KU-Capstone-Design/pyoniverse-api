@@ -45,7 +45,9 @@ class BusinessInjector(BusinessContainer):
 
     brand_business = BusinessProvider(
         AsyncBrandBusiness,
-        brand_service=BusinessContainer.brand_service,
+        constant_brand_service=BusinessContainer.constant_brand_service,
+        product_service=BusinessContainer.product_service,
+        event_service=BusinessContainer.event_service,
         converter=BusinessContainer.brand_converter,
         loop=BusinessContainer.loop,
     )

@@ -1,11 +1,12 @@
 from abc import ABCMeta, abstractmethod
-from typing import Any
+from typing import Any, Literal
 
 from chalicelib.service.interface.command import (
     AddModifyEqualCommandIfs,
     EqualCommandIfs,
     SelectAllByCommandIfs,
     SelectAllCommandIfs,
+    SelectBySortByCommandIfs,
     SortByLimit10CommandIfs,
 )
 
@@ -47,4 +48,17 @@ class CommandFactoryIfs(metaclass=ABCMeta):
     def get_add_modify_equal_command(
         self, db_name: str, rel_name: str, key: str, value: Any, data: dict
     ) -> AddModifyEqualCommandIfs:
+        pass
+
+    @abstractmethod
+    def get_select_by_sort_by_command(
+        self,
+        db_name: str,
+        rel_name: str,
+        key: str,
+        value: Any,
+        sort_key: str,
+        sort_value: Literal["asc", "desc"],
+        chunk_size: int = None,
+    ) -> SelectBySortByCommandIfs:
         pass

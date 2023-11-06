@@ -29,3 +29,18 @@ class AsyncConstantBrandService(ConstantBrandServiceIfs):
             raise NotFoundError(f"{self.__db_name}.{self.__rel_name} is empty")
         else:
             return result
+
+    async def find_by_slug(self, entity: ConstantBrandEntity) -> ConstantBrandEntity:
+        self.__invoker.add_command(
+            self.__command_factory.get_equal_command(
+                db_name=self.__db_name,
+                rel_name=self.__rel_name,
+                key="slug",
+                value=entity.slug,  # ascending
+            )
+        )
+        result = (await self.__invoker.invoke())[0]
+        if not result:
+            raise NotFoundError(f"{self.__db_name}.{self.__rel_name} is empty")
+        else:
+            return result
