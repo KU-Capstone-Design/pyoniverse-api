@@ -128,3 +128,13 @@ class AsyncEventService(EventServiceIfs):
         if "view_count" in data:
             result.view_count += data["view_count"]
         return result
+
+    def find_chunk_by(
+        self,
+        filter_key: str,
+        filter_value: str,
+        sort_key: str,
+        direction: Literal["asc", "desc"],
+        chunk_size: int,
+    ):
+        pass

@@ -1,4 +1,3 @@
-import logging
 from abc import ABCMeta, abstractmethod
 from typing import Any, Literal, Sequence
 
@@ -52,6 +51,35 @@ class SelectAllByCommandIfs(CommandIfs):
     """
 
     pass
+
+
+class SelectBySortByCommandIfs(CommandIfs):
+    def __init__(
+        self,
+        rel_name: str,
+        key: str,
+        value: Any,
+        sort_key: str,
+        sort_value: Literal["asc", "desc"],
+        chunk_size: int = None,
+        db_name: Literal["constant", "service"] = "service",
+    ):
+        """
+        :param key: for filter
+        :param value: for filter
+        :param sort_key: for sort
+        :param sort_value: for sort
+        :param chunk_size: all if None
+        """
+        super().__init__(
+            rel_name=rel_name,
+            key=key,
+            value=value,
+            db_name=db_name,
+        )
+        self._sort_key = sort_key
+        self._sort_value = sort_value
+        self._chunk_size = chunk_size
 
 
 class ModifyCommandIfs(CommandIfs):
