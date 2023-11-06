@@ -47,6 +47,7 @@ class AsyncProductBusiness(ProductBusinessIfs):
         )
         response: ProductResponseDto = self.__converter.convert_to_dto(product_entity)
         self._get_histories(constant_brand_entities, product_entity, response)
+        self._get_histories_summary(response)
         return response
 
     def _get_histories(
@@ -114,3 +115,27 @@ class AsyncProductBusiness(ProductBusinessIfs):
                 tmp.histories, key=lambda x: x.date, reverse=True
             )  # Latest 순서
             response.brands.append(tmp)
+
+    def _get_histories_summary(self, response: ProductResponseDto):
+        for brand in response.brands:
+            min_price, max_price = float("+inf"), float("-inf")
+            min_brand, max_brand = None, None
+            min_date, max_date = None, None
+            for history in brand.histories:
+                # 이벤트 가격 or 원본 가격으로 비교(이벤트 가격이 없다면)
+                price = history.event_price or history.price
+                if price < min_price:
+                    min_brand = ConstantConverter.convert_brand_id(brand.id)["name"]
+                    min_date = history.date
+                    min_price = price
+                if price > max_price:
+                    max_brand = ConstantConverter.convert_brand_id(brand.id)["name"]
+                    max_price = price
+                    max_date = history.date
+            brand.histories_summary.lowest_price.brand = min_brand
+            brand.histories_summary.lowest_price.value = min_price
+            brand.histories_summary.lowest_price.date = min_date
+
+            brand.histories_summary.highest_price.brand = max_brand
+            brand.histories_summary.highest_price.value = max_price
+            brand.histories_summary.highest_price.date = max_date

@@ -8,6 +8,20 @@ class ProductBrandHistoryResponseSchema(Schema):
     event_price = fields.Float(required=True, allow_none=True)
 
 
+class ProductBrandHistoriesSummaryPriceSchema(Schema):
+    brand = fields.Str(required=True)
+    date = fields.Date(required=True, format="iso")
+    value = fields.Float(required=True)
+
+
+class ProductBrandHistoriesSummarySchema(Schema):
+    # 행사 가격 기준으로 최저, 최고가 명시
+    lowest_price = fields.Nested(ProductBrandHistoriesSummaryPriceSchema, required=True)
+    highest_price = fields.Nested(
+        ProductBrandHistoriesSummaryPriceSchema, required=True
+    )
+
+
 class ProductBrandResponseSchema(Schema):
     id = fields.Integer(required=True)
     name = fields.Str(required=True)
@@ -18,6 +32,7 @@ class ProductBrandResponseSchema(Schema):
     histories = fields.Nested(
         ProductBrandHistoryResponseSchema, required=True, many=True
     )
+    histories_summary = fields.Nested(ProductBrandHistoriesSummarySchema, required=True)
 
 
 class ProductResponseSchema(Schema):
