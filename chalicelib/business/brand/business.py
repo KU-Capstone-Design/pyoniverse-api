@@ -118,8 +118,8 @@ class AsyncBrandBusiness(BrandBusinessIfs):
             name=constant_brand.name,
             image=constant_brand.image,
             image_alt=f"{constant_brand.name} image",
-            description=f"{constant_brand} Page",
-            meta=BrandMetaResponseDto(description=f"{constant_brand} Page"),
+            description=f"{constant_brand.name} Page",
+            meta=BrandMetaResponseDto(description=f"{constant_brand.name} Page"),
             products=product_responses,
             events=event_responses,
         )

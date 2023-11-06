@@ -48,7 +48,7 @@ class AsyncMongoEqualCommand(EqualCommandIfs):
         Detail 정보에 접근할 때는 status에 관계없이 정보를 띄운다.
         """
         _filter = {self._key: self._value}
-        logger.debug(f"AsyncMongoEqualCommand: {_filter}")
+        logger.debug(f"AsyncMongoEqualCommand: [{self._db}.{self._rel_name}] {_filter}")
         result = await self._db[self._rel_name].find_one(filter=_filter)
         if result:
             return ENTITY_MAP[self._db_name][self._rel_name].from_dict(result)
@@ -83,7 +83,9 @@ class AsyncMongoSortByLimit10Command(SortByLimit10CommandIfs):
 
     async def execute(self) -> Sequence[EntityType]:
         _filter = {"status": {"$gt": 0}}
-        logger.debug(f"AsyncMongoSortByLimit10Command: {_filter}")
+        logger.debug(
+            f"AsyncMongoSortByLimit10Command: [{self._db}.{self._rel_name}] {_filter}"
+        )
         result = (
             await self._db[self._rel_name]
             .find(filter=_filter)
@@ -125,7 +127,9 @@ class AsyncMongoSelectAllCommand(SelectAllCommandIfs):
 
     async def execute(self) -> Sequence[EntityType]:
         _filter = {"status": {"$gt": 0}}
-        logger.debug(f"AsyncMongoSelectAllCommand: {_filter}")
+        logger.debug(
+            f"AsyncMongoSelectAllCommand: [{self._db}.{self._rel_name}] {_filter}"
+        )
         result = (
             await self._db[self._rel_name]
             .find(filter=_filter)
@@ -166,7 +170,9 @@ class AsyncMongoSelectAllByCommand(SelectAllByCommandIfs):
 
     async def execute(self) -> Sequence[EntityType]:
         _filter = {"status": {"$gt": 0}, self._key: self._value}
-        logger.debug(f"AsyncMongoSelectAllByCommand: {_filter}")
+        logger.debug(
+            f"AsyncMongoSelectAllByCommand: [{self._db}.{self._rel_name}] {_filter}"
+        )
         result = (
             await self._db[self._rel_name].find(filter=_filter).to_list(length=None)
         )
@@ -222,7 +228,9 @@ class AsyncMongoSelectBySortByCommand(SelectBySortByCommandIfs):
 
     async def execute(self) -> Sequence[EntityType] | EntityType | None:
         _filter = {"status": {"$gt": 0}, self._key: self._value}
-        logger.debug(f"AsyncMongoSelectBySortByCommand: {_filter}")
+        logger.debug(
+            f"AsyncMongoSelectBySortByCommand: [{self._db}.{self._rel_name}] {_filter}"
+        )
         result = (
             await self._db[self._rel_name]
             .find(filter=_filter)
