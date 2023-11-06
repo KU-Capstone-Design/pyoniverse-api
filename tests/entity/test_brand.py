@@ -11,7 +11,7 @@ def brand_entity():
         "_id": {"$oid": "652f808cd27bfe47fd517cbe"},
         "id": 2,
         "slug": "cu",
-        "name": "CU Store",
+        "name": "CU",
         "meta": {"description": "CU Store Main Page"},
         "description": "CU Store Description",
         "events": [

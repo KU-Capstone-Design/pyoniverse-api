@@ -13,6 +13,23 @@ class ProductBrandHistoryResponseDto:
 
 
 @dataclass(kw_only=True)
+class ProductHistoriesSummaryPriceResponseDto:
+    brand: str = field(default=None)
+    value: float = field(default=None)
+    date: str = field(default=None)
+
+
+@dataclass(kw_only=True)
+class ProductHistoriesSummaryResponseDto:
+    lowest_price: ProductHistoriesSummaryPriceResponseDto = field(
+        default_factory=ProductHistoriesSummaryPriceResponseDto
+    )
+    highest_price: ProductHistoriesSummaryPriceResponseDto = field(
+        default_factory=ProductHistoriesSummaryPriceResponseDto
+    )
+
+
+@dataclass(kw_only=True)
 class ProductBrandResponseDto:
     id: int = field(default=None)
     name: str = field(default=None)
@@ -21,6 +38,9 @@ class ProductBrandResponseDto:
     price: float = field(default=None)
     event_price: float | None = field(default=None)  # 가격과 행사 가격이 동일하면 None으로 처리
     histories: List[ProductBrandHistoryResponseDto] = field(default_factory=list)
+    histories_summary: ProductHistoriesSummaryResponseDto = field(
+        default_factory=ProductHistoriesSummaryResponseDto
+    )
 
 
 @dataclass(kw_only=True)
