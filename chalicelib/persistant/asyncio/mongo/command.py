@@ -1,3 +1,4 @@
+import logging
 import os
 from typing import Any, Literal, Sequence
 
@@ -12,6 +13,9 @@ from chalicelib.service.interface.command import (
     SelectAllCommandIfs,
     SortByLimit10CommandIfs,
 )
+
+
+logger = logging.getLogger(__name__)
 
 
 class AsyncMongoEqualCommand(EqualCommandIfs):
@@ -39,9 +43,12 @@ class AsyncMongoEqualCommand(EqualCommandIfs):
         )
 
     async def execute(self) -> EntityType | None:
-        result = await self._db[self._rel_name].find_one(
-            filter={self._key: self._value}
-        )
+        """
+        Detail 정보에 접근할 때는 status에 관계없이 정보를 띄운다.
+        """
+        _filter = {self._key: self._value}
+        logger.debug(f"AsyncMongoEqualCommand: {_filter}")
+        result = await self._db[self._rel_name].find_one(filter=_filter)
         if result:
             return ENTITY_MAP[self._db_name][self._rel_name].from_dict(result)
         else:
@@ -74,9 +81,11 @@ class AsyncMongoSortByLimit10Command(SortByLimit10CommandIfs):
         )
 
     async def execute(self) -> Sequence[EntityType]:
+        _filter = {"status": {"$gt": 0}}
+        logger.debug(f"AsyncMongoSortByLimit10Command: {_filter}")
         result = (
             await self._db[self._rel_name]
-            .find()
+            .find(filter=_filter)
             .sort(self._key, self._value)
             .to_list(10)
         )
@@ -114,9 +123,11 @@ class AsyncMongoSelectAllCommand(SelectAllCommandIfs):
         )
 
     async def execute(self) -> Sequence[EntityType]:
+        _filter = {"status": {"$gt": 0}}
+        logger.debug(f"AsyncMongoSelectAllCommand: {_filter}")
         result = (
             await self._db[self._rel_name]
-            .find()
+            .find(filter=_filter)
             .sort(self._key, self._value)
             .to_list(length=None)
         )
@@ -153,10 +164,10 @@ class AsyncMongoSelectAllByCommand(SelectAllByCommandIfs):
         )
 
     async def execute(self) -> Sequence[EntityType]:
+        _filter = {"status": {"$gt": 0}, self._key: self._value}
+        logger.debug(f"AsyncMongoSelectAllByCommand: {_filter}")
         result = (
-            await self._db[self._rel_name]
-            .find(filter={self._key: self._value})
-            .to_list(length=None)
+            await self._db[self._rel_name].find(filter=_filter).to_list(length=None)
         )
         if result:
             return [

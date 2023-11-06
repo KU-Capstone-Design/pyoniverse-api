@@ -25,6 +25,7 @@ class AsyncBrandBusiness(BrandBusinessIfs):
         assert isinstance(self.__loop, AbstractEventLoop)
 
     def get_detail_page(self, request: BrandRequestDto) -> BrandResponseDto:
+        # TODO : 배치를 미리 만들지 않기
         if not isinstance(request, BrandRequestDto):
             raise BadRequestError(f"{request} should be BrandRequestDto type")
         if not isinstance(request.slug, str):
