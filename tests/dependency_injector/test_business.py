@@ -34,6 +34,7 @@ def service_injector(persistent_injector):
         constant_brand_invoker=persistent_injector.invoker(),
         product_invoker=persistent_injector.invoker(),
         event_invoker=persistent_injector.invoker(),
+        engine_uri=os.getenv("SEARCH_ENGINE_URI"),
     )
     return injector
 
@@ -62,6 +63,7 @@ def test_business_injector(service_injector, loop):
         constant_brand_service=service_injector.constant_brand_service(),
         event_service=service_injector.event_service(),
         product_service=service_injector.product_service(),
+        search_service=service_injector.search_service(),
         brand_converter=BrandConverter(),
         home_converter=HomeConverter(),
         event_converter=EventConverter(),
