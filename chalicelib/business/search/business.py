@@ -7,6 +7,7 @@ from chalicelib.business.interface.converter import ConverterIfs
 from chalicelib.business.interface.service import (
     ConstantBrandServiceIfs,
     ProductServiceIfs,
+    SearchServiceIfs,
 )
 from chalicelib.business.search.dto.request import SearchResultRequestDto
 from chalicelib.business.search.dto.response import (
@@ -24,16 +25,19 @@ from chalicelib.business.search.dto.response import (
 class AsyncSearchBusiness(SearchBusinessIfs):
     def __init__(
         self,
+        search_service: SearchServiceIfs,
         constant_brand_service: ConstantBrandServiceIfs,
         product_service: ProductServiceIfs,
         converter: ConverterIfs,
         loop: AbstractEventLoop,
     ):
+        self.__search_service = search_service
         self.__constant_brand_service = constant_brand_service
         self.__product_service = product_service
         self.__converter = converter
         self.__loop = loop
 
+        assert isinstance(self.__search_service, SearchServiceIfs)
         assert isinstance(self.__constant_brand_service, ConstantBrandServiceIfs)
         assert isinstance(self.__product_service, ProductServiceIfs)
         assert isinstance(self.__converter, ConverterIfs)

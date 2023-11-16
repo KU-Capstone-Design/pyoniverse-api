@@ -38,6 +38,7 @@ jobs:
           echo "DOMAIN_NAME=$DOMAIN_NAME" >> .env
           echo "CERTIFICATE_ARN=${{ secrets.CERTIFICATE_ARN }}" >> .env
           echo "DB_QUEUE_NAME=${{ secrets.DB_SQS_NAME_DEV }}" >> .env
+          echo "SEARCH_ENGINE_URI=${{ secrets.SEARCH_ENGINE_URI_DEV }}" >> .env
 
           python -m pytest -v
           python deploy.py --stage=dev_v1
