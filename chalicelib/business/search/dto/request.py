@@ -6,7 +6,7 @@ from chalicelib.business.interface.dto import DtoIfs
 
 @dataclass(kw_only=True)
 class SearchResultRequestDto(DtoIfs):
-    queries: List[str] = field(default_factory=list)
+    query: str = field(default_factory=list)
     sort: str = field(default=None)
     direction: str = field(default=None)
     category: str = field(default=None)
