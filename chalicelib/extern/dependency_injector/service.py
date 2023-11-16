@@ -8,6 +8,7 @@ from chalicelib.service.event.service import AsyncEventService
 from chalicelib.service.interface.command_factory import CommandFactoryIfs
 from chalicelib.service.interface.invoker import InvokerIfs
 from chalicelib.service.product.service import AsyncProductService
+from chalicelib.service.search.service import AsyncSearchService
 
 
 class ServiceProvider(Singleton):
@@ -20,6 +21,7 @@ class ServiceContainer(DeclarativeContainer):
     constant_brand_invoker = Dependency(InvokerIfs)
     product_invoker = Dependency(InvokerIfs)
     event_invoker = Dependency(InvokerIfs)
+    engine_uri = Dependency(str)
 
 
 class ServiceInjector(ServiceContainer):
@@ -42,4 +44,8 @@ class ServiceInjector(ServiceContainer):
         AsyncEventService,
         invoker=ServiceContainer.event_invoker,
         command_factory=ServiceContainer.command_factory,
+    )
+    search_service = ServiceProvider(
+        AsyncSearchService,
+        engine_uri=ServiceContainer.engine_uri,
     )

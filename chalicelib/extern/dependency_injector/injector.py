@@ -1,4 +1,5 @@
 import logging
+import os
 
 import dotenv
 
@@ -11,9 +12,7 @@ from chalicelib.converter.search import SearchConverter
 from chalicelib.extern.dependency_injector.business import BusinessInjector
 from chalicelib.extern.dependency_injector.persistant import PersistentInjector
 from chalicelib.extern.dependency_injector.resource import ResourceInjector
-from chalicelib.extern.dependency_injector.service import (
-    ServiceInjector as TmpServiceInjector,
-)
+from chalicelib.extern.dependency_injector.service import ServiceInjector
 
 
 class MainInjector:
@@ -46,12 +45,13 @@ class MainInjector:
         self.injectors["persistent"] = PersistentInjector(client=client)
         self.injectors["persistent"].check_dependencies()
 
-        self.injectors["service"] = TmpServiceInjector(
+        self.injectors["service"] = ServiceInjector(
             command_factory=self.injectors["persistent"].command_factory(),
             brand_invoker=self.injectors["persistent"].invoker(),
             constant_brand_invoker=self.injectors["persistent"].invoker(),
             product_invoker=self.injectors["persistent"].invoker(),
             event_invoker=self.injectors["persistent"].invoker(),
+            engine_uri=os.getenv("SEARCH_ENGINE_URI"),
         )
         self.injectors["service"].check_dependencies()
 
@@ -67,6 +67,7 @@ class MainInjector:
             constant_brand_service=self.injectors["service"].constant_brand_service(),
             event_service=self.injectors["service"].event_service(),
             product_service=self.injectors["service"].product_service(),
+            search_service=self.injectors["service"].search_service(),
         )
         self.injectors["business"].check_dependencies()
         return self.injectors

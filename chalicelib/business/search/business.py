@@ -1,4 +1,5 @@
-from asyncio import AbstractEventLoop
+from asyncio import AbstractEventLoop, gather
+from typing import Sequence
 
 from chalice import NotFoundError
 
@@ -7,6 +8,7 @@ from chalicelib.business.interface.converter import ConverterIfs
 from chalicelib.business.interface.service import (
     ConstantBrandServiceIfs,
     ProductServiceIfs,
+    SearchServiceIfs,
 )
 from chalicelib.business.search.dto.request import SearchResultRequestDto
 from chalicelib.business.search.dto.response import (
@@ -19,21 +21,26 @@ from chalicelib.business.search.dto.response import (
     SearchResultSelectedOptionResponseDto,
     SearchResultSortResponseDto,
 )
+from chalicelib.entity.product import ProductEntity
+from chalicelib.entity.util import ConstantConverter
 
 
 class AsyncSearchBusiness(SearchBusinessIfs):
     def __init__(
         self,
+        search_service: SearchServiceIfs,
         constant_brand_service: ConstantBrandServiceIfs,
         product_service: ProductServiceIfs,
         converter: ConverterIfs,
         loop: AbstractEventLoop,
     ):
+        self.__search_service = search_service
         self.__constant_brand_service = constant_brand_service
         self.__product_service = product_service
         self.__converter = converter
         self.__loop = loop
 
+        assert isinstance(self.__search_service, SearchServiceIfs)
         assert isinstance(self.__constant_brand_service, ConstantBrandServiceIfs)
         assert isinstance(self.__product_service, ProductServiceIfs)
         assert isinstance(self.__converter, ConverterIfs)
@@ -45,68 +52,100 @@ class AsyncSearchBusiness(SearchBusinessIfs):
         return result
 
     def get_result(self, request: SearchResultRequestDto) -> SearchResultResponseDto:
-        # TODO : DB Sync
-        request.queries = [q.replace("%20", " ").strip() for q in request.queries]
+        query = request.query.replace("%20", " ")
+        # 1. Search Service를 이용해 검색 시도
+        search_results: Sequence[int] = self.__loop.run_until_complete(
+            self.__search_service.find_products(query=query)
+        )
+
+        # 2. id list에 맞는 상품 가져오기
+        coroutines = [
+            self.__product_service.find_one(ProductEntity(id=id_))
+            for id_ in search_results
+        ]
+        product_entities: Sequence[ProductEntity] = self.__loop.run_until_complete(
+            gather(*coroutines)
+        )
+
+        # 3. category 정보 가져오기
+        categories = list(
+            {
+                p.category: SearchResultCategoryResponseDto(
+                    id=int(p.category),
+                    name=ConstantConverter.convert_category_id(p.category)["name"],
+                )
+                for p in product_entities
+            }.values()
+        )
+        categories.append(SearchResultCategoryResponseDto(id=None, name="전체"))
+        # 4. event 정보 가져오기
+        events = {}
+        for product in product_entities:
+            for brand in product.brands:
+                events.update(
+                    {
+                        id_: SearchResultEventResponseDto(
+                            id=id_, name=ConstantConverter.convert_event_id(id_)["name"]
+                        )
+                        for id_ in brand.events
+                    }
+                )
+        events = list(events.values())
+        events.append(SearchResultEventResponseDto(id=None, name="전체"))
+        # 5. brand 정보 가져오기
+        constant_brands = self.__loop.run_until_complete(
+            self.__constant_brand_service.find_all()
+        )
+        brand_map = {
+            cb.id: SearchResultBrandResponseDto(id=cb.id, name=cb.name, image=cb.image)
+            for cb in constant_brands
+        }
+        brands = {}
+        for product in product_entities:
+            brands.update({b.id: brand_map[b.id] for b in product.brands})
+        brands = list(brands.values())
+        brands.append(SearchResultBrandResponseDto(id=None, name="전체", image=None))
+
+        # 6. sort # TODO : 아직 협의되지 않음 - price 순서로 정렬
+        sorts = [
+            SearchResultSortResponseDto(id=1, name="Good Count"),
+            SearchResultSortResponseDto(id=2, name="View Count"),
+            SearchResultSortResponseDto(id=3, name="price"),
+        ]
+        # 7. 필터 적용 # TODO :
+        selected = SearchResultSelectedOptionResponseDto(
+            category=None,
+            event=None,
+            brand=None,
+            sort=3,
+            direction="asc",
+        )
+        # 8. 반횐될 products 생성
+        products = []
+        for product in product_entities:
+            res_product = SearchResultProductResponseDto(
+                id=product.id,
+                name=product.name,
+                image=product.image,
+                image_alt=f"{product.name}",
+                price=product.price,
+                events=[
+                    ConstantConverter.convert_event_id(id_)["name"]
+                    for id_ in product.best.events
+                ],
+                event_price=product.best.price,
+            )
+            products.append(res_product)
+        # 9. 정렬 기준에 맞춰 정렬 - 현재 price asc
+        products = sorted(products, key=lambda x: x.price)
 
         response = SearchResultResponseDto(
-            categories=[
-                SearchResultCategoryResponseDto(**{"id": None, "name": "전체"}),
-                SearchResultCategoryResponseDto(**{"id": 1, "name": "과자류"}),
-            ],
-            events=[
-                SearchResultEventResponseDto(**{"id": None, "name": "전체"}),
-                SearchResultEventResponseDto(**{"id": 1, "name": "1+1"}),
-            ],
-            brands=[
-                SearchResultBrandResponseDto(**{"id": None, "name": "전체"}),
-                SearchResultBrandResponseDto(
-                    **{
-                        "id": 1,
-                        "name": "GS25",
-                        "image": "https://dev-image.pyoniverse.kr/"
-                        "brands/gs25-logo.webp",
-                    }
-                ),
-            ],
-            sorts=[
-                SearchResultSortResponseDto(**{"id": 1, "name": "Good Count"}),
-                SearchResultSortResponseDto(**{"id": 2, "name": "View Count"}),
-            ],
-            selected=SearchResultSelectedOptionResponseDto(
-                **{
-                    "category": 1,
-                    "event": 1,
-                    "brand": 1,
-                    "sort": 1,
-                    "direction": "asc",
-                }
-            ),
-            products=[
-                SearchResultProductResponseDto(
-                    **{
-                        "id": 1,
-                        "name": "test-product-one",
-                        "image": "https://dev-image.pyoniverse.kr/products/"
-                        "ae5a223ab345c744c7179d3689adb6eb6eabc1a9.webp",
-                        "image_alt": "test-product-image-alt",
-                        "price": 1000,
-                        "events": ["NEW", "1+1"],
-                        "event_price": None,
-                    }
-                ),
-                SearchResultProductResponseDto(
-                    **{
-                        "id": 2,
-                        "name": "test-product-two",
-                        "image": "https://dev-image.pyoniverse.kr/products/"
-                        "79cd70e8235b951d16f8701e9f5629242ed8fca2.webp",
-                        "image_alt": "test-product-image-alt",
-                        "price": 1000,
-                        "events": ["NEW", "SALE"],
-                        "event_price": 900,
-                    }
-                ),
-            ],
+            categories=categories,
+            events=events,
+            brands=brands,
+            sorts=sorts,
+            selected=selected,
+            products=products,
         )
 
         if not response.products:

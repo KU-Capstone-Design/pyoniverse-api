@@ -83,3 +83,13 @@ class ConstantBrandServiceIfs(ServiceIfs):
     @abstractmethod
     def find_by_slug(self, entity: ConstantBrandEntity) -> ConstantBrandEntity:
         pass
+
+
+class SearchServiceIfs(ServiceIfs):
+    @abstractmethod
+    def find_products(self, query: str) -> Sequence[int]:
+        """
+        :param query: 검색 쿼리
+        :return: 검색 결과 ID List
+        """
+        pass

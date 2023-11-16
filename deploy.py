@@ -36,6 +36,9 @@ if __name__ == "__main__":
         config["stages"][args.stage]["environment_variables"][
             "DB_QUEUE_NAME"
         ] = os.getenv("DB_QUEUE_NAME")
+        config["stages"][args.stage]["environment_variables"][
+            "SEARCH_ENGINE_URI"
+        ] = os.getenv("SEARCH_ENGINE_URI")
         config["stages"][args.stage]["api_gateway_custom_domain"][
             "domain_name"
         ] = os.getenv("DOMAIN_NAME")
