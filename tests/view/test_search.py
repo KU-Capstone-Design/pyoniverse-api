@@ -20,3 +20,14 @@ def test_spec_search_result(env, test_client, injector):
     body = json.loads(res.body)
     assert res.status_code == 200
     assert Api.validate(SearchResultResponseSchema, body, many=False) == {}
+
+
+def test_spec_search_result_empty(env, test_client, injector):
+    import json
+
+    query = "이 검색어는 빈 배열을 반환합니다."
+    res = test_client.http.get(f"/v1/search/result?query={query}")
+    body = json.loads(res.body)
+    assert res.status_code == 200
+    assert Api.validate(SearchResultResponseSchema, body, many=False) == {}
+    assert len(body["data"]["products"]) == 0
