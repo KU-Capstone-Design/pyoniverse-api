@@ -6,6 +6,7 @@ from chalicelib.business.interface.dto import DtoIfs
 
 @dataclass(kw_only=True)
 class SearchHomeResponseDto(DtoIfs):
+    recommendations: List[str] = field(default_factory=list)
     histories: List[str] = field(default_factory=list)
 
 
