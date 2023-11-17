@@ -57,20 +57,20 @@ class AsyncSearchBusiness(SearchBusinessIfs):
         search_results: List[int] = self.__loop.run_until_complete(
             self.__search_service.find_products(query=query)
         )
-
         # 2. id list에 맞는 상품 가져오기
-        coroutines = []
-        coroutines.append(
-            self.__product_service.find_in_sort_by(
-                filter_key="id",
-                filter_value=search_results,
-                sort_key="price",
-                direction="asc",
+        try:
+            product_entities = self.__loop.run_until_complete(
+                self.__product_service.find_in_sort_by(
+                    filter_key="id",
+                    filter_value=search_results,
+                    sort_key="price",
+                    direction="asc",
+                )
             )
-        )
-        coroutines.append(self.__constant_brand_service.find_all())
-        product_entities, constant_brands = self.__loop.run_until_complete(
-            gather(*coroutines)
+        except NotFoundError:
+            product_entities = []
+        constant_brands = self.__loop.run_until_complete(
+            self.__constant_brand_service.find_all()
         )
 
         # 3. category 정보 가져오기
@@ -154,7 +154,4 @@ class AsyncSearchBusiness(SearchBusinessIfs):
             selected=selected,
             products=products,
         )
-
-        if not response.products:
-            raise NotFoundError(f"products not in {request} search")
         return response

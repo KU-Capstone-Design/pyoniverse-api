@@ -27,7 +27,7 @@ class SearchView:
 
     @staticmethod
     @api.route("/search/result", methods=["GET", "HEAD"], cors=True)
-    def index() -> Api:
+    def search() -> Api:
         params: MultiDict = SearchView.api.current_request.query_params
         if not params or not params.get("query"):
             raise BadRequestError("Empty Query")
