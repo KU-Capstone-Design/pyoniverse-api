@@ -1,5 +1,5 @@
 from asyncio import AbstractEventLoop, gather
-from typing import Sequence
+from typing import List
 
 from chalice import NotFoundError
 
@@ -21,7 +21,6 @@ from chalicelib.business.search.dto.response import (
     SearchResultSelectedOptionResponseDto,
     SearchResultSortResponseDto,
 )
-from chalicelib.entity.product import ProductEntity
 from chalicelib.entity.util import ConstantConverter
 
 
@@ -54,16 +53,22 @@ class AsyncSearchBusiness(SearchBusinessIfs):
     def get_result(self, request: SearchResultRequestDto) -> SearchResultResponseDto:
         query = request.query.replace("%20", " ")
         # 1. Search Service를 이용해 검색 시도
-        search_results: Sequence[int] = self.__loop.run_until_complete(
+        search_results: List[int] = self.__loop.run_until_complete(
             self.__search_service.find_products(query=query)
         )
 
         # 2. id list에 맞는 상품 가져오기
-        coroutines = [
-            self.__product_service.find_one(ProductEntity(id=id_))
-            for id_ in search_results
-        ]
-        product_entities: Sequence[ProductEntity] = self.__loop.run_until_complete(
+        coroutines = []
+        coroutines.append(
+            self.__product_service.find_in_sort_by(
+                filter_key="id",
+                filter_value=search_results,
+                sort_key="price",
+                direction="asc",
+            )
+        )
+        coroutines.append(self.__constant_brand_service.find_all())
+        product_entities, constant_brands = self.__loop.run_until_complete(
             gather(*coroutines)
         )
 
@@ -75,6 +80,7 @@ class AsyncSearchBusiness(SearchBusinessIfs):
                     name=ConstantConverter.convert_category_id(p.category)["name"],
                 )
                 for p in product_entities
+                if p.category is not None
             }.values()
         )
         categories.append(SearchResultCategoryResponseDto(id=None, name="전체"))
@@ -93,9 +99,9 @@ class AsyncSearchBusiness(SearchBusinessIfs):
         events = list(events.values())
         events.append(SearchResultEventResponseDto(id=None, name="전체"))
         # 5. brand 정보 가져오기
-        constant_brands = self.__loop.run_until_complete(
-            self.__constant_brand_service.find_all()
-        )
+        # constant_brands = self.__loop.run_until_complete(
+        #         self.__constant_brand_service.find_all()
+        # )
         brand_map = {
             cb.id: SearchResultBrandResponseDto(id=cb.id, name=cb.name, image=cb.image)
             for cb in constant_brands

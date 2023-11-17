@@ -53,6 +53,35 @@ class SelectAllByCommandIfs(CommandIfs):
     pass
 
 
+class SelectInSortByCommandIfs(CommandIfs):
+    def __init__(
+        self,
+        rel_name: str,
+        key: str,
+        value: list,
+        sort_key: str,
+        sort_value: Literal["asc", "desc"],
+        db_name: Literal["constant", "service"] = "service",
+    ):
+        """
+        key in value 검색 결과 반환
+        :param rel_name:
+        :param key:
+        :param value: List[Any]
+        :param sort_key:
+        :param sort_value:
+        :param db_name:
+        """
+        super().__init__(
+            rel_name=rel_name,
+            db_name=db_name,
+            key=key,
+            value=value,
+        )
+        self._sort_key = sort_key
+        self._sort_value = sort_value
+
+
 class SelectBySortByCommandIfs(CommandIfs):
     def __init__(
         self,

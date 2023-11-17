@@ -8,6 +8,7 @@ from chalicelib.persistant.asyncio.mongo.command import (
     AsyncMongoSelectAllByCommand,
     AsyncMongoSelectAllCommand,
     AsyncMongoSelectBySortByCommand,
+    AsyncMongoSelectInSortByCommand,
     AsyncMongoSortByLimit10Command,
 )
 from chalicelib.persistant.asyncio.sqs.command import AsyncSqsAddModifyEqualCommand
@@ -16,6 +17,7 @@ from chalicelib.service.interface.command import (
     SelectAllByCommandIfs,
     SelectAllCommandIfs,
     SelectBySortByCommandIfs,
+    SelectInSortByCommandIfs,
     SortByLimit10CommandIfs,
 )
 from chalicelib.service.interface.command_factory import CommandFactoryIfs
@@ -104,4 +106,23 @@ class AsyncCommandFactory(CommandFactoryIfs):
             sort_key=sort_key,
             sort_value=sort_value,
             chunk_size=chunk_size,
+        )
+
+    def get_select_in_sort_by_command(
+        self,
+        db_name: str,
+        rel_name: str,
+        key: str,
+        value: list,
+        sort_key: str,
+        sort_value: Literal["asc", "desc"],
+    ) -> SelectInSortByCommandIfs:
+        return AsyncMongoSelectInSortByCommand(
+            client=self.__client,
+            db_name=db_name,
+            rel_name=rel_name,
+            key=key,
+            value=value,
+            sort_key=sort_key,
+            sort_value=sort_value,
         )

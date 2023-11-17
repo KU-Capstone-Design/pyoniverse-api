@@ -7,6 +7,7 @@ from chalicelib.service.interface.command import (
     SelectAllByCommandIfs,
     SelectAllCommandIfs,
     SelectBySortByCommandIfs,
+    SelectInSortByCommandIfs,
     SortByLimit10CommandIfs,
 )
 
@@ -61,4 +62,16 @@ class CommandFactoryIfs(metaclass=ABCMeta):
         sort_value: Literal["asc", "desc"],
         chunk_size: int = None,
     ) -> SelectBySortByCommandIfs:
+        pass
+
+    @abstractmethod
+    def get_select_in_sort_by_command(
+        self,
+        db_name: str,
+        rel_name: str,
+        key: str,
+        value: list,
+        sort_key: str,
+        sort_value: Literal["asc", "desc"],
+    ) -> SelectInSortByCommandIfs:
         pass

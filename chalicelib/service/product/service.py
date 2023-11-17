@@ -136,8 +136,8 @@ class AsyncProductService(ProductServiceIfs):
                 rel_name=self.__rel_name,
                 key=filter_key,
                 value=filter_value,
-                sort_key="good_count",
-                sort_value="desc",
+                sort_key=sort_key,
+                sort_value=direction,
                 chunk_size=3,
             )
         )
@@ -145,6 +145,31 @@ class AsyncProductService(ProductServiceIfs):
         if not result:
             raise NotFoundError(
                 f"brands.id={id} not in {self.__db_name}.{self.__rel_name}"
+            )
+        else:
+            return result
+
+    async def find_in_sort_by(
+        self,
+        filter_key: str,
+        filter_value: list,
+        sort_key: str,
+        direction: Literal["asc", "desc"],
+    ):
+        self.__invoker.add_command(
+            self.__command_factory.get_select_in_sort_by_command(
+                db_name=self.__db_name,
+                rel_name=self.__rel_name,
+                key=filter_key,
+                value=filter_value,
+                sort_key=sort_key,
+                sort_value=direction,
+            )
+        )
+        result = (await self.__invoker.invoke())[0]
+        if not result:
+            raise NotFoundError(
+                f"{filter_key} in {filter_value} not in {self.__db_name}.{self.__rel_name}"
             )
         else:
             return result

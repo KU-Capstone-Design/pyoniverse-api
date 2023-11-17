@@ -35,18 +35,13 @@ def factory(client):
 
 
 @pytest.fixture
-def invoker():
-    return AsyncInvoker()
+def constant_brand_service(factory):
+    return AsyncConstantBrandService(command_factory=factory, invoker=AsyncInvoker())
 
 
 @pytest.fixture
-def constant_brand_service(factory, invoker):
-    return AsyncConstantBrandService(command_factory=factory, invoker=invoker)
-
-
-@pytest.fixture
-def product_service(factory, invoker):
-    return AsyncProductService(command_factory=factory, invoker=invoker)
+def product_service(factory):
+    return AsyncProductService(command_factory=factory, invoker=AsyncInvoker())
 
 
 @pytest.fixture

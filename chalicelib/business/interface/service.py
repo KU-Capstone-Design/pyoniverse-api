@@ -37,6 +37,16 @@ class ProductServiceIfs(ServiceIfs):
     def add_values(self, entity: ProductEntity) -> ProductEntity:
         pass
 
+    @abstractmethod
+    def find_in_sort_by(
+        self,
+        filter_key: str,
+        filter_value: list,
+        sort_key: str,
+        direction: Literal["asc", "desc"],
+    ):
+        pass
+
 
 class EventServiceIfs(ServiceIfs):
     @abstractmethod

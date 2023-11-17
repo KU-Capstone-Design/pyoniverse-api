@@ -143,8 +143,8 @@ class AsyncEventService(EventServiceIfs):
                 rel_name=self.__rel_name,
                 key=filter_key,
                 value=filter_value,
-                sort_key="good_count",
-                sort_value="desc",
+                sort_key=sort_key,
+                sort_value=direction,
                 chunk_size=3,
             )
         )
