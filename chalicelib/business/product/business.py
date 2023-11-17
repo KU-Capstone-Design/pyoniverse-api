@@ -1,4 +1,5 @@
 from asyncio import AbstractEventLoop, gather
+from collections import OrderedDict
 from datetime import datetime
 from typing import Dict, List
 
@@ -114,6 +115,40 @@ class AsyncProductBusiness(ProductBusinessIfs):
             tmp.histories = sorted(
                 tmp.histories, key=lambda x: x.date, reverse=True
             )  # Latest 순서
+            # 월 단위로 기록 모으기
+            month_histories: Dict[
+                str, List[ProductBrandHistoryResponseDto]
+            ] = OrderedDict()
+            for history in tmp.histories:
+                key = datetime.strptime(history.date, "%Y-%m-%d").strftime("%Y-%m")
+                if key not in month_histories:
+                    month_histories[key] = []
+                month_histories[key].append(history)
+            # event, price, event_price 모으기
+            result = []
+            for date, value in month_histories.items():
+                events = set()
+                price = float("+inf")
+                event_price = None
+                for h in value:
+                    events = events.union(h.events)
+                    price = min(price, h.price)
+                    if h.event_price is not None:
+                        if event_price is None:
+                            event_price = h.event_price
+                        else:
+                            event_price = min(event_price, h.event_price)
+                result.append(
+                    ProductBrandHistoryResponseDto(
+                        date=date,
+                        events=list(events),
+                        price=price,
+                        event_price=event_price,
+                    )
+                )
+            tmp.histories = result
+
+            # 이벤트
             response.brands.append(tmp)
 
     def _get_histories_summary(self, response: ProductResponseDto):
