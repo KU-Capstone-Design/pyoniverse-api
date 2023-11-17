@@ -46,8 +46,9 @@ class AsyncSearchBusiness(SearchBusinessIfs):
         assert isinstance(self.__loop, AbstractEventLoop)
 
     def get_index(self) -> SearchHomeResponseDto:
-        # TODO : DB Sync
-        result = SearchHomeResponseDto(histories=[])
+        result = SearchHomeResponseDto(
+            histories=[], recommendations=["과자", "도시락", "김밥", "우유"]
+        )
         return result
 
     def get_result(self, request: SearchResultRequestDto) -> SearchResultResponseDto:
