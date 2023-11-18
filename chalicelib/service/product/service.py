@@ -173,3 +173,20 @@ class AsyncProductService(ProductServiceIfs):
             )
         else:
             return result
+
+    async def random(
+        self,
+        chunk_size: int,
+    ):
+        self.__invoker.add_command(
+            self.__command_factory.get_select_random_command(
+                db_name=self.__db_name,
+                rel_name=self.__rel_name,
+                chunk_size=chunk_size,
+            )
+        )
+        result = (await self.__invoker.invoke())[0]
+        if not result:
+            raise NotFoundError(f"{self.__db_name}.{self.__rel_name} is empty")
+        else:
+            return result

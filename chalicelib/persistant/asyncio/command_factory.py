@@ -9,6 +9,7 @@ from chalicelib.persistant.asyncio.mongo.command import (
     AsyncMongoSelectAllCommand,
     AsyncMongoSelectBySortByCommand,
     AsyncMongoSelectInSortByCommand,
+    AsyncMongoSelectRandomCommand,
     AsyncMongoSortByLimit10Command,
 )
 from chalicelib.persistant.asyncio.sqs.command import AsyncSqsAddModifyEqualCommand
@@ -18,6 +19,7 @@ from chalicelib.service.interface.command import (
     SelectAllCommandIfs,
     SelectBySortByCommandIfs,
     SelectInSortByCommandIfs,
+    SelectRandomCommandIfs,
     SortByLimit10CommandIfs,
 )
 from chalicelib.service.interface.command_factory import CommandFactoryIfs
@@ -125,4 +127,17 @@ class AsyncCommandFactory(CommandFactoryIfs):
             value=value,
             sort_key=sort_key,
             sort_value=sort_value,
+        )
+
+    def get_select_random_command(
+        self,
+        db_name: str,
+        rel_name: str,
+        chunk_size: int,
+    ) -> SelectRandomCommandIfs:
+        return AsyncMongoSelectRandomCommand(
+            client=self.__client,
+            db_name=db_name,
+            rel_name=rel_name,
+            chunk_size=chunk_size,
         )

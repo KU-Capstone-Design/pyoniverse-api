@@ -47,6 +47,10 @@ class ProductServiceIfs(ServiceIfs):
     ):
         pass
 
+    @abstractmethod
+    def random(self, chunk_size: int):
+        pass
+
 
 class EventServiceIfs(ServiceIfs):
     @abstractmethod
