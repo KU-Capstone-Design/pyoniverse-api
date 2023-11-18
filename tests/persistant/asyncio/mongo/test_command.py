@@ -8,6 +8,7 @@ from chalicelib.entity.product import ProductEntity
 from chalicelib.persistant.asyncio.mongo.command import (
     AsyncMongoEqualCommand,
     AsyncMongoSelectBySortByCommand,
+    AsyncMongoSelectRandomCommand,
     AsyncMongoSortByLimit10Command,
 )
 from tests.mock.mock import env
@@ -103,3 +104,21 @@ def test_select_by_sort_by_command(client):
                 ok = True
                 break
         assert ok
+
+
+def test_select_random_command(client):
+    # given
+    command = AsyncMongoSelectRandomCommand(
+        client=client,
+        rel_name="products",
+        db_name="service",
+        chunk_size=3,
+    )
+    # when
+    loop: AbstractEventLoop = client.get_io_loop()
+    r1 = loop.run_until_complete(command.execute())
+    r2 = loop.run_until_complete(command.execute())
+    r1 = set(e.id for e in r1)
+    r2 = set(e.id for e in r2)
+    # then
+    assert r1 != r2

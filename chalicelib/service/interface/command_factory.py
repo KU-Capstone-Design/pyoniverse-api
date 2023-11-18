@@ -8,6 +8,7 @@ from chalicelib.service.interface.command import (
     SelectAllCommandIfs,
     SelectBySortByCommandIfs,
     SelectInSortByCommandIfs,
+    SelectRandomCommandIfs,
     SortByLimit10CommandIfs,
 )
 
@@ -74,4 +75,13 @@ class CommandFactoryIfs(metaclass=ABCMeta):
         sort_key: str,
         sort_value: Literal["asc", "desc"],
     ) -> SelectInSortByCommandIfs:
+        pass
+
+    @abstractmethod
+    def get_select_random_command(
+        self,
+        db_name: str,
+        rel_name: str,
+        chunk_size: int,
+    ) -> SelectRandomCommandIfs:
         pass
