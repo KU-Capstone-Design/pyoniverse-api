@@ -13,6 +13,7 @@ from chalicelib.service.interface.command import (
     SelectAllCommandIfs,
     SelectBySortByCommandIfs,
     SelectInSortByCommandIfs,
+    SelectRandomCommandIfs,
     SortByLimit10CommandIfs,
 )
 
@@ -296,6 +297,45 @@ class AsyncMongoSelectInSortByCommand(SelectInSortByCommandIfs):
             .find(filter=_filter)
             .sort(self._sort_key, self._sort_value)
             .to_list(None)
+        )
+        if result:
+            return [
+                ENTITY_MAP[self._db_name][self._rel_name].from_dict(r) for r in result
+            ]
+        else:
+            return []
+
+
+class AsyncMongoSelectRandomCommand(SelectRandomCommandIfs):
+    def __init__(
+        self,
+        client: AsyncIOMotorClient,
+        rel_name: str,
+        chunk_size: int,
+        db_name: Literal["constant", "service"] = "service",
+    ):
+        super().__init__(rel_name=rel_name, db_name=db_name, chunk_size=chunk_size)
+        self._client = client
+
+        assert isinstance(self._client, AsyncIOMotorClient)
+        assert isinstance(self._rel_name, str)
+        assert self._db_name in ["constant", "service"]
+        if self._db_name == "service":
+            db_name = os.getenv("MONGO_DB")
+        else:
+            db_name = self._db_name
+        self._db: AsyncIOMotorDatabase = self._client.get_database(
+            db_name, read_preference=ReadPreference.SECONDARY_PREFERRED
+        )
+        assert isinstance(self._chunk_size, int)
+
+    async def execute(self) -> Sequence[EntityType] | EntityType | None:
+        pipeline = [{"$sample": {"size": self._chunk_size}}]
+        logger.debug(
+            f"AsyncMongoSelectRandomCommand: [{self._db}.{self._rel_name}] {pipeline}(pipeline)"
+        )
+        result = (
+            await self._db[self._rel_name].aggregate(pipeline=pipeline).to_list(None)
         )
         if result:
             return [

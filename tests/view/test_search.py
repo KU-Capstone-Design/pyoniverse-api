@@ -13,6 +13,20 @@ def test_spec_search_home(env, test_client, injector):
     assert Api.validate(SearchHomeResponseSchema, body, many=False) == {}
 
 
+def test_random_recommendation(env, test_client, injector):
+    import json
+
+    res1 = test_client.http.get("/v1/search")
+    res2 = test_client.http.get("/v1/search")
+
+    assert res1.status_code == 200 and res2.status_code == 200
+
+    body1 = json.loads(res1.body)
+    body2 = json.loads(res2.body)
+
+    assert body1["data"]["recommendations"] != body2["data"]["recommendations"]
+
+
 def test_spec_search_result(env, test_client, injector):
     import json
 

@@ -53,6 +53,26 @@ class SelectAllByCommandIfs(CommandIfs):
     pass
 
 
+class SelectRandomCommandIfs(CommandIfs):
+    """
+    전체 문서에서 랜덤 chunk_size 문서 반환
+    """
+
+    def __init__(
+        self,
+        rel_name: str,
+        chunk_size: int,
+        db_name: Literal["constant", "service"] = "service",
+    ):
+        super().__init__(
+            rel_name=rel_name,
+            db_name=db_name,
+            key=None,
+            value=None,
+        )
+        self._chunk_size = chunk_size
+
+
 class SelectInSortByCommandIfs(CommandIfs):
     def __init__(
         self,

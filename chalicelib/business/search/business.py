@@ -46,9 +46,12 @@ class AsyncSearchBusiness(SearchBusinessIfs):
         assert isinstance(self.__loop, AbstractEventLoop)
 
     def get_index(self) -> SearchHomeResponseDto:
-        result = SearchHomeResponseDto(
-            histories=[], recommendations=["과자", "도시락", "김밥", "우유"]
+        # 중복된 상품이 선택되는 경우를 고려해 2배 더 많은 8개를 선택함
+        random_products = self.__loop.run_until_complete(
+            self.__product_service.random(chunk_size=8)
         )
+        recommendations = list(set(p.name for p in random_products))[:4]
+        result = SearchHomeResponseDto(histories=[], recommendations=recommendations)
         return result
 
     def get_result(self, request: SearchResultRequestDto) -> SearchResultResponseDto:
