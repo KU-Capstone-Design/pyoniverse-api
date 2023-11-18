@@ -1,4 +1,4 @@
-from asyncio import AbstractEventLoop, gather
+from asyncio import AbstractEventLoop
 from typing import List
 
 from chalice import NotFoundError
@@ -130,6 +130,10 @@ class AsyncSearchBusiness(SearchBusinessIfs):
         # 8. 반횐될 products 생성
         products = []
         for product in product_entities:
+            if product.price == product.best.price:
+                event_price = None
+            else:
+                event_price = product.best.price
             res_product = SearchResultProductResponseDto(
                 id=product.id,
                 name=product.name,
@@ -140,7 +144,7 @@ class AsyncSearchBusiness(SearchBusinessIfs):
                     ConstantConverter.convert_event_id(id_)["name"]
                     for id_ in product.best.events
                 ],
-                event_price=product.best.price,
+                event_price=event_price,
             )
             products.append(res_product)
         # 9. 정렬 기준에 맞춰 정렬 - 현재 price asc
