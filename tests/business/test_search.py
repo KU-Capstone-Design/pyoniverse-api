@@ -74,9 +74,13 @@ def test_search(constant_brand_service, product_service, search_service, loop):
         loop=loop,
     )
     request = SearchResultRequestDto(
-        query="test",
+        query="우유",
     )
     # when
     res = business.get_result(request=request)
     # then
     assert isinstance(res, SearchResultResponseDto)
+    for product in res.products:
+        assert product.price != product.event_price
+        if product.event_price is not None:
+            assert product.event_price < product.price
