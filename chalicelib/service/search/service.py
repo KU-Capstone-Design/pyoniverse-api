@@ -1,4 +1,5 @@
 import logging
+from functools import lru_cache
 from typing import Sequence
 
 import aiohttp
@@ -16,6 +17,7 @@ class AsyncSearchService(SearchServiceIfs):
         assert self.__engine_uri
         self.logger = logging.getLogger(__name__)
 
+    @lru_cache(maxsize=512)
     async def find_products(self, query: str) -> Sequence[int]:
         if not query:
             raise BadRequestError(f"{query} should be not empty")

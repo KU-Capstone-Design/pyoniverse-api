@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import List, Literal
+from typing import List
 
 from chalicelib.business.interface.dto import DtoIfs
 
@@ -30,21 +30,6 @@ class SearchResultBrandResponseDto:
 
 
 @dataclass(kw_only=True)
-class SearchResultSortResponseDto:
-    id: int = field(default=None)
-    name: str = field(default=None)
-
-
-@dataclass(kw_only=True)
-class SearchResultSelectedOptionResponseDto:
-    category: int | None = field(default=None)
-    event: int | None = field(default=None)
-    brand: int | None = field(default=None)
-    sort: int = field(default=None)
-    direction: Literal["asc", "desc"] = field(default=None)
-
-
-@dataclass(kw_only=True)
 class SearchResultProductResponseDto:
     id: int = field(default=None)
     name: str = field(default=None)
@@ -53,6 +38,8 @@ class SearchResultProductResponseDto:
     price: float = field(default=None)
     events: List[str] = field(default_factory=list)
     event_price: float | None = field(default=None)
+    category: int | None = field(default=None)
+    brands: List[int] = field(default_factory=list)
 
 
 @dataclass(kw_only=True)
@@ -60,8 +47,4 @@ class SearchResultResponseDto(DtoIfs):
     categories: List[SearchResultCategoryResponseDto] = field(default_factory=list)
     events: List[SearchResultEventResponseDto] = field(default_factory=list)
     brands: List[SearchResultBrandResponseDto] = field(default_factory=list)
-    sorts: List[SearchResultSortResponseDto] = field(default_factory=list)
-    selected: SearchResultSelectedOptionResponseDto = field(
-        default_factory=SearchResultSelectedOptionResponseDto
-    )
     products: List[SearchResultProductResponseDto] = field(default_factory=list)

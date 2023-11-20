@@ -18,9 +18,8 @@ from chalicelib.business.search.dto.response import (
     SearchResultEventResponseDto,
     SearchResultProductResponseDto,
     SearchResultResponseDto,
-    SearchResultSelectedOptionResponseDto,
-    SearchResultSortResponseDto,
 )
+from chalicelib.entity.product import ProductEntity
 from chalicelib.entity.util import ConstantConverter
 
 
@@ -102,10 +101,7 @@ class AsyncSearchBusiness(SearchBusinessIfs):
                 )
         events = list(events.values())
         events.append(SearchResultEventResponseDto(id=None, name="전체"))
-        # 5. brand 정보 가져오기
-        # constant_brands = self.__loop.run_until_complete(
-        #         self.__constant_brand_service.find_all()
-        # )
+
         brand_map = {
             cb.id: SearchResultBrandResponseDto(id=cb.id, name=cb.name, image=cb.image)
             for cb in constant_brands
@@ -116,23 +112,10 @@ class AsyncSearchBusiness(SearchBusinessIfs):
         brands = list(brands.values())
         brands.append(SearchResultBrandResponseDto(id=None, name="전체", image=None))
 
-        # 6. sort # TODO : 아직 협의되지 않음 - price 순서로 정렬
-        sorts = [
-            SearchResultSortResponseDto(id=1, name="Good Count"),
-            SearchResultSortResponseDto(id=2, name="View Count"),
-            SearchResultSortResponseDto(id=3, name="price"),
-        ]
-        # 7. 필터 적용 # TODO :
-        selected = SearchResultSelectedOptionResponseDto(
-            category=None,
-            event=None,
-            brand=None,
-            sort=3,
-            direction="asc",
-        )
         # 8. 반횐될 products 생성
         products = []
         for product in product_entities:
+            product: ProductEntity = product
             if product.price == product.best.price:
                 event_price = None
             else:
@@ -148,6 +131,8 @@ class AsyncSearchBusiness(SearchBusinessIfs):
                     for id_ in product.best.events
                 ],
                 event_price=event_price,
+                category=product.category,
+                brands=list(map(lambda x: x.id, product.brands)),
             )
             products.append(res_product)
         # 9. 정렬 기준에 맞춰 정렬 - 현재 price asc
@@ -157,8 +142,6 @@ class AsyncSearchBusiness(SearchBusinessIfs):
             categories=categories,
             events=events,
             brands=brands,
-            sorts=sorts,
-            selected=selected,
             products=products,
         )
         return response

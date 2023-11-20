@@ -17,19 +17,6 @@ class SearchResultBrandResponseSchema(Schema):
     image = fields.URL(required=True)
 
 
-class SearchResultSortResponseSchema(Schema):
-    id = fields.Integer(required=True, allow_none=True)
-    name = fields.Str(required=True)
-
-
-class SearchResultSelectedOptionResponseSchema(Schema):
-    category = fields.Integer(required=True, allow_none=True)
-    event = fields.Integer(required=True, allow_none=True)
-    brand = fields.Integer(required=True, allow_none=True)
-    sort = fields.Integer(required=True)
-    direction = fields.Str(required=True, validate=lambda x: x in {"asc", "desc"})
-
-
 class SearchResultProductSchema(Schema):
     id = fields.Integer(required=True)
     name = fields.Str(required=True)
@@ -38,6 +25,8 @@ class SearchResultProductSchema(Schema):
     price = fields.Float(required=True)
     events = fields.List(fields.Str(), required=True)
     event_price = fields.Float(required=True, allow_none=True)
+    category = fields.Integer(required=True, allow_none=True)
+    brands = fields.List(fields.Integer(), required=True, validate=lambda x: len(x) > 0)
 
 
 class SearchResultResponseSchema(Schema):
@@ -46,6 +35,4 @@ class SearchResultResponseSchema(Schema):
     )
     events = fields.Nested(SearchResultEventResponseSchema, required=True, many=True)
     brands = fields.Nested(SearchResultBrandResponseSchema, required=True, many=True)
-    sorts = fields.Nested(SearchResultSortResponseSchema, required=True, many=True)
-    selected = fields.Nested(SearchResultSelectedOptionResponseSchema, required=True)
     products = fields.Nested(SearchResultProductSchema, required=True, many=True)
