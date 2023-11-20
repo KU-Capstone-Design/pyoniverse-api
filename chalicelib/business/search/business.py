@@ -128,7 +128,7 @@ class AsyncSearchBusiness(SearchBusinessIfs):
                     for id_ in product.best.events
                 ],
                 event_price=event_price,
-                category=product.category,
+                category=int(product.category) if product.category else None,
                 brands=list(map(lambda x: x.id, product.brands)),
             )
             products.append(res_product)
