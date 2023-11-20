@@ -33,11 +33,6 @@ class SearchView:
             raise BadRequestError("Empty Query")
         request = SearchResultRequestDto(
             query=params.get("query"),
-            sort=params.get("sort"),
-            direction=params.get("direction"),
-            category=params.get("category"),
-            event=params.get("event"),
-            brand=params.get("brand"),
         )
 
         response = SearchView.business.get_result(request)
