@@ -86,7 +86,6 @@ class AsyncSearchBusiness(SearchBusinessIfs):
                 if p.category is not None
             }.values()
         )
-        categories.append(SearchResultCategoryResponseDto(id=None, name="전체"))
         # 4. event 정보 가져오기
         events = {}
         for product in product_entities:
@@ -100,7 +99,6 @@ class AsyncSearchBusiness(SearchBusinessIfs):
                     }
                 )
         events = list(events.values())
-        events.append(SearchResultEventResponseDto(id=None, name="전체"))
 
         brand_map = {
             cb.id: SearchResultBrandResponseDto(id=cb.id, name=cb.name, image=cb.image)
@@ -110,7 +108,6 @@ class AsyncSearchBusiness(SearchBusinessIfs):
         for product in product_entities:
             brands.update({b.id: brand_map[b.id] for b in product.brands})
         brands = list(brands.values())
-        brands.append(SearchResultBrandResponseDto(id=None, name="전체", image=None))
 
         # 8. 반횐될 products 생성
         products = []
