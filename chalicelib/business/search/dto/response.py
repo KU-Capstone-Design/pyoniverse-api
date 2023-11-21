@@ -48,3 +48,4 @@ class SearchResultResponseDto(DtoIfs):
     events: List[SearchResultEventResponseDto] = field(default_factory=list)
     brands: List[SearchResultBrandResponseDto] = field(default_factory=list)
     products: List[SearchResultProductResponseDto] = field(default_factory=list)
+    products_count: int = field(default=None)

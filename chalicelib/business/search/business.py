@@ -140,5 +140,6 @@ class AsyncSearchBusiness(SearchBusinessIfs):
             events=events,
             brands=brands,
             products=products,
+            products_count=len(products),
         )
         return response
