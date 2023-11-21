@@ -84,3 +84,4 @@ def test_search(constant_brand_service, product_service, search_service, loop):
         assert product.price != product.event_price
         if product.event_price is not None:
             assert product.event_price < product.price
+    assert res.products_count == len(res.products)
