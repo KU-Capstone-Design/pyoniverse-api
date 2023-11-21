@@ -85,3 +85,7 @@ def test_search(constant_brand_service, product_service, search_service, loop):
         if product.event_price is not None:
             assert product.event_price < product.price
     assert res.products_count == len(res.products)
+
+    assert sorted(res.categories, key=lambda x: x.id) == res.categories
+    assert sorted(res.brands, key=lambda x: x.id) == res.brands
+    assert sorted(res.events, key=lambda x: x.id) == res.events

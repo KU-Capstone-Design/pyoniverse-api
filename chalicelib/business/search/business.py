@@ -136,9 +136,9 @@ class AsyncSearchBusiness(SearchBusinessIfs):
         products = sorted(products, key=lambda x: x.price)
 
         response = SearchResultResponseDto(
-            categories=categories,
-            events=events,
-            brands=brands,
+            categories=sorted(categories, key=lambda x: x.id),
+            events=sorted(events, key=lambda x: x.id),
+            brands=sorted(brands, key=lambda x: x.id),
             products=products,
             products_count=len(products),
         )
