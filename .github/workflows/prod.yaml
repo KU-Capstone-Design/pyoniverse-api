@@ -1,7 +1,7 @@
-name: Deploy Dev Lambda
+name: Deploy Prod Lambda
 on:
   push:
-    branches: [ develop ]
+    branches: [ prod ]
 
 jobs:
   build:
@@ -29,8 +29,8 @@ jobs:
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
           IAM_ROLE_ARN: ${{ secrets.LAMBDA_ARN }}
-          DOMAIN_NAME: ${{ secrets.DOMAIN_NAME_DEV }}
-          STAGE: dev_v1
+          DOMAIN_NAME: ${{ secrets.DOMAIN_NAME_PROD }}
+          STAGE: prod_v1
         run: |
           pip install -r requirements.txt
           # Make .env file
@@ -38,11 +38,12 @@ jobs:
           echo "IAM_ROLE_ARN=$IAM_ROLE_ARN" >> .env
           echo "DOMAIN_NAME=$DOMAIN_NAME" >> .env
           echo "CERTIFICATE_ARN=${{ secrets.CERTIFICATE_ARN }}" >> .env
-          echo "DB_QUEUE_NAME=${{ secrets.DB_SQS_NAME_DEV }}" >> .env
-          echo "SEARCH_ENGINE_URI=${{ secrets.SEARCH_ENGINE_URI_DEV }}" >> .env
+          echo "DB_QUEUE_NAME=${{ secrets.DB_SQS_NAME_PROD }}" >> .env
+          echo "SEARCH_ENGINE_URI=${{ secrets.SEARCH_ENGINE_URI_PROD }}" >> .env
 
           python -m pytest -v
           python deploy.py --stage=${{ env.STAGE }}
+
       - name: Deploy Alarm
         uses: 8398a7/action-slack@v3
         with:
