@@ -1,0 +1,36 @@
+{
+  "resources": [
+    {
+      "name": "managed-layer",
+      "resource_type": "lambda_layer",
+      "layer_version_arn": "arn:aws:lambda:ap-northeast-2:792939917746:layer:pyoniverse-api-dev_v1-managed-layer:37"
+    },
+    {
+      "name": "api_handler",
+      "resource_type": "lambda_function",
+      "lambda_arn": "arn:aws:lambda:ap-northeast-2:792939917746:function:pyoniverse-api-dev_v1"
+    },
+    {
+      "name": "rest_api",
+      "resource_type": "rest_api",
+      "rest_api_id": "q5h3rqk4xj",
+      "rest_api_url": "https://q5h3rqk4xj.execute-api.ap-northeast-2.amazonaws.com/dev/"
+    },
+    {
+      "name": "api_gateway_custom_domain",
+      "resource_type": "domain_name",
+      "hosted_zone_id": "Z20JF4UZKIW1U8",
+      "alias_domain_name": "d-d8p8pt6kif.execute-api.ap-northeast-2.amazonaws.com",
+      "certificate_arn": "arn:aws:acm:ap-northeast-2:792939917746:certificate/545ac79d-41dd-4ae7-adb6-84a92e46e369",
+      "security_policy": "TLS_1_2",
+      "domain_name": "dev-api.pyoniverse.kr",
+      "api_mapping": [
+        {
+          "key": "/"
+        }
+      ]
+    }
+  ],
+  "schema_version": "2.0",
+  "backend": "api"
+}

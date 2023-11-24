@@ -1,0 +1,45 @@
+{
+    "version": "2.0",
+    "app_name": "pyoniverse-api",
+    "api_gateway_endpoint_type": "REGIONAL",
+    "manage_iam_role": false,
+    "lambda_timeout": 600,
+    "automatic_layer": true,
+    "environment_variables": {
+        "COUNTRY_CODE": "kr"
+    },
+    "minimum_compression_size": 0,
+    "stages": {
+        "dev_v1": {
+            "api_gateway_stage": "dev",
+            "api_gateway_custom_domain": {
+                "domain_name": "",
+                "certificate_arn": "",
+                "tls_version": "TLS_1_2",
+                "tags": {
+                    "project": "pyoniverse",
+                    "author": "yeongro",
+                    "asignee": "yeongro"
+                }
+            },
+            "environment_variables": {
+                "MONGO_DB": "service_dev",
+                "LOG_LEVEL": "DEBUG"
+            }
+        },
+        "prod_v1": {
+            "api_gateway_stage": "prod",
+            "environment_variables": {
+                "MONGO_DB": "service_prod",
+                "LOG_LEVEL": "INFO"
+            }
+        },
+        "test": {
+            "api_gateway_stage": "test",
+            "environment_variables": {
+                "MONGO_DB": "test",
+                "LOG_LEVEL": "DEBUG"
+            }
+        }
+    }
+}
