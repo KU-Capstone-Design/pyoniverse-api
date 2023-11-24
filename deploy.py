@@ -53,7 +53,10 @@ if __name__ == "__main__":
         os.system(f"chalice deploy --stage {args.stage}")
     except Exception as e:
         tb = traceback.format_exc()
-        print(f"Error: {tb}")
+        print(tb)
+        exit(1)
+    else:
+        exit(0)
     finally:
         # rollback config file
         with open(r".chalice/config.json.bak", "r") as f:
