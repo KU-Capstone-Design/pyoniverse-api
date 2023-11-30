@@ -43,9 +43,23 @@ class SearchResultProductResponseDto:
 
 
 @dataclass(kw_only=True)
+class SearchResultResponseMetaDto(DtoIfs):
+    current_page: int
+    total_page: int
+    current_size: int
+    page_size: int
+    total_size: int
+    sort_key: str
+    sort_direction: str
+
+
+@dataclass(kw_only=True)
 class SearchResultResponseDto(DtoIfs):
     categories: List[SearchResultCategoryResponseDto] = field(default_factory=list)
     events: List[SearchResultEventResponseDto] = field(default_factory=list)
     brands: List[SearchResultBrandResponseDto] = field(default_factory=list)
     products: List[SearchResultProductResponseDto] = field(default_factory=list)
     products_count: int = field(default=None)
+    meta: SearchResultResponseMetaDto = field(
+        default_factory=SearchResultResponseMetaDto
+    )

@@ -1,4 +1,4 @@
-from chalice import BadRequestError, Blueprint
+from chalice import Blueprint
 from chalice.app import MultiDict
 from dependency_injector.wiring import Provide
 
@@ -29,12 +29,7 @@ class SearchView:
     @api.route("/search/result", methods=["GET", "HEAD"], cors=True)
     def search() -> Api:
         params: MultiDict = SearchView.api.current_request.query_params
-        if not params or not params.get("query"):
-            raise BadRequestError("Empty Query")
-        request = SearchResultRequestDto(
-            query=params.get("query"),
-        )
-
+        request = SearchResultRequestDto.load(params)
         response = SearchView.business.get_result(request)
         api = (
             ApiBuilder()

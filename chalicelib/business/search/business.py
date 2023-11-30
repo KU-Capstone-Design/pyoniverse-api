@@ -1,5 +1,5 @@
 from asyncio import AbstractEventLoop
-from typing import List
+from math import ceil
 
 from chalice import NotFoundError
 
@@ -18,6 +18,7 @@ from chalicelib.business.search.dto.response import (
     SearchResultEventResponseDto,
     SearchResultProductResponseDto,
     SearchResultResponseDto,
+    SearchResultResponseMetaDto,
 )
 from chalicelib.entity.product import ProductEntity
 from chalicelib.entity.util import ConstantConverter
@@ -55,26 +56,42 @@ class AsyncSearchBusiness(SearchBusinessIfs):
 
     def get_result(self, request: SearchResultRequestDto) -> SearchResultResponseDto:
         query = request.query.replace("%20", " ")
-        # 1. Search Service를 이용해 검색 시도
-        search_results: List[int] = self.__loop.run_until_complete(
-            self.__search_service.find_products(query=query)
-        )
-        # 2. id list에 맞는 상품 가져오기
-        try:
-            product_entities = self.__loop.run_until_complete(
-                self.__product_service.find_in_sort_by(
-                    filter_key="id",
-                    filter_value=search_results,
-                    sort_key="price",
-                    direction="asc",
+        # 1. query="" 이면 모든 상품을 가져온다. 검색 X
+        if not request.query:
+            filter_key = "status"
+            filter_value = 1
+            total_size = self.__loop.run_until_complete(
+                self.__product_service.get_length(
+                    filter_key=filter_key,
+                    filter_value=filter_value,
                 )
             )
+        else:
+            # 1. Search Service를 이용해 검색 시도
+            filter_key = "id"
+            filter_value = self.__loop.run_until_complete(
+                self.__search_service.find_products(query=query)
+            )
+            total_size = len(filter_value)
+        total_page = ceil(total_size / request.page_size)
+
+        # 2. id list에 맞는 상품 가져오기
+        action = self.__product_service.find_page(
+            filter_key=filter_key,
+            filter_value=filter_value,
+            sort_key=request.sort_key,
+            sort_direction=request.sort_direction,
+            page=request.page,
+            page_size=request.page_size,
+        )
+        try:
+            product_entities = self.__loop.run_until_complete(action)
         except NotFoundError:
             product_entities = []
+
         constant_brands = self.__loop.run_until_complete(
             self.__constant_brand_service.find_all()
         )
-
         # 3. category 정보 가져오기
         categories = list(
             {
@@ -132,9 +149,16 @@ class AsyncSearchBusiness(SearchBusinessIfs):
                 brands=list(map(lambda x: x.id, product.brands)),
             )
             products.append(res_product)
-        # 9. 정렬 기준에 맞춰 정렬 - 현재 price asc
-        products = sorted(products, key=lambda x: x.price)
 
+        meta = SearchResultResponseMetaDto(
+            current_page=request.page,
+            total_page=total_page,
+            current_size=len(products),
+            total_size=total_size,
+            page_size=request.page_size,
+            sort_key=request.sort_key,
+            sort_direction=request.sort_direction,
+        )
         response = SearchResultResponseDto(
             categories=sorted(categories, key=lambda x: x.id),
             events=sorted(events, key=lambda x: x.id),
