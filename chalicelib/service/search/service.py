@@ -2,10 +2,10 @@ import logging
 from typing import Sequence
 
 import aiohttp
-from async_lru import alru_cache
 from chalice import BadRequestError, ChaliceViewError
 
 from chalicelib.business.interface.service import SearchServiceIfs
+from chalicelib.extern.util import async_cache
 from chalicelib.service.search.model.search_engine_response import (
     SearchEngineResponseDto,
 )
@@ -17,7 +17,7 @@ class AsyncSearchService(SearchServiceIfs):
         assert self.__engine_uri
         self.logger = logging.getLogger(__name__)
 
-    @alru_cache
+    @async_cache
     async def find_products(self, query: str) -> Sequence[int]:
         if not query:
             raise BadRequestError(f"{query} should be not empty")
