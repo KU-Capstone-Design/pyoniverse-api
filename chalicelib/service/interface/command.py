@@ -22,6 +22,10 @@ class CommandIfs(metaclass=ABCMeta):
         pass
 
 
+class CountByCommandIfs(CommandIfs):
+    pass
+
+
 class EqualCommandIfs(CommandIfs):
     pass
 

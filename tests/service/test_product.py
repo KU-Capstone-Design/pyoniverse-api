@@ -1,5 +1,4 @@
 import os
-from asyncio import gather
 
 import pytest
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -67,3 +66,13 @@ def test_product_service_add_values(client, factory, invoker):
     assert result.id == entity.id
     assert result.good_count == prv_entity.good_count + entity.good_count
     assert result.view_count == prv_entity.view_count + entity.view_count
+
+
+@pytest.mark.asyncio
+async def test_product_length(client, factory, invoker):
+    service = AsyncProductService(command_factory=factory, invoker=invoker)
+    loop = client.get_io_loop()
+    res = await service.get_length()
+    assert res > 0
+    exactly_one = await service.get_length(filter_key="id", filter_value=1)
+    assert exactly_one == 1

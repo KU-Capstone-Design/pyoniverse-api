@@ -8,6 +8,7 @@ from pymongo import ReadPreference
 from chalicelib.entity.base import EntityType
 from chalicelib.entity.util import ENTITY_MAP
 from chalicelib.service.interface.command import (
+    CountByCommandIfs,
     EqualCommandIfs,
     SelectAllByCommandIfs,
     SelectAllCommandIfs,
@@ -343,3 +344,36 @@ class AsyncMongoSelectRandomCommand(SelectRandomCommandIfs):
             ]
         else:
             return []
+
+
+class AsyncMongoCountByCommand(CountByCommandIfs):
+    def __init__(
+        self,
+        client: AsyncIOMotorClient,
+        rel_name: str,
+        key: str,
+        value: Any,
+        db_name: Literal["constant", "service"] = "service",
+    ):
+        super().__init__(rel_name=rel_name, db_name=db_name, key=key, value=value)
+        self._client = client
+
+        assert isinstance(self._client, AsyncIOMotorClient)
+        assert isinstance(self._rel_name, str)
+        assert self._db_name in ["constant", "service"]
+        if self._db_name == "service":
+            db_name = os.getenv("MONGO_DB")
+        else:
+            db_name = self._db_name
+        self._db: AsyncIOMotorDatabase = self._client.get_database(
+            db_name, read_preference=ReadPreference.SECONDARY_PREFERRED
+        )
+
+    async def execute(self) -> int:
+        if self._key is None:
+            length = await self._db[self._rel_name].count_documents(filter={})
+        else:
+            length = await self._db[self._rel_name].count_documents(
+                filter={self._key: self._value}
+            )
+        return length

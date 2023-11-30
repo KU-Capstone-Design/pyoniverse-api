@@ -4,6 +4,7 @@ import boto3
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from chalicelib.persistant.asyncio.mongo.command import (
+    AsyncMongoCountByCommand,
     AsyncMongoEqualCommand,
     AsyncMongoSelectAllByCommand,
     AsyncMongoSelectAllCommand,
@@ -14,6 +15,7 @@ from chalicelib.persistant.asyncio.mongo.command import (
 )
 from chalicelib.persistant.asyncio.sqs.command import AsyncSqsAddModifyEqualCommand
 from chalicelib.service.interface.command import (
+    CountByCommandIfs,
     EqualCommandIfs,
     SelectAllByCommandIfs,
     SelectAllCommandIfs,
@@ -140,4 +142,15 @@ class AsyncCommandFactory(CommandFactoryIfs):
             db_name=db_name,
             rel_name=rel_name,
             chunk_size=chunk_size,
+        )
+
+    def get_count_by_command(
+        self, db_name: str, rel_name: str, key: str = None, value: Any = None
+    ) -> CountByCommandIfs:
+        return AsyncMongoCountByCommand(
+            client=self.__client,
+            db_name=db_name,
+            rel_name=rel_name,
+            key=key,
+            value=value,
         )

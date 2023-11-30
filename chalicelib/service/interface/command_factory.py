@@ -3,6 +3,7 @@ from typing import Any, Literal
 
 from chalicelib.service.interface.command import (
     AddModifyEqualCommandIfs,
+    CountByCommandIfs,
     EqualCommandIfs,
     SelectAllByCommandIfs,
     SelectAllCommandIfs,
@@ -84,4 +85,10 @@ class CommandFactoryIfs(metaclass=ABCMeta):
         rel_name: str,
         chunk_size: int,
     ) -> SelectRandomCommandIfs:
+        pass
+
+    @abstractmethod
+    def get_count_by_command(
+        self, db_name: str, rel_name: str, key: str, value: Any
+    ) -> CountByCommandIfs:
         pass

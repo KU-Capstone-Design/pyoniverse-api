@@ -51,6 +51,13 @@ class ProductServiceIfs(ServiceIfs):
     def random(self, chunk_size: int):
         pass
 
+    @abstractmethod
+    def get_length(self, filter_key: str = None, filter_value: Any = None) -> int:
+        """
+        filter_key is None: 전체 문서 수를 반환한다.
+        """
+        pass
+
 
 class EventServiceIfs(ServiceIfs):
     @abstractmethod
