@@ -47,3 +47,4 @@ class SearchResultResponseSchema(Schema):
     brands = fields.Nested(SearchResultBrandResponseSchema, required=True, many=True)
     products = fields.Nested(SearchResultProductSchema, required=True, many=True)
     meta = fields.Nested(SearchResultMetaSchema, required=True)
+    product_count = fields.Integer(required=True)

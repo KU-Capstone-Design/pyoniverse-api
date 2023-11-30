@@ -9,8 +9,8 @@ from chalicelib.business.interface.dto import DtoIfs
 
 class _SearchResultRequestDtoSchema(Schema):
     query = fields.Str(required=True)
-    page = fields.Int(required=False, load_default=1)
-    page_size = fields.Int(required=False, load_default=10)
+    page = fields.Int(required=False, load_default=1, validate=lambda x: x > 0)
+    page_size = fields.Int(required=False, load_default=10, validate=lambda x: x > 0)
     sort_key = fields.Str(
         required=False,
         validate=validate.OneOf(["price", "event_price", "good_count", "view_count"]),

@@ -21,9 +21,9 @@ def service():
 
 
 def test_find_products(service):
+    loop = asyncio.get_event_loop()
     # given
     query = "우유"
-    loop = asyncio.get_event_loop()
     # when
     result = loop.run_until_complete(service.find_products(query))
     # then

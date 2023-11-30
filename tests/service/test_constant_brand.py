@@ -25,12 +25,12 @@ def invoker():
     return AsyncInvoker()
 
 
-def test_constant_brand_service(client, factory, invoker):
+@pytest.mark.asyncio
+async def test_constant_brand_service(client, factory, invoker):
     # given
     service = AsyncConstantBrandService(command_factory=factory, invoker=invoker)
-    loop = client.get_io_loop()
     # when & then
-    result = loop.run_until_complete(service.find_all())
+    result = await service.find_all()
     assert isinstance(result, list)
     assert len(result) > 0
     assert all(isinstance(r, ConstantBrandEntity) for r in result)

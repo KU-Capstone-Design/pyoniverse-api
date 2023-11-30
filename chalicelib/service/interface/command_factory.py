@@ -9,6 +9,7 @@ from chalicelib.service.interface.command import (
     SelectAllCommandIfs,
     SelectBySortByCommandIfs,
     SelectInSortByCommandIfs,
+    SelectPageByOrderByCommandIfs,
     SelectRandomCommandIfs,
     SortByLimit10CommandIfs,
 )
@@ -91,4 +92,18 @@ class CommandFactoryIfs(metaclass=ABCMeta):
     def get_count_by_command(
         self, db_name: str, rel_name: str, key: str, value: Any
     ) -> CountByCommandIfs:
+        pass
+
+    @abstractmethod
+    def get_find_page_command(
+        self,
+        db_name: str,
+        rel_name: str,
+        key: str,
+        value: Any,
+        sort_key: str,
+        sort_direction: Literal["asc", "desc"],
+        page: int,
+        page_size: int,
+    ) -> SelectPageByOrderByCommandIfs:
         pass

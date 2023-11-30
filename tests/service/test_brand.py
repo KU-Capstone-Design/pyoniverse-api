@@ -5,8 +5,8 @@ from chalice import BadRequestError
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from chalicelib.entity.brand import BrandEntity
-from chalicelib.persistant.asyncio.invoker import AsyncInvoker
 from chalicelib.persistant.asyncio.command_factory import AsyncCommandFactory
+from chalicelib.persistant.asyncio.invoker import AsyncInvoker
 from chalicelib.service.brand.service import AsyncBrandService
 from tests.mock.mock import env
 
@@ -26,17 +26,13 @@ def invoker():
     return AsyncInvoker()
 
 
-def test_brand_service(client, factory, invoker):
+@pytest.mark.asyncio
+async def test_brand_service(client, factory, invoker):
     # given
     service = AsyncBrandService(command_factory=factory, invoker=invoker)
-    loop = client.get_io_loop()
     # when & then
-    try:
-        loop.run_until_complete(service.find_by_slug(None))
-    except BadRequestError:
-        assert True
-    else:
-        assert False
+    with pytest.raises(BadRequestError):
+        await service.find_by_slug(None)
 
-    result = loop.run_until_complete(service.find_by_slug(BrandEntity(slug="cu")))
+    result = await service.find_by_slug(BrandEntity(slug="cu"))
     assert isinstance(result, BrandEntity)

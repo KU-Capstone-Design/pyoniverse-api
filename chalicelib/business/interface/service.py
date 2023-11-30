@@ -58,6 +58,18 @@ class ProductServiceIfs(ServiceIfs):
         """
         pass
 
+    @abstractmethod
+    def find_page(
+        self,
+        filter_key: str,
+        filter_value: Any,
+        sort_key: str,
+        sort_direction: Literal["asc", "desc"],
+        page: int,
+        page_size: int,
+    ):
+        pass
+
 
 class EventServiceIfs(ServiceIfs):
     @abstractmethod

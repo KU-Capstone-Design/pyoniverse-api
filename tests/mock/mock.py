@@ -38,6 +38,6 @@ def test_client(env):
 
 
 @pytest.fixture
-def injector(env):
+def injector(env, event_loop):
     injector = MainInjector()
     injector.inject()

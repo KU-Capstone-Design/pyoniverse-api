@@ -1,3 +1,4 @@
+import asyncio
 from asyncio import AbstractEventLoop
 from math import ceil
 
@@ -165,5 +166,6 @@ class AsyncSearchBusiness(SearchBusinessIfs):
             brands=sorted(brands, key=lambda x: x.id),
             products=products,
             products_count=len(products),
+            meta=meta,
         )
         return response
