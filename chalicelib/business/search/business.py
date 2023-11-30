@@ -76,11 +76,16 @@ class AsyncSearchBusiness(SearchBusinessIfs):
             total_size = len(filter_value)
         total_page = ceil(total_size / request.page_size)
 
-        # 2. id list에 맞는 상품 가져오기
+        # 2. 상품 가져오기
+        if request.sort_key == "event_price":
+            # best.price
+            sort_key = "best.price"
+        else:
+            sort_key = request.sort_key
         action = self.__product_service.find_page(
             filter_key=filter_key,
             filter_value=filter_value,
-            sort_key=request.sort_key,
+            sort_key=sort_key,
             sort_direction=request.sort_direction,
             page=request.page,
             page_size=request.page_size,
