@@ -1,19 +1,8 @@
-import os
-
-import pytest
-from motor.motor_asyncio import AsyncIOMotorClient
-
+from chalicelib.persistant.asyncio.command_factory import AsyncCommandFactory
 from chalicelib.persistant.asyncio.mongo.command import (
     AsyncMongoEqualCommand,
     AsyncMongoSortByLimit10Command,
 )
-from chalicelib.persistant.asyncio.command_factory import AsyncCommandFactory
-from tests.mock.mock import env
-
-
-@pytest.fixture
-def client(env):
-    return AsyncIOMotorClient(os.getenv("MONGO_URI"))
 
 
 def test_factory(client):

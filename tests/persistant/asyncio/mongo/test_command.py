@@ -1,8 +1,4 @@
-import os
-from asyncio import AbstractEventLoop
-
 import pytest
-from motor.motor_asyncio import AsyncIOMotorClient
 
 from chalicelib.entity.product import ProductEntity
 from chalicelib.persistant.asyncio.mongo.command import (
@@ -11,12 +7,6 @@ from chalicelib.persistant.asyncio.mongo.command import (
     AsyncMongoSelectRandomCommand,
     AsyncMongoSortByLimit10Command,
 )
-from tests.mock.mock import env
-
-
-@pytest.fixture
-def client(env):
-    return AsyncIOMotorClient(os.getenv("MONGO_URI"))
 
 
 def test_invalid_equal_command(client):
@@ -24,44 +14,31 @@ def test_invalid_equal_command(client):
     rel_name = "error_rel_name"
     key, value = None, None
     # when & then
-    try:
+    with pytest.raises(AssertionError):
         AsyncMongoEqualCommand(
             client=client,
             rel_name=rel_name,
             key=key,
             value=value,
         )
-    except AssertionError:
-        assert True
-    else:
-        assert False
 
-    try:
         AsyncMongoEqualCommand(
             client=client,
             rel_name=None,
             key="key",
             value=value,
         )
-    except AssertionError:
-        assert True
-    else:
-        assert False
 
-    try:
         AsyncMongoEqualCommand(
             client=None,
             rel_name=rel_name,
             key="key",
             value=value,
         )
-    except AssertionError:
-        assert True
-    else:
-        assert False
 
 
-def test_equal_command(client):
+@pytest.mark.asyncio
+async def test_equal_command(client):
     # given
     rel_name = "brands"
     db_name = "constant"
@@ -71,14 +48,14 @@ def test_equal_command(client):
     command = AsyncMongoSortByLimit10Command(
         rel_name=rel_name, db_name=db_name, key=key, value=value, client=client
     )
-    loop: AbstractEventLoop = client.get_io_loop()
-    result = loop.run_until_complete(command.execute())
+    result = await command.execute()
     # then
     assert len(result) <= 10
     assert sorted(result, key=lambda x: x.id) == result
 
 
-def test_select_by_sort_by_command(client):
+@pytest.mark.asyncio
+async def test_select_by_sort_by_command(client):
     # given
     command = AsyncMongoSelectBySortByCommand(
         client=client,
@@ -91,8 +68,7 @@ def test_select_by_sort_by_command(client):
         chunk_size=3,
     )
     # when
-    loop: AbstractEventLoop = client.get_io_loop()
-    result = loop.run_until_complete(command.execute())
+    result = await command.execute()
     # then
     assert len(result) <= 3
     assert sorted(result, key=lambda x: x.good_count, reverse=True) == result
@@ -106,7 +82,8 @@ def test_select_by_sort_by_command(client):
         assert ok
 
 
-def test_select_random_command(client):
+@pytest.mark.asyncio
+async def test_select_random_command(client):
     # given
     command = AsyncMongoSelectRandomCommand(
         client=client,
@@ -115,9 +92,8 @@ def test_select_random_command(client):
         chunk_size=3,
     )
     # when
-    loop: AbstractEventLoop = client.get_io_loop()
-    r1 = loop.run_until_complete(command.execute())
-    r2 = loop.run_until_complete(command.execute())
+    r1 = await command.execute()
+    r2 = await command.execute()
     r1 = set(e.id for e in r1)
     r2 = set(e.id for e in r2)
     # then

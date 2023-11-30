@@ -1,17 +1,6 @@
-import os
-
-import pytest
-from motor.motor_asyncio import AsyncIOMotorClient
-
 from chalicelib.extern.dependency_injector.persistant import PersistentInjector
-from chalicelib.persistant.asyncio.invoker import AsyncInvoker
 from chalicelib.persistant.asyncio.command_factory import AsyncCommandFactory
-from tests.mock.mock import env
-
-
-@pytest.fixture
-def client(env):
-    return AsyncIOMotorClient(os.getenv("MONGO_URI"))
+from chalicelib.persistant.asyncio.invoker import AsyncInvoker
 
 
 def test_persistent_injector_without_dependency(client):

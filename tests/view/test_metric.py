@@ -1,9 +1,8 @@
 from chalicelib.view.model.api import Api
-from tests.mock.mock import env, injector, test_client
 from tests.schema.metric.metric_response import MetricResponseSchema
 
 
-def test_spec_get_good_count(env, test_client, injector):
+def test_spec_get_good_count(env, test_client, event_loop):
     import json
 
     res = test_client.http.get("/v1/metric/good?domain=product&id=1")
@@ -12,7 +11,7 @@ def test_spec_get_good_count(env, test_client, injector):
     assert Api.validate(MetricResponseSchema, body, many=False) == {}
 
 
-def test_spec_get_view_count(env, test_client, injector):
+def test_spec_get_view_count(env, test_client, event_loop):
     import json
 
     res = test_client.http.get("/v1/metric/view?domain=product&id=1")
@@ -21,7 +20,7 @@ def test_spec_get_view_count(env, test_client, injector):
     assert Api.validate(MetricResponseSchema, body, many=False) == {}
 
 
-def test_spec_update_good_count(env, test_client, injector):
+def test_spec_update_good_count(env, test_client, event_loop):
     import json
 
     res = test_client.http.patch(
@@ -34,7 +33,7 @@ def test_spec_update_good_count(env, test_client, injector):
     assert Api.validate(MetricResponseSchema, body, many=False) == {}
 
 
-def test_spec_update_view_count(env, test_client, injector):
+def test_spec_update_view_count(env, test_client, event_loop):
     import json
 
     res = test_client.http.patch(

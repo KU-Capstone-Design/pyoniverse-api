@@ -1,28 +1,7 @@
-import os
-
 import pytest
-from motor.motor_asyncio import AsyncIOMotorClient
 
 from chalicelib.entity.product import ProductEntity
-from chalicelib.persistant.asyncio.command_factory import AsyncCommandFactory
-from chalicelib.persistant.asyncio.invoker import AsyncInvoker
 from chalicelib.service.product.service import AsyncProductService
-from tests.mock.mock import env
-
-
-@pytest.fixture
-def client(env):
-    return AsyncIOMotorClient(os.getenv("MONGO_URI"))
-
-
-@pytest.fixture
-def factory(client):
-    return AsyncCommandFactory(client)
-
-
-@pytest.fixture
-def invoker():
-    return AsyncInvoker()
 
 
 @pytest.fixture
@@ -31,7 +10,7 @@ def product_service(factory, invoker):
 
 
 @pytest.mark.asyncio
-async def test_product_service_find_chunk(client, factory, invoker):
+async def test_product_service_find_chunk(factory, invoker):
     # given
     service = AsyncProductService(command_factory=factory, invoker=invoker)
     chunk_size = 2
@@ -46,7 +25,7 @@ async def test_product_service_find_chunk(client, factory, invoker):
 
 
 @pytest.mark.asyncio
-async def test_product_service_find_one(client, factory, invoker):
+async def test_product_service_find_one(factory, invoker):
     # given
     service = AsyncProductService(command_factory=factory, invoker=invoker)
     entity = ProductEntity(id=1)
@@ -57,7 +36,7 @@ async def test_product_service_find_one(client, factory, invoker):
 
 
 @pytest.mark.asyncio
-async def test_product_service_add_values(client, factory, invoker):
+async def test_product_service_add_values(factory, invoker):
     # given
     service = AsyncProductService(command_factory=factory, invoker=invoker)
     entity = ProductEntity(id=1, good_count=1, view_count=2)
@@ -72,7 +51,7 @@ async def test_product_service_add_values(client, factory, invoker):
 
 
 @pytest.mark.asyncio
-async def test_product_length(client, factory, invoker):
+async def test_product_length(factory, invoker):
     service = AsyncProductService(command_factory=factory, invoker=invoker)
     res = await service.get_length()
     assert res > 0
