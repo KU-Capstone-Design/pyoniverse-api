@@ -2,6 +2,7 @@ import os
 from asyncio import AbstractEventLoop
 
 import pytest
+from chalice import BadRequestError
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from chalicelib.business.search.business import AsyncSearchBusiness
@@ -89,3 +90,18 @@ def test_search(constant_brand_service, product_service, search_service, loop):
     assert sorted(res.categories, key=lambda x: x.id) == res.categories
     assert sorted(res.brands, key=lambda x: x.id) == res.brands
     assert sorted(res.events, key=lambda x: x.id) == res.events
+
+
+def test_search_request_validator():
+    tmp_data = {
+        "invalid_query": 1,
+    }
+    with pytest.raises(BadRequestError) as e:
+        SearchResultRequestDto.validate(tmp_data)
+
+    request = SearchResultRequestDto.load({"query": ""})
+    assert request.page == 1
+    assert request.page_size == 10
+    assert request.query == ""
+    assert request.sort_key == "event_price"
+    assert request.sort_direction == "asc"

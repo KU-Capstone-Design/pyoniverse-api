@@ -8,7 +8,7 @@ from chalicelib.business.interface.dto import DtoIfs
 
 
 class _SearchResultRequestDtoSchema(Schema):
-    query = fields.Str(required=True, load_default="")
+    query = fields.Str(required=True)
     page = fields.Int(required=False, load_default=1)
     page_size = fields.Int(required=False, load_default=10)
     sort_key = fields.Str(
