@@ -1,11 +1,8 @@
-import asyncio
-
 import boto3
 import pytest
 from boto3_type_annotations.sqs import Client
 
 from chalicelib.persistant.asyncio.sqs.command import AsyncSqsAddModifyEqualCommand
-from tests.mock.mock import env
 
 
 @pytest.fixture
@@ -14,7 +11,8 @@ def client(env):
     return client
 
 
-def test_add_message(client):
+@pytest.mark.asyncio
+async def test_add_message(client):
     # given
     command = AsyncSqsAddModifyEqualCommand(
         client=client,
@@ -26,8 +24,7 @@ def test_add_message(client):
     )
     # when & then
     try:
-        loop = asyncio.get_event_loop()
-        loop.run_until_complete(command.execute())
+        await command.execute()
         assert True
     except Exception:
         assert False

@@ -1,5 +1,5 @@
 from dataclasses import asdict
-from typing import Literal, Sequence
+from typing import Any, Literal, Sequence
 
 from chalice import BadRequestError, NotFoundError
 
@@ -190,3 +190,39 @@ class AsyncProductService(ProductServiceIfs):
             raise NotFoundError(f"{self.__db_name}.{self.__rel_name} is empty")
         else:
             return result
+
+    async def get_length(self, filter_key: str = None, filter_value: Any = None) -> int:
+        self.__invoker.add_command(
+            self.__command_factory.get_count_by_command(
+                db_name=self.__db_name,
+                rel_name=self.__rel_name,
+                key=filter_key,
+                value=filter_value,
+            )
+        )
+        result = (await self.__invoker.invoke())[0]
+        return result
+
+    async def find_page(
+        self,
+        filter_key: str,
+        filter_value: Any,
+        sort_key: str,
+        sort_direction: Literal["asc", "desc"],
+        page: int,
+        page_size: int,
+    ):
+        self.__invoker.add_command(
+            self.__command_factory.get_find_page_command(
+                db_name=self.__db_name,
+                rel_name=self.__rel_name,
+                key=filter_key,
+                value=filter_value,
+                sort_key=sort_key,
+                sort_direction=sort_direction,
+                page=page,
+                page_size=page_size,
+            )
+        )
+        result = (await self.__invoker.invoke())[0]
+        return result

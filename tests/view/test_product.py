@@ -1,10 +1,8 @@
-from chalicelib.business.product.dto.response import ProductResponseDto
 from chalicelib.view.model.api import Api
-from tests.mock.mock import env, injector, test_client
 from tests.schema.product.product_response import ProductResponseSchema
 
 
-def test_spec_product_detail(env, test_client, injector):
+def test_spec_product_detail(env, test_client, event_loop):
     import json
 
     res = test_client.http.get("/v1/product/1")

@@ -22,6 +22,10 @@ class CommandIfs(metaclass=ABCMeta):
         pass
 
 
+class CountByCommandIfs(CommandIfs):
+    pass
+
+
 class EqualCommandIfs(CommandIfs):
     pass
 
@@ -129,6 +133,38 @@ class SelectBySortByCommandIfs(CommandIfs):
         self._sort_key = sort_key
         self._sort_value = sort_value
         self._chunk_size = chunk_size
+
+
+class SelectPageByOrderByCommandIfs(CommandIfs):
+    def __init__(
+        self,
+        rel_name: str,
+        key: str,
+        value: Any,
+        sort_key: str,
+        sort_direction: Literal["asc", "desc"],
+        page: int,
+        page_size: int,
+        db_name: Literal["constant", "service"] = "service",
+    ):
+        """
+        :param key: for filter
+        :param value: for filter
+        :param sort_key: for sort
+        :param sort_value: for sort
+        :param page: current page(1부터 시작)
+        :param page_size: 찾을 문서 수
+        """
+        super().__init__(
+            rel_name=rel_name,
+            key=key,
+            value=value,
+            db_name=db_name,
+        )
+        self._sort_key = sort_key
+        self._sort_direction = sort_direction
+        self._page = page
+        self._page_size = page_size
 
 
 class ModifyCommandIfs(CommandIfs):

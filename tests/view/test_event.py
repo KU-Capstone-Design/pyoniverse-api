@@ -1,10 +1,9 @@
 from chalicelib.view.model.api import Api
-from tests.mock.mock import injector, test_client, env
 from tests.schema.event.event_detail_response import EventDetailResponseSchema
 from tests.schema.event.event_list_response import EventListResponseSchema
 
 
-def test_spec_default_event_list(env, test_client, injector):
+def test_spec_default_event_list(env, test_client, event_loop):
     import json
 
     res = test_client.http.get("/v1/events")
@@ -14,7 +13,7 @@ def test_spec_default_event_list(env, test_client, injector):
     assert body["data"]["brand_slug"] == "cu"
 
 
-def test_spec_event_list(env, test_client, injector):
+def test_spec_event_list(env, test_client, event_loop):
     import json
 
     res = test_client.http.get("/v1/events/cu")
@@ -24,7 +23,7 @@ def test_spec_event_list(env, test_client, injector):
     assert body["data"]["brand_slug"] == "cu"
 
 
-def test_spec_event_detail(env, test_client, injector):
+def test_spec_event_detail(env, test_client, event_loop):
     import json
 
     res = test_client.http.get("/v1/event/1")

@@ -4,21 +4,25 @@ import boto3
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from chalicelib.persistant.asyncio.mongo.command import (
+    AsyncMongoCountByCommand,
     AsyncMongoEqualCommand,
     AsyncMongoSelectAllByCommand,
     AsyncMongoSelectAllCommand,
     AsyncMongoSelectBySortByCommand,
     AsyncMongoSelectInSortByCommand,
+    AsyncMongoSelectPageByOrderByCommand,
     AsyncMongoSelectRandomCommand,
     AsyncMongoSortByLimit10Command,
 )
 from chalicelib.persistant.asyncio.sqs.command import AsyncSqsAddModifyEqualCommand
 from chalicelib.service.interface.command import (
+    CountByCommandIfs,
     EqualCommandIfs,
     SelectAllByCommandIfs,
     SelectAllCommandIfs,
     SelectBySortByCommandIfs,
     SelectInSortByCommandIfs,
+    SelectPageByOrderByCommandIfs,
     SelectRandomCommandIfs,
     SortByLimit10CommandIfs,
 )
@@ -140,4 +144,38 @@ class AsyncCommandFactory(CommandFactoryIfs):
             db_name=db_name,
             rel_name=rel_name,
             chunk_size=chunk_size,
+        )
+
+    def get_count_by_command(
+        self, db_name: str, rel_name: str, key: str = None, value: Any = None
+    ) -> CountByCommandIfs:
+        return AsyncMongoCountByCommand(
+            client=self.__client,
+            db_name=db_name,
+            rel_name=rel_name,
+            key=key,
+            value=value,
+        )
+
+    def get_find_page_command(
+        self,
+        db_name: str,
+        rel_name: str,
+        key: str,
+        value: Any,
+        sort_key: str,
+        sort_direction: Literal["asc", "desc"],
+        page: int,
+        page_size: int,
+    ) -> SelectPageByOrderByCommandIfs:
+        return AsyncMongoSelectPageByOrderByCommand(
+            client=self.__client,
+            db_name=db_name,
+            rel_name=rel_name,
+            key=key,
+            value=value,
+            sort_key=sort_key,
+            sort_direction=sort_direction,
+            page=page,
+            page_size=page_size,
         )
