@@ -3,7 +3,7 @@ import enum
 
 @enum.unique
 class OperatorEnum(enum.Enum):
-    NOT = enum.auto()
+    NOT_EQUAL = enum.auto()
     EQUAL = enum.auto()
     GREATER_THAN = enum.auto()
     LESS_THAN = enum.auto()

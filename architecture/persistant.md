@@ -18,7 +18,7 @@ classDiagram
     }
     class Factory {
         <<interface>>
-        + make() Builder
+        + make(db: str, rel: str) Builder
     }
     class Builder {
         <<interface>>
@@ -28,12 +28,13 @@ classDiagram
         + or() self
         + limit(n: int) self
         + skip(n: int) self
+        + order(attr: str, direction: "asc" | "desc") self
         + read() Result
         + update(**attrs) Result
     }
     class Operator {
         <<enumeration>>
-        NOT
+        NOT_EQUAL
         EQUAL
         GREATER_THAN
         LESS_THAN
@@ -57,7 +58,7 @@ classDiagram
     Factory <|.. AsyncMongoFactory
     AsyncMongoFactory: - DBClient client
     Builder <|.. AsyncMongoBuilder
-    AsyncMongoBuilder: - DBClient client
+    AsyncMongoBuilder: - DBRelation rel
     AsyncProductService <-- AsyncMongoFactory
     AsyncMongoFactory <.. AsyncMongoBuilder: create
 ```

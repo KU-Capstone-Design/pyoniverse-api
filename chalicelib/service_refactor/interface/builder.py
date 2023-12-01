@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from typing import Any
+from typing import Any, Literal
 
 from chalicelib.service_refactor.model.enum import OperatorEnum
 from chalicelib.service_refactor.model.result import Result
@@ -12,6 +12,10 @@ class BuilderIfs(metaclass=ABCMeta):
 
     @abstractmethod
     def where(self, op: OperatorEnum, attr: str, val: Any) -> "BuilderIfs":
+        pass
+
+    @abstractmethod
+    def order(self, attr: str, direction: Literal["asc", "desc"]) -> "BuilderIfs":
         pass
 
     @abstractmethod
