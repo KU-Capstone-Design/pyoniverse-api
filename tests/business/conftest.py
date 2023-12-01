@@ -2,32 +2,31 @@ import os
 
 import pytest
 
-from chalicelib.persistant.asyncio.command_factory import AsyncCommandFactory
-from chalicelib.persistant.asyncio.invoker import AsyncInvoker
-from chalicelib.service.constant_brand.service import AsyncConstantBrandService
-from chalicelib.service.event.service import AsyncEventService
-from chalicelib.service.product.service import AsyncProductService
-from chalicelib.service.search.service import AsyncSearchService
+from chalicelib.persistant.refactor.factory import AsyncMongoFactory
+from chalicelib.service_refactor.constant_brand.service import AsyncConstantBrandService
+from chalicelib.service_refactor.event.service import AsyncEventService
+from chalicelib.service_refactor.product.service import AsyncProductService
+from chalicelib.service_refactor.search.service import AsyncSearchService
 
 
 @pytest.fixture(scope="module")
 def factory(client):
-    return AsyncCommandFactory(client)
+    return AsyncMongoFactory(client)
 
 
 @pytest.fixture(scope="module")
 def constant_brand_service(factory):
-    return AsyncConstantBrandService(command_factory=factory, invoker=AsyncInvoker())
+    return AsyncConstantBrandService(factory=factory)
 
 
 @pytest.fixture(scope="module")
 def product_service(factory):
-    return AsyncProductService(command_factory=factory, invoker=AsyncInvoker())
+    return AsyncProductService(factory=factory)
 
 
 @pytest.fixture(scope="module")
 def event_service(factory):
-    return AsyncEventService(command_factory=factory, invoker=AsyncInvoker())
+    return AsyncEventService(factory=factory)
 
 
 @pytest.fixture(scope="module")

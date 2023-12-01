@@ -88,8 +88,10 @@ class AsyncProductService(ProductServiceIfs, AbstractService):
         direction: Literal["asc", "desc"],
     ):
         builder = self._factory.make(db=self.__db_name, rel=self.__rel_name)
-        result = await builder.where(OperatorEnum.IN, filter_key, filter_value).order(
-            sort_key, direction
+        result = (
+            await builder.where(OperatorEnum.IN, filter_key, filter_value)
+            .order(sort_key, direction)
+            .read()
         )
         return result.get()
 

@@ -157,7 +157,6 @@ class AsyncMongoBuilder(BuilderIfs):
         # 1. filter 생성
         if self.__or:
             raise RuntimeError("Update 시에는 and 연산만 허용됩니다.")
-
         filters = []
         for k, v in self.__filter.items():
             for op, val in v.items():
@@ -187,7 +186,7 @@ class AsyncMongoBuilder(BuilderIfs):
         else:
             filter_ = {"$and": [{k: v} for k, v in self.__filter.items()]}
         self.logger.debug(f"collection: {self.__coll} filter: {filter_} n: {n}")
-        pipeline = [filter_, {"$sample": {"size": n}}]
+        pipeline = [{"$match": filter_}, {"$sample": {"size": n}}]
         data = await self.__coll.aggregate(pipeline).to_list(None)
         entities = [self.__entity.from_dict(r) for r in data]
         if len(entities) > 1:
