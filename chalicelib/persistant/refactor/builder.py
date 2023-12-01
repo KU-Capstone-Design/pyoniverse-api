@@ -110,7 +110,9 @@ class AsyncMongoBuilder(BuilderIfs):
 
     async def read(self) -> Result:
         # 1. filter 생성
-        if self.__or:
+        if not self.__filter:
+            filter_ = {}
+        elif self.__or:
             filter_ = {"$or": [{k: v} for k, v in self.__filter.items()]}
         else:
             filter_ = {"$and": [{k: v} for k, v in self.__filter.items()]}
@@ -176,3 +178,32 @@ class AsyncMongoBuilder(BuilderIfs):
         await command.execute()
         # 4. Filter에 맞는 Entity 반환
         return await self.read()
+
+    async def random(self, n: int) -> Result:
+        if not self.__filter:
+            filter_ = {}
+        elif self.__or:
+            filter_ = {"$or": [{k: v} for k, v in self.__filter.items()]}
+        else:
+            filter_ = {"$and": [{k: v} for k, v in self.__filter.items()]}
+        self.logger.debug(f"collection: {self.__coll} filter: {filter_} n: {n}")
+        pipeline = [filter_, {"$sample": {"size": n}}]
+        data = await self.__coll.aggregate(pipeline).to_list(None)
+        entities = [self.__entity.from_dict(r) for r in data]
+        if len(entities) > 1:
+            result = Result(data=entities)
+        elif len(entities) == 1:
+            result = Result(data=entities[0])
+        else:
+            raise NotFoundError("데이터를 찾지 못했습니다.")
+        return result
+
+    async def count(self) -> int:
+        if not self.__filter:
+            filter_ = {}
+        elif self.__or:
+            filter_ = {"$or": [{k: v} for k, v in self.__filter.items()]}
+        else:
+            filter_ = {"$and": [{k: v} for k, v in self.__filter.items()]}
+        result = await self.__coll.count_documents(filter=filter_)
+        return result

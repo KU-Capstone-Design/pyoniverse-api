@@ -41,3 +41,11 @@ class BuilderIfs(metaclass=ABCMeta):
     @abstractmethod
     def update(self, **attrs) -> Result:
         pass
+
+    @abstractmethod
+    def random(self, n: int) -> Result:
+        pass
+
+    @abstractmethod
+    def count(self) -> int:
+        pass

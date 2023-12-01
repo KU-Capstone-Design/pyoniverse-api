@@ -1,3 +1,5 @@
+import os
+
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from chalicelib.persistant.refactor.builder import AsyncMongoBuilder
@@ -9,6 +11,8 @@ class AsyncMongoFactory(FactoryIfs):
         self.__client = client
 
     def make(self, db: str, rel: str) -> AsyncMongoBuilder:
+        if db == "service":
+            db = os.getenv("MONGO_DB")
         return AsyncMongoBuilder(
             db_name=db,
             rel_name=rel,

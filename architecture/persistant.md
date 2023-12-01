@@ -31,6 +31,8 @@ classDiagram
         + order(attr: str, direction: "asc" | "desc") self
         + read() Result
         + update(**attrs) Result
+        + random(n: int) Result
+        + count() int
     }
     class Operator {
         <<enumeration>>
