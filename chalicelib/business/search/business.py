@@ -1,6 +1,6 @@
-import asyncio
 from asyncio import AbstractEventLoop
 from math import ceil
+from typing import Set
 
 from chalice import NotFoundError
 
@@ -61,20 +61,22 @@ class AsyncSearchBusiness(SearchBusinessIfs):
         if not request.query:
             filter_key = "status"
             filter_value = 1
-            total_size = self.__loop.run_until_complete(
-                self.__product_service.get_length(
-                    filter_key=filter_key,
-                    filter_value=filter_value,
-                )
-            )
+            # 필터를 API에서 수행함으로써 현재 DB에서 가져오는 데이터 수는 의미없다
+            # total_size = self.__loop.run_until_complete(
+            #         self.__product_service.get_length(
+            #                 filter_key=filter_key,
+            #                 filter_value=filter_value,
+            #         )
+            # )
         else:
             # 1. Search Service를 이용해 검색 시도
             filter_key = "id"
             filter_value = self.__loop.run_until_complete(
                 self.__search_service.find_products(query=query)
             )
-            total_size = len(filter_value)
-        total_page = ceil(total_size / request.page_size)
+            # 필터를 API에서 수행함으로써 현재 DB에서 가져오는 데이터 수는 의미없다
+            # total_size = len(filter_value)
+        # total_page = ceil(total_size / request.page_size)
 
         # 2. 상품 가져오기
         if request.sort_key == "event_price":
@@ -82,13 +84,21 @@ class AsyncSearchBusiness(SearchBusinessIfs):
             sort_key = "best.price"
         else:
             sort_key = request.sort_key
-        action = self.__product_service.find_page(
+        # TODO : Command -> Builder 로 패턴 변경하기(복합 조건문을 사용할 필요가 있다)
+        # action = self.__product_service.find_page(
+        #     filter_key=filter_key,
+        #     filter_value=filter_value,
+        #     sort_key=sort_key,
+        #     sort_direction=request.sort_direction,
+        #     page=request.page,
+        #     page_size=request.page_size,
+        # )
+        # 전체 데이터를 가져오기(lambda 내에서 pagination, category, brand, event filter를 적용한다.
+        action = self.__product_service.find_in_sort_by(
             filter_key=filter_key,
             filter_value=filter_value,
             sort_key=sort_key,
-            sort_direction=request.sort_direction,
-            page=request.page,
-            page_size=request.page_size,
+            direction=request.sort_direction,
         )
         try:
             product_entities = self.__loop.run_until_complete(action)
@@ -133,9 +143,36 @@ class AsyncSearchBusiness(SearchBusinessIfs):
         brands = list(brands.values())
 
         # 8. 반횐될 products 생성
+        # category, brand, event filter 적용하기
+        category_filter: Set[int] = set(
+            request.categories or [c.id for c in categories]
+        )
+        brand_filter: Set[int] = set(request.brands or [b.id for b in brands])
+        event_filter: Set[int] = set(request.events or [e.id for e in events])
+
         products = []
         for product in product_entities:
+            # 1. category filter 적용
             product: ProductEntity = product
+            if product.category not in category_filter:
+                continue
+            # 2. brand filter 적용
+            is_ok = False
+            for b in product.brands:
+                if b.id in brand_filter:
+                    is_ok = True
+                    break
+            if not is_ok:
+                continue
+            # 3. event filter 적용
+            is_ok = False
+            for b in product.brands:
+                if event_filter.intersection(b.events):
+                    is_ok = True
+                    break
+            if not is_ok:
+                continue
+
             if product.price == product.best.price:
                 event_price = None
             else:
@@ -156,14 +193,26 @@ class AsyncSearchBusiness(SearchBusinessIfs):
             )
             products.append(res_product)
 
+        # pagination 수행
+        # 현재 페이지가 총 페이지보다 많다면 []를 반환하고, 현재 페이지를 마지막 페이지로 변경한다.
+        total_size = len(products)
+        total_page = ceil(total_size / request.page_size)
+        current_page = min(request.page, total_page)
+        products = products[
+            (current_page - 1) * request.page_size : current_page * request.page_size
+        ]
+
         meta = SearchResultResponseMetaDto(
-            current_page=request.page,
+            current_page=current_page,
             total_page=total_page,
             current_size=len(products),
             total_size=total_size,
             page_size=request.page_size,
             sort_key=request.sort_key,
             sort_direction=request.sort_direction,
+            categories=list(category_filter),
+            brands=list(brand_filter),
+            events=list(event_filter),
         )
         response = SearchResultResponseDto(
             categories=sorted(categories, key=lambda x: x.id),

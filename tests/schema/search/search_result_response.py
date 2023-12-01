@@ -37,6 +37,9 @@ class SearchResultMetaSchema(Schema):
     total_size = fields.Integer(required=True)
     sort_key = fields.Str(required=True)
     sort_direction = fields.Str(required=True)
+    categories = fields.List(fields.Integer(), required=True)
+    brands = fields.List(fields.Integer(), required=True)
+    events = fields.List(fields.Integer(), required=True)
 
 
 class SearchResultResponseSchema(Schema):

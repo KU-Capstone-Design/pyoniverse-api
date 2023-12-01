@@ -1,3 +1,4 @@
+import re
 import typing
 from dataclasses import dataclass, field
 
@@ -19,6 +20,15 @@ class _SearchResultRequestDtoSchema(Schema):
     sort_direction = fields.Str(
         required=False, validate=validate.OneOf(["asc", "desc"]), load_default="asc"
     )
+    categories = fields.Str(
+        required=False, validate=lambda x: re.match(r"^(\d,)*\d?$", x) is not None
+    )
+    brands = fields.Str(
+        required=False, validate=lambda x: re.match(r"^(\d,)*\d?$", x) is not None
+    )
+    events = fields.Str(
+        required=False, validate=lambda x: re.match(r"^(\d,)*\d?$", x) is not None
+    )
 
     class Meta:
         unknown = RAISE
@@ -35,6 +45,18 @@ class _SearchResultRequestDtoSchema(Schema):
         unknown: str | None = None,
     ) -> "SearchResultRequestDto":
         res = super().load(data)
+        if "categories" in res and res["categories"]:
+            res["categories"] = list(map(int, res["categories"].strip(", ").split(",")))
+        else:
+            res["categories"] = []
+        if "brands" in res and res["brands"]:
+            res["brands"] = list(map(int, res["brands"].strip(", ").split(",")))
+        else:
+            res["brands"] = []
+        if "events" in res and res["events"]:
+            res["events"] = list(map(int, res["events"].strip(", ").split(",")))
+        else:
+            res["events"] = []
         return SearchResultRequestDto(**res)
 
 
@@ -45,6 +67,9 @@ class SearchResultRequestDto(DtoIfs):
     page_size: int = field(default=10)
     sort_key: str = field(default="event_price")
     sort_direction: str = field(default="asc")
+    categories: typing.List[int] = field(default_factory=list)
+    brands: typing.List[int] = field(default_factory=list)
+    events: typing.List[int] = field(default_factory=list)
 
     @classmethod
     def validate(cls, request: typing.Mapping):

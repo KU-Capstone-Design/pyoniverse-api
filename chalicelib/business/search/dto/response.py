@@ -51,6 +51,9 @@ class SearchResultResponseMetaDto(DtoIfs):
     total_size: int
     sort_key: str
     sort_direction: str
+    categories: List[int]
+    brands: List[int]
+    events: List[int]
 
 
 @dataclass(kw_only=True)
