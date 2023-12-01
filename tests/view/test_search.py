@@ -35,6 +35,15 @@ def test_spec_search_result(env, test_client, event_loop):
     assert Api.validate(SearchResultResponseSchema, body, many=False) == {}
 
 
+def test_spec_search_result_empty_query(env, test_client, event_loop):
+    import json
+
+    res = test_client.http.get("/v1/search/result?query=")
+    body = json.loads(res.body)
+    assert res.status_code == 200
+    assert Api.validate(SearchResultResponseSchema, body, many=False) == {}
+
+
 def test_spec_search_result_empty(env, test_client, event_loop):
     import json
 

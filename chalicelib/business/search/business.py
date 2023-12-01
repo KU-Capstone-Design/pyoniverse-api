@@ -60,7 +60,7 @@ class AsyncSearchBusiness(SearchBusinessIfs):
         # 1. query="" 이면 모든 상품을 가져온다. 검색 X
         if not request.query:
             filter_key = "status"
-            filter_value = 1
+            filter_value = [1]
             # 필터를 API에서 수행함으로써 현재 DB에서 가져오는 데이터 수는 의미없다
             # total_size = self.__loop.run_until_complete(
             #         self.__product_service.get_length(
