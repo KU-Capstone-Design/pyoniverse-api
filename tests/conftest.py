@@ -42,7 +42,10 @@ def event_loop():
 
 @pytest.fixture(scope="session")
 def client(env):
-    return AsyncIOMotorClient(os.getenv("MONGO_URI"))
+    client = AsyncIOMotorClient(os.getenv("MONGO_URI"))
+    client.get_io_loop().run_until_complete(client.admin.command("ping"))
+    yield client
+    client.close()
 
 
 @pytest.fixture(scope="function")

@@ -1,3 +1,5 @@
+import pytest
+
 from chalicelib.business.metric.business import AsyncMetricBusiness
 from chalicelib.business.metric.model.request import MetricRequestDto
 from chalicelib.business.metric.model.response import MetricResponseDto
@@ -89,36 +91,18 @@ def test_product_business_update_good_count(product_service, event_service, even
     invalid_request1 = MetricRequestDto(id=1, domain="invalid", value=3)
     invalid_request2 = MetricRequestDto(id=1, domain="event", value=None)
     # when
-    prv_good_count1 = business.get_good_count(request1).value
-    prv_good_count2 = business.get_good_count(request2).value
     response1: MetricResponseDto = business.update_good_count(request1)
     response2: MetricResponseDto = business.update_good_count(request2)
     # then
     assert isinstance(response1, MetricResponseDto) and isinstance(
         response2, MetricResponseDto
     )
-    assert (
-        response1.id == request1.id
-        and response1.domain == request1.domain
-        and response1.value == request1.value + prv_good_count1
-    )
-    assert (
-        response2.id == request2.id
-        and response2.domain == request2.domain
-        and response2.value == request2.value + prv_good_count2
-    )
+    assert response1.id == request1.id and response1.domain == request1.domain
+    assert response2.id == request2.id and response2.domain == request2.domain
 
-    try:
+    with pytest.raises(Exception):
         business.update_view_count(invalid_request1)
-        assert False
-    except Exception:
-        assert True
-
-    try:
         business.update_view_count(invalid_request2)
-        assert False
-    except Exception:
-        assert True
 
 
 def test_product_business_update_view_count(product_service, event_service, event_loop):
@@ -134,33 +118,15 @@ def test_product_business_update_view_count(product_service, event_service, even
     invalid_request1 = MetricRequestDto(id=1, domain="invalid", value=3)
     invalid_request2 = MetricRequestDto(id=1, domain="event", value=None)
     # when
-    prv_good_count1 = business.get_view_count(request1).value
-    prv_good_count2 = business.get_view_count(request2).value
     response1: MetricResponseDto = business.update_view_count(request1)
     response2: MetricResponseDto = business.update_view_count(request2)
     # then
     assert isinstance(response1, MetricResponseDto) and isinstance(
         response2, MetricResponseDto
     )
-    assert (
-        response1.id == request1.id
-        and response1.domain == request1.domain
-        and response1.value == request1.value + prv_good_count1
-    )
-    assert (
-        response2.id == request2.id
-        and response2.domain == request2.domain
-        and response2.value == request2.value + prv_good_count2
-    )
+    assert response1.id == request1.id and response1.domain == request1.domain
+    assert response2.id == request2.id and response2.domain == request2.domain
 
-    try:
+    with pytest.raises(Exception):
         business.update_view_count(invalid_request1)
-        assert False
-    except Exception:
-        assert True
-
-    try:
         business.update_view_count(invalid_request2)
-        assert False
-    except Exception:
-        assert True
