@@ -64,3 +64,18 @@ def test_spec_search_sort_check(env, test_client, event_loop):
         )
         == body["data"]["products"]
     )
+
+
+def test_spec_search_filter_check(env, test_client, event_loop):
+    import json
+
+    query = "우유"
+    res = test_client.http.get(
+        f"/v1/search/result?query={query}&categories=1,&brands=1,2,3&events=1,2"
+    )
+    body = json.loads(res.body)
+    assert res.status_code == 200
+    assert len(body["data"]["products"]) > 0
+    assert body["data"]["meta"]["categories"] == [1]
+    assert body["data"]["meta"]["brands"] == [1, 2, 3]
+    assert body["data"]["meta"]["events"] == [1, 2]
