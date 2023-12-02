@@ -1,7 +1,7 @@
 from abc import ABCMeta, abstractmethod
 from typing import Any, Literal
 
-from chalicelib.service.model.enum import OperatorEnum
+from chalicelib.business.model.enum import OperatorEnum
 from chalicelib.service.model.result import Result
 
 

@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from typing import Any, Literal, Sequence
+from typing import Any, List, Literal, Sequence
 
 from chalicelib.entity.brand import BrandEntity
 from chalicelib.entity.constant_brand import ConstantBrandEntity
@@ -68,6 +68,20 @@ class ProductServiceIfs(ServiceIfs):
         page: int,
         page_size: int,
     ):
+        pass
+
+    @abstractmethod
+    def search(
+        self,
+        queries: List[list],
+        sort_key: str,
+        direction: Literal["asc", "desc"],
+        page: int,
+        page_size: int,
+    ) -> List[ProductEntity]:
+        """
+        :param queries: [OperatorEnum, attr, value] 순서의 리스트의 리스트
+        """
         pass
 
 

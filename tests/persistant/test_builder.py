@@ -4,7 +4,7 @@ import pytest
 
 from chalicelib.entity.product import ProductEntity
 from chalicelib.persistant.factory import AsyncMongoFactory
-from chalicelib.service.model.enum import OperatorEnum
+from chalicelib.business.model.enum import OperatorEnum
 from chalicelib.service.model.result import Result
 
 

@@ -1,5 +1,8 @@
+from typing import List
+
 import pytest
 
+from chalicelib.business.model.enum import OperatorEnum
 from chalicelib.entity.product import ProductEntity
 from chalicelib.service.product.service import AsyncProductService
 
@@ -64,3 +67,22 @@ async def test_product_find_page(service):
         page_size=10,
     )
     assert len(res) == 10
+
+
+@pytest.mark.asyncio
+async def test_product_search(service):
+    res: List[ProductEntity] = await service.search(
+        queries=[
+            [OperatorEnum.IN, "category", [1, 2, 3]],
+            [OperatorEnum.EQUAL, "status", 1],
+        ],
+        sort_key="best.price",
+        direction="asc",
+        page=2,
+        page_size=5,
+    )
+    assert len(res) > 0
+    assert sorted(res, key=lambda x: x.best.price) == res
+    for p in res:
+        assert p.status == 1
+        assert p.category in [1, 2, 3]

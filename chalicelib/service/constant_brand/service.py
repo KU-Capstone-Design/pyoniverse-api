@@ -4,7 +4,7 @@ from chalicelib.business.interface.service import ConstantBrandServiceIfs
 from chalicelib.entity.constant_brand import ConstantBrandEntity
 from chalicelib.service.interface.factory import FactoryIfs
 from chalicelib.service.interface.service import AbstractService
-from chalicelib.service.model.enum import OperatorEnum
+from chalicelib.business.model.enum import OperatorEnum
 
 
 class AsyncConstantBrandService(ConstantBrandServiceIfs, AbstractService):

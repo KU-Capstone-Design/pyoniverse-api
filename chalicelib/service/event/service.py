@@ -7,7 +7,7 @@ from chalicelib.business.interface.service import EventServiceIfs
 from chalicelib.entity.event import EventEntity
 from chalicelib.service.interface.factory import FactoryIfs
 from chalicelib.service.interface.service import AbstractService
-from chalicelib.service.model.enum import OperatorEnum
+from chalicelib.business.model.enum import OperatorEnum
 
 
 class AsyncEventService(EventServiceIfs, AbstractService):

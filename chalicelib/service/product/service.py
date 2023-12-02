@@ -1,14 +1,14 @@
 from dataclasses import asdict
-from typing import Any, Literal, Sequence
+from typing import Any, List, Literal, Sequence
 
 from chalice import BadRequestError
 
 from chalicelib.business.interface.service import ProductServiceIfs
+from chalicelib.business.model.enum import OperatorEnum
 from chalicelib.entity.event import EventEntity
 from chalicelib.entity.product import ProductEntity
 from chalicelib.service.interface.factory import FactoryIfs
 from chalicelib.service.interface.service import AbstractService
-from chalicelib.service.model.enum import OperatorEnum
 
 
 class AsyncProductService(ProductServiceIfs, AbstractService):
@@ -128,4 +128,23 @@ class AsyncProductService(ProductServiceIfs, AbstractService):
             .limit(page_size)
             .read()
         )
+        return result.get()
+
+    async def search(
+        self,
+        queries: List[list],
+        sort_key: str,
+        direction: Literal["asc", "desc"],
+        page: int,
+        page_size: int,
+    ) -> List[ProductEntity]:
+        assert page >= 1
+        builder = self._factory.make(db=self.__db_name, rel=self.__rel_name)
+        for op, attr, val in queries:
+            builder.where(op, attr, val)
+        builder.order(sort_key, direction)
+        builder.skip((page - 1) * page_size)
+        builder.limit(page_size)
+
+        result = await builder.read()
         return result.get()
