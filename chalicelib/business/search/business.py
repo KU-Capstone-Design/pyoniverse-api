@@ -189,9 +189,13 @@ class AsyncSearchBusiness(SearchBusinessIfs):
             page_size=request.page_size,
             sort_key=request.sort_key,
             sort_direction=request.sort_direction,
-            categories=sorted([c.id for c in categories]),
-            brands=sorted([b.id for b in brands]),
-            events=sorted([e.id for e in events]),
+            # categories=sorted([c.id for c in categories]),
+            # brands=sorted([b.id for b in brands]),
+            # events=sorted([e.id for e in events]),
+            # meta에는 선택된 category, brand, event를 내린다
+            categories=sorted(request.categories),
+            brands=sorted(request.brands),
+            events=sorted(request.events),
         )
         response = SearchResultResponseDto(
             categories=sorted(categories, key=lambda x: x.id),
