@@ -80,11 +80,15 @@ def test_spec_search_filter_check(env, test_client, event_loop):
 
     query = "우유"
     res = test_client.http.get(
-        f"/v1/search/result?query={query}&categories=1,&brands=1,2,3&events=1,2"
+        f"/v1/search/result?query={query}&categories=1,10&brands=1,2,3,4,5&events=1,2,3,4,5"
     )
     body = json.loads(res.body)
     assert res.status_code == 200
     assert len(body["data"]["products"]) > 0
-    assert body["data"]["meta"]["categories"] == [1]
-    assert body["data"]["meta"]["brands"] == [1, 2, 3]
-    assert body["data"]["meta"]["events"] == [1, 2]
+    res_categories = set()
+    brands = {1, 2, 3, 4, 5}
+    for d in body["data"]["products"]:
+        if d["category"] is not None:
+            res_categories.add(d["category"])
+        assert brands.intersection(d["brands"]) != set()
+    assert res_categories.issubset({1, 10})

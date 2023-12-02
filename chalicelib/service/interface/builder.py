@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from typing import Any, Literal
+from typing import Any, Literal, Set
 
 from chalicelib.business.model.enum import OperatorEnum
 from chalicelib.service.model.result import Result
@@ -12,6 +12,10 @@ class BuilderIfs(metaclass=ABCMeta):
 
     @abstractmethod
     def where(self, op: OperatorEnum, attr: str, val: Any) -> "BuilderIfs":
+        pass
+
+    @abstractmethod
+    def elm_where(self, op: OperatorEnum, attr: str, val: Any) -> "BuilderIfs":
         pass
 
     @abstractmethod
@@ -48,4 +52,8 @@ class BuilderIfs(metaclass=ABCMeta):
 
     @abstractmethod
     def count(self) -> int:
+        pass
+
+    @abstractmethod
+    def distinct(self, attr: str) -> Set[Any]:
         pass

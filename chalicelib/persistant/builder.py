@@ -1,17 +1,17 @@
 import logging
 import os
 from collections import OrderedDict
-from typing import Any, Dict, Literal
+from typing import Any, Dict, Literal, Set
 
 from chalice import NotFoundError
 from motor.motor_asyncio import AsyncIOMotorCollection
 from pymongo import ASCENDING, DESCENDING
 
+from chalicelib.business.model.enum import OperatorEnum
 from chalicelib.entity.util import ENTITY_MAP
 from chalicelib.persistant.sqs.command import AsyncSqsAddModifyEqualCommand
 from chalicelib.persistant.sqs.model.message import Data, Filter
 from chalicelib.service.interface.builder import BuilderIfs
-from chalicelib.business.model.enum import OperatorEnum
 from chalicelib.service.model.result import Result
 
 
@@ -72,6 +72,11 @@ class AsyncMongoBuilder(BuilderIfs):
                     self.__filter[attr] = {"$exists": True, "$nin": val}
             case _:
                 raise RuntimeWarning(f"{op}는 지원하지 않습니다.")
+        return self
+
+    def elm_where(self, op: OperatorEnum, attr: str, val: Any) -> "BuilderIfs":
+        self.where(op, attr, val)
+        self.__filter[attr] = {"$elemMatch": self.__filter[attr]}
         return self
 
     def and_(self) -> "BuilderIfs":
@@ -209,3 +214,13 @@ class AsyncMongoBuilder(BuilderIfs):
             filter_ = {"$and": [{k: v} for k, v in self.__filter.items()]}
         result = await self.__coll.count_documents(filter=filter_)
         return result
+
+    async def distinct(self, attr: str) -> Set[Any]:
+        if not self.__filter:
+            filter_ = {}
+        elif self.__or:
+            filter_ = {"$or": [{k: v} for k, v in self.__filter.items()]}
+        else:
+            filter_ = {"$and": [{k: v} for k, v in self.__filter.items()]}
+        res = await self.__coll.distinct(key=attr, filter=filter_)
+        return set(res)

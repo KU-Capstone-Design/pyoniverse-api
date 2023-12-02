@@ -50,9 +50,9 @@ async def test_product_service_add_values(service):
 
 @pytest.mark.asyncio
 async def test_product_length(service):
-    res = await service.get_length("status", 1)
+    res = await service.get_length([[OperatorEnum.EQUAL, "status", 1]])
     assert res > 0
-    exactly_one = await service.get_length(filter_key="id", filter_value=1)
+    exactly_one = await service.get_length([[OperatorEnum.EQUAL, "id", 1]])
     assert exactly_one == 1
 
 
@@ -86,3 +86,13 @@ async def test_product_search(service):
     for p in res:
         assert p.status == 1
         assert p.category in [1, 2, 3]
+
+
+@pytest.mark.asyncio
+async def test_distinct(service):
+    queries = [
+        [OperatorEnum.IN, "category", [1, 2, 3]],
+        [OperatorEnum.EQUAL, "status", 1],
+    ]
+    res: set = await service.distinct(queries=queries, attr="category")
+    assert res.intersection([1, 2, 3]) != set()

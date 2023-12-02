@@ -1,5 +1,5 @@
 from dataclasses import asdict
-from typing import Any, List, Literal, Sequence
+from typing import Any, List, Literal, Sequence, Set
 
 from chalice import BadRequestError
 
@@ -103,11 +103,17 @@ class AsyncProductService(ProductServiceIfs, AbstractService):
         result = await builder.where(OperatorEnum.EQUAL, "status", 1).random(chunk_size)
         return result.get()
 
-    async def get_length(self, filter_key: str = None, filter_value: Any = None) -> int:
+    async def get_length(self, queries: List[list]) -> int:
         builder = self._factory.make(db=self.__db_name, rel=self.__rel_name)
-        result = await builder.where(
-            OperatorEnum.EQUAL, filter_key, filter_value
-        ).count()
+        builder.and_()
+        for op, *sub_query in queries:
+            if op == OperatorEnum.ELEM_MATCH:
+                nested_op, attr, val = sub_query
+                builder.elm_where(nested_op, attr, val)
+            else:
+                attr, val = sub_query
+                builder.where(op, attr, val)
+        result = await builder.count()
         return result
 
     async def find_page(
@@ -140,11 +146,30 @@ class AsyncProductService(ProductServiceIfs, AbstractService):
     ) -> List[ProductEntity]:
         assert page >= 1
         builder = self._factory.make(db=self.__db_name, rel=self.__rel_name)
-        for op, attr, val in queries:
-            builder.where(op, attr, val)
+        builder.and_()
+        for op, *sub_query in queries:
+            if op == OperatorEnum.ELEM_MATCH:
+                nested_op, attr, val = sub_query
+                builder.elm_where(nested_op, attr, val)
+            else:
+                attr, val = sub_query
+                builder.where(op, attr, val)
         builder.order(sort_key, direction)
         builder.skip((page - 1) * page_size)
         builder.limit(page_size)
 
         result = await builder.read()
         return result.get()
+
+    async def distinct(self, attr: str, queries: List[list]) -> Set[Any]:
+        builder = self._factory.make(db=self.__db_name, rel=self.__rel_name)
+        builder.and_()
+        for op, *sub_query in queries:
+            if op == OperatorEnum.ELEM_MATCH:
+                nested_op, attr_, val = sub_query
+                builder.elm_where(nested_op, attr_, val)
+            else:
+                attr_, val = sub_query
+                builder.where(op, attr_, val)
+        result = await builder.distinct(attr)
+        return result
