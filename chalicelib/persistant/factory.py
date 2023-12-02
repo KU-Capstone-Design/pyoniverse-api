@@ -2,8 +2,8 @@ import os
 
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from chalicelib.persistant.refactor.builder import AsyncMongoBuilder
-from chalicelib.service_refactor.interface.factory import FactoryIfs
+from chalicelib.persistant.builder import AsyncMongoBuilder
+from chalicelib.service.interface.factory import FactoryIfs
 
 
 class AsyncMongoFactory(FactoryIfs):

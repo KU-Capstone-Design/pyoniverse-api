@@ -11,3 +11,4 @@ class OperatorEnum(enum.Enum):
     LESS_OR_EQUAL_THAN = enum.auto()
     IN = enum.auto()
     NOT_IN = enum.auto()
+    ELEM_MATCH = enum.auto()

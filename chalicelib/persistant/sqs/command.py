@@ -7,7 +7,7 @@ from typing import List
 
 import boto3
 
-from chalicelib.persistant.asyncio.sqs.model.message import Data, Filter, Message
+from chalicelib.persistant.sqs.model.message import Data, Filter, Message
 
 
 class AsyncSqsAddModifyEqualCommand:

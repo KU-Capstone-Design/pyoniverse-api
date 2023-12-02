@@ -21,13 +21,15 @@ class _SearchResultRequestDtoSchema(Schema):
         required=False, validate=validate.OneOf(["asc", "desc"]), load_default="asc"
     )
     categories = fields.Str(
-        required=False, validate=lambda x: re.match(r"^(\d,)*\d?$", x) is not None
+        required=False,
+        validate=lambda x: re.match(r"^(\d{1,2},)*\d{1,2}?$", x) is not None,
     )
     brands = fields.Str(
         required=False, validate=lambda x: re.match(r"^(\d,)*\d?$", x) is not None
     )
     events = fields.Str(
-        required=False, validate=lambda x: re.match(r"^(\d,)*\d?$", x) is not None
+        required=False,
+        validate=lambda x: re.match(r"^(\d{1,2},)*\d{1,2}?$", x) is not None,
     )
 
     class Meta:
