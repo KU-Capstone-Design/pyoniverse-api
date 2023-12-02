@@ -1,4 +1,5 @@
 import logging
+import os
 from collections import OrderedDict
 from typing import Any, Dict, Literal
 
@@ -21,6 +22,8 @@ class AsyncMongoBuilder(BuilderIfs):
 
     def __init__(self, db_name: str, rel_name: str, rel: AsyncIOMotorCollection):
         self.__db_name = db_name
+        if self.__db_name == "service":
+            self.__db_name = os.getenv("MONGO_DB")
         self.__rel_name = rel_name
         self.__entity = ENTITY_MAP[db_name][rel_name]
         self.__coll = rel

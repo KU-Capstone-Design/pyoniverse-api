@@ -12,9 +12,11 @@ class AsyncMongoFactory(FactoryIfs):
 
     def make(self, db: str, rel: str) -> AsyncMongoBuilder:
         if db == "service":
-            db = os.getenv("MONGO_DB")
+            db_name = os.getenv("MONGO_DB")
+        else:
+            db_name = db
         return AsyncMongoBuilder(
             db_name=db,
             rel_name=rel,
-            rel=self.__client.get_database(db).get_collection(rel),
+            rel=self.__client.get_database(db_name).get_collection(rel),
         )
