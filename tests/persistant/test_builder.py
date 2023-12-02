@@ -3,9 +3,9 @@ from contextlib import contextmanager
 import pytest
 
 from chalicelib.entity.product import ProductEntity
-from chalicelib.persistant.refactor.factory import AsyncMongoFactory
-from chalicelib.service_refactor.model.enum import OperatorEnum
-from chalicelib.service_refactor.model.result import Result
+from chalicelib.persistant.factory import AsyncMongoFactory
+from chalicelib.service.model.enum import OperatorEnum
+from chalicelib.service.model.result import Result
 
 
 @pytest.fixture

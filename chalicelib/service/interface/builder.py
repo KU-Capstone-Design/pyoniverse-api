@@ -1,8 +1,8 @@
 from abc import ABCMeta, abstractmethod
 from typing import Any, Literal
 
-from chalicelib.service_refactor.model.enum import OperatorEnum
-from chalicelib.service_refactor.model.result import Result
+from chalicelib.service.model.enum import OperatorEnum
+from chalicelib.service.model.result import Result
 
 
 class BuilderIfs(metaclass=ABCMeta):

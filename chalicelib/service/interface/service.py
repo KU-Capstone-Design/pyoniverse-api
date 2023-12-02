@@ -1,5 +1,5 @@
 from chalicelib.business.interface.service import ServiceIfs
-from chalicelib.service_refactor.interface.factory import FactoryIfs
+from chalicelib.service.interface.factory import FactoryIfs
 
 
 class AbstractService(ServiceIfs):

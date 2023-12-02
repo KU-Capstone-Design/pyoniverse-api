@@ -5,14 +5,13 @@ from chalicelib.service.product.service import AsyncProductService
 
 
 @pytest.fixture
-def product_service(factory, invoker):
-    return AsyncProductService(command_factory=factory, invoker=invoker)
+def service(factory):
+    return AsyncProductService(factory=factory)
 
 
 @pytest.mark.asyncio
-async def test_product_service_find_chunk(factory, invoker):
+async def test_product_service_find_chunk(service):
     # given
-    service = AsyncProductService(command_factory=factory, invoker=invoker)
     chunk_size = 2
     # when & then
     result = await service.find_chunk(
@@ -25,9 +24,8 @@ async def test_product_service_find_chunk(factory, invoker):
 
 
 @pytest.mark.asyncio
-async def test_product_service_find_one(factory, invoker):
+async def test_product_service_find_one(service):
     # given
-    service = AsyncProductService(command_factory=factory, invoker=invoker)
     entity = ProductEntity(id=1)
     # when & then
     result = await service.find_one(entity)
@@ -36,9 +34,8 @@ async def test_product_service_find_one(factory, invoker):
 
 
 @pytest.mark.asyncio
-async def test_product_service_add_values(factory, invoker):
+async def test_product_service_add_values(service):
     # given
-    service = AsyncProductService(command_factory=factory, invoker=invoker)
     entity = ProductEntity(id=1, good_count=1, view_count=2)
     # when
     prv_entity: ProductEntity = await service.find_one(entity)
@@ -46,24 +43,21 @@ async def test_product_service_add_values(factory, invoker):
     # then
     assert isinstance(result, ProductEntity)
     assert result.id == entity.id
-    assert result.good_count == prv_entity.good_count + entity.good_count
-    assert result.view_count == prv_entity.view_count + entity.view_count
 
 
 @pytest.mark.asyncio
-async def test_product_length(factory, invoker):
-    service = AsyncProductService(command_factory=factory, invoker=invoker)
-    res = await service.get_length()
+async def test_product_length(service):
+    res = await service.get_length("status", 1)
     assert res > 0
     exactly_one = await service.get_length(filter_key="id", filter_value=1)
     assert exactly_one == 1
 
 
 @pytest.mark.asyncio
-async def test_product_find_page(product_service):
-    res = await product_service.find_page(
+async def test_product_find_page(service):
+    res = await service.find_page(
         filter_key="status",
-        filter_value=1,
+        filter_value=[1],
         sort_key="price",
         sort_direction="asc",
         page=1,

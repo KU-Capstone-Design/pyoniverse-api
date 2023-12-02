@@ -2,11 +2,11 @@ from dependency_injector.containers import DeclarativeContainer
 from dependency_injector.providers import Dependency, Singleton
 
 from chalicelib.business.interface.service import ServiceIfs
-from chalicelib.service_refactor.constant_brand.service import AsyncConstantBrandService
-from chalicelib.service_refactor.event.service import AsyncEventService
-from chalicelib.service_refactor.interface.factory import FactoryIfs
-from chalicelib.service_refactor.product.service import AsyncProductService
-from chalicelib.service_refactor.search.service import AsyncSearchService
+from chalicelib.service.constant_brand.service import AsyncConstantBrandService
+from chalicelib.service.event.service import AsyncEventService
+from chalicelib.service.interface.factory import FactoryIfs
+from chalicelib.service.product.service import AsyncProductService
+from chalicelib.service.search.service import AsyncSearchService
 
 
 class ServiceProvider(Singleton):

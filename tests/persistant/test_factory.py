@@ -1,6 +1,6 @@
-from chalicelib.persistant.refactor.builder import AsyncMongoBuilder
-from chalicelib.persistant.refactor.factory import AsyncMongoFactory
-from chalicelib.service_refactor.interface.factory import FactoryIfs
+from chalicelib.persistant.builder import AsyncMongoBuilder
+from chalicelib.persistant.factory import AsyncMongoFactory
+from chalicelib.service.interface.factory import FactoryIfs
 
 
 def test_async_mongo_factory(mongo_client):

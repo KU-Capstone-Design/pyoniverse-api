@@ -2,11 +2,11 @@ import os
 
 import pytest
 
-from chalicelib.persistant.refactor.factory import AsyncMongoFactory
-from chalicelib.service_refactor.constant_brand.service import AsyncConstantBrandService
-from chalicelib.service_refactor.event.service import AsyncEventService
-from chalicelib.service_refactor.product.service import AsyncProductService
-from chalicelib.service_refactor.search.service import AsyncSearchService
+from chalicelib.persistant.factory import AsyncMongoFactory
+from chalicelib.service.constant_brand.service import AsyncConstantBrandService
+from chalicelib.service.event.service import AsyncEventService
+from chalicelib.service.product.service import AsyncProductService
+from chalicelib.service.search.service import AsyncSearchService
 
 
 @pytest.fixture(scope="module")

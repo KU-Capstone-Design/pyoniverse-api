@@ -2,7 +2,7 @@ from dependency_injector.containers import DeclarativeContainer
 from dependency_injector.providers import Dependency, Singleton
 from motor.motor_asyncio import AsyncIOMotorClient
 
-from chalicelib.persistant.refactor.factory import AsyncMongoFactory
+from chalicelib.persistant.factory import AsyncMongoFactory
 
 
 class PersistentInjector(DeclarativeContainer):
