@@ -159,7 +159,11 @@ class AsyncProductService(ProductServiceIfs, AbstractService):
         builder.limit(page_size)
 
         result = await builder.read()
-        return result.get()
+        result = result.get()
+        if not isinstance(result, list):
+            return [result]
+        else:
+            return result
 
     async def distinct(self, attr: str, queries: List[list]) -> Set[Any]:
         builder = self._factory.make(db=self.__db_name, rel=self.__rel_name)
