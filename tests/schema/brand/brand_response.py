@@ -22,6 +22,8 @@ class _BrandDetailEventResponseSchema(Schema):
     end_at = fields.Str(
         required=True, validate=lambda x: re.match(r"\d{4}-\d{2}-\d{2}", x)
     )
+    good_count: int = fields.Integer(required=True)
+    view_count: int = fields.Integer(required=True)
 
 
 class _BrandDetailProductResponseSchema(Schema):
@@ -30,7 +32,10 @@ class _BrandDetailProductResponseSchema(Schema):
     image = fields.URL(required=True, allow_none=True)
     image_alt = fields.Str(required=True)
     price = fields.Float(required=True)
+    event_price = fields.Float(required=True, allow_none=True)
+    events = fields.List(fields.Str(), required=True)
     good_count: int = fields.Integer(required=True)
+    view_count: int = fields.Integer(required=True)
 
 
 class BrandDetailResponseSchema(Schema):
@@ -43,3 +48,5 @@ class BrandDetailResponseSchema(Schema):
     products = fields.Nested(
         _BrandDetailProductResponseSchema, required=True, many=True
     )
+    image = fields.URL(required=True)
+    image_alt = fields.Str(required=True)

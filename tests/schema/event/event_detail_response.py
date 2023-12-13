@@ -10,5 +10,5 @@ class EventDetailResponseSchema(Schema):
     good_count = fields.Integer(required=True)
     images = fields.List(fields.URL(required=True), required=True)
     image_alt = fields.Str(required=True)
-    start_at = fields.Date(required=True, format="iso")
-    end_at = fields.Date(required=True, format="iso")
+    start_at = fields.Date(required=True, format="%m/%d")
+    end_at = fields.Date(required=True, format="%m/%d")
