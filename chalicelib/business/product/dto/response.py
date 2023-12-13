@@ -7,7 +7,7 @@ from chalicelib.business.interface.dto import DtoIfs
 @dataclass(kw_only=True)
 class ProductBrandHistoryResponseDto:
     date: str = field(default=None)
-    events: List[str] = field(default_factory=list)
+    events: List[int] = field(default_factory=list)
     price: float = field(default=None)
     event_price: float | None = field(default=None)
 
@@ -34,7 +34,7 @@ class ProductBrandResponseDto:
     id: int = field(default=None)
     name: str = field(default=None)
     image: str = field(default=None)
-    events: List[str] = field(default_factory=list)
+    events: List[int] = field(default_factory=list)
     price: float = field(default=None)
     event_price: float | None = field(default=None)  # 가격과 행사 가격이 동일하면 None으로 처리
     histories: List[ProductBrandHistoryResponseDto] = field(default_factory=list)

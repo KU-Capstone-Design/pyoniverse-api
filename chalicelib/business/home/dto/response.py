@@ -25,7 +25,7 @@ class HomeProductResponseDto:
     image_alt: str = field(default=None)
     name: str = field(default=None)
     id: int = field(default=None)
-    events: List[str] = field(default_factory=list)
+    events: List[int] = field(default_factory=list)
     price: float = field(default=None)
     event_price: float = field(default=None)
     event_brand: str = field(default=None)

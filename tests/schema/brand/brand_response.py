@@ -33,7 +33,7 @@ class _BrandDetailProductResponseSchema(Schema):
     image_alt = fields.Str(required=True)
     price = fields.Float(required=True)
     event_price = fields.Float(required=True, allow_none=True)
-    events = fields.List(fields.Str(), required=True)
+    events = fields.List(fields.Integer(), required=True)
     good_count: int = fields.Integer(required=True)
     view_count: int = fields.Integer(required=True)
 

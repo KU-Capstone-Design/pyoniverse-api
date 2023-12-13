@@ -80,10 +80,11 @@ class AsyncBrandBusiness(BrandBusinessIfs):
             cur_brand_info: ProductBrandEntity = next(
                 filter(lambda x: x.id == constant_brand.id, product.brands)
             )
-            product_events = [
-                ConstantConverter.convert_event_id(e)["name"]
-                for e in cur_brand_info.events
-            ]
+            # product_events = [
+            #     ConstantConverter.convert_event_id(e)["name"]
+            #     for e in cur_brand_info.events
+            # ]
+            product_events = sorted(cur_brand_info.events)
             event_price = cur_brand_info.price.discounted_value
             tmp = BrandProductResponseDto(
                 id=product.id,

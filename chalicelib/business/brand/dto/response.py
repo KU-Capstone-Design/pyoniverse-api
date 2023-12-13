@@ -31,7 +31,7 @@ class BrandProductResponseDto:
     good_count: int = field(default=None)
     view_count: int = field(default=None)
     price: float = field(default=None)
-    events: List[str] = field(default=None)
+    events: List[int] = field(default=None)
     event_price: float = field(default=None)
 
 

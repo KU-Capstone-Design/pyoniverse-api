@@ -69,12 +69,13 @@ class AsyncProductBusiness(ProductBusinessIfs):
                 id=brand.id,
                 name=constant_brand_map[brand.id].name,
                 image=constant_brand_map[brand.id].image,
-                events=list(
-                    map(
-                        lambda x: ConstantConverter.convert_event_id(x)["name"],
-                        brand.events,
-                    )
-                ),
+                # events=list(
+                #     map(
+                #         lambda x: ConstantConverter.convert_event_id(x)["name"],
+                #         brand.events,
+                #     )
+                # ),
+                events=sorted(brand.events),
                 price=brand.price.value,
                 event_price=brand.price.discounted_value,
             )
@@ -88,12 +89,13 @@ class AsyncProductBusiness(ProductBusinessIfs):
                 tmp.histories.append(
                     ProductBrandHistoryResponseDto(
                         date=history.date,
-                        events=list(
-                            map(
-                                lambda x: ConstantConverter.convert_event_id(x)["name"],
-                                history_info.events,
-                            )
-                        ),
+                        # events=list(
+                        #     map(
+                        #         lambda x: ConstantConverter.convert_event_id(x)["name"],
+                        #         history_info.events,
+                        #     )
+                        # ),
+                        events=sorted(history_info.events),
                         price=history_info.price.value,
                         event_price=history_info.price.discounted_value,
                     )
@@ -102,12 +104,13 @@ class AsyncProductBusiness(ProductBusinessIfs):
             tmp.histories.append(
                 ProductBrandHistoryResponseDto(
                     date=datetime.now().strftime("%Y-%m-%d"),
-                    events=list(
-                        map(
-                            lambda x: ConstantConverter.convert_event_id(x)["name"],
-                            brand.events,
-                        )
-                    ),
+                    # events=list(
+                    #     map(
+                    #         lambda x: ConstantConverter.convert_event_id(x)["name"],
+                    #         brand.events,
+                    #     )
+                    # ),
+                    events=sorted(brand.events),
                     price=brand.price.value,
                     event_price=brand.price.discounted_value,
                 )
