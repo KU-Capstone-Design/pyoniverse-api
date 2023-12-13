@@ -11,3 +11,4 @@ class _HomeStoreResponseSchema(Schema):
 
 class HomeStoreResponseSchema(Schema):
     stores = fields.Nested(_HomeStoreResponseSchema, required=True, many=True)
+    search = fields.Raw(required=True, allow_none=True)

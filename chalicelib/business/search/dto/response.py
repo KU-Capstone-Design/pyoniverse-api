@@ -36,7 +36,7 @@ class SearchResultProductResponseDto:
     image: str = field(default=None)
     image_alt: str = field(default=None)
     price: float = field(default=None)
-    events: List[str] = field(default_factory=list)
+    events: List[int] = field(default_factory=list)
     event_price: float | None = field(default=None)
     category: int | None = field(default=None)
     brands: List[int] = field(default_factory=list)

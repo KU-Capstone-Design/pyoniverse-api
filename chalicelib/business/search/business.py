@@ -172,7 +172,8 @@ class AsyncSearchBusiness(SearchBusinessIfs):
                 image_alt=f"{product.name}",
                 price=product.price,
                 events=[
-                    ConstantConverter.convert_event_id(id_)["name"]
+                    # ConstantConverter.convert_event_id(id_)["name"]
+                    id_
                     for id_ in product.best.events
                 ],
                 event_price=event_price,
@@ -189,9 +190,6 @@ class AsyncSearchBusiness(SearchBusinessIfs):
             page_size=request.page_size,
             sort_key=request.sort_key,
             sort_direction=request.sort_direction,
-            # categories=sorted([c.id for c in categories]),
-            # brands=sorted([b.id for b in brands]),
-            # events=sorted([e.id for e in events]),
             # meta에는 선택된 category, brand, event를 내린다
             categories=sorted(request.categories),
             brands=sorted(request.brands),
