@@ -23,5 +23,6 @@ Chalice 는 기본적으로 배포 시, Stage 마다 새로운 게이트웨이�
 
 PS) 다른 스테이지에서 `rest_api_url`의 마지막 `/{stage_name}` 은 변경해야 합니다.
 
-## 아키텍처
-- [Persistant](architecture/persistant)
+## 문서
+- [Architecture](docs/architecture.md)
+- [Design](docs/design.md)
