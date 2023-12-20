@@ -56,7 +56,7 @@ class AsyncSearchBusiness(SearchBusinessIfs):
         return result
 
     def get_result(self, request: SearchResultRequestDto) -> SearchResultResponseDto:
-        query = request.query.replace("%20", " ")
+        query = request.query.replace("%20", " ").strip()
         if request.sort_key == "event_price":
             # best.price
             sort_key = "best.price"
