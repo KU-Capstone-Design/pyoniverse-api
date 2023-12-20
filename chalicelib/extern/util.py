@@ -1,28 +1,31 @@
-import asyncio
-from functools import lru_cache, wraps
+import logging
+from functools import wraps
 
 
-def async_cache(f=None):
-    """
-    :param f: Coroutine Function
-    :return:
-    """
-    # Check f is coroutine
-    if not asyncio.iscoroutinefunction(f):
-        raise RuntimeError(f"{f} is not coroutine")
+class SimpleAsyncCache:
+    def __init__(self, func):
+        self.__func = func
+        self.__cache = {}
+        self.logger = logging.getLogger(__name__)
 
-    loop = asyncio.get_event_loop()
+    def get_key(self, *args, **kwargs):
+        return f"{args}{kwargs}"
 
-    @lru_cache
-    def __cached_func(*args, **kwargs):
-        res = loop.run_until_complete(f(*args, **kwargs))
-        return res
+    async def __call__(self, *args, **kwargs):
+        self.logger.debug(self.__cache)
+        key = self.get_key(args, kwargs)
+        if key not in self.__cache:
+            val = await self.__func(*args, **kwargs)
+            self.__cache[key] = val
+        return self.__cache.get(key)
 
-    @wraps(f)
+
+def async_cache(func):
+    cache = SimpleAsyncCache(func)
+
+    @wraps(func)
     def wrapper(*args, **kwargs):
-        res = __cached_func(*args, **kwargs)
-        future = loop.create_future()
-        future.set_result(res)
-        return future
+        res = cache(*args, **kwargs)
+        return res
 
     return wrapper

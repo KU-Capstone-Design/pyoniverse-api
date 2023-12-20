@@ -1,9 +1,13 @@
+import asyncio
+import os
+
 import pytest
+from motor.motor_asyncio import AsyncIOMotorClient
 
 from chalicelib.extern.dependency_injector.injector import MainInjector
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def env():
     import os
 
@@ -28,7 +32,23 @@ def env():
     os.environ["MONGO_DB"] = "test"
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
+def event_loop():
+    policy = asyncio.get_event_loop_policy()
+    loop = policy.new_event_loop()
+    yield loop
+    loop.close()
+
+
+@pytest.fixture(scope="session")
+def client(env):
+    client = AsyncIOMotorClient(os.getenv("MONGO_URI"))
+    client.get_io_loop().run_until_complete(client.admin.command("ping"))
+    yield client
+    client.close()
+
+
+@pytest.fixture(scope="function")
 def test_client(env):
     from chalice.test import Client
     from app import app
@@ -37,7 +57,7 @@ def test_client(env):
         yield client
 
 
-@pytest.fixture
+@pytest.fixture(scope="function")
 def injector(env):
     injector = MainInjector()
     injector.inject()

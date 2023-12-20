@@ -1,3 +1,4 @@
+import asyncio
 from asyncio import AbstractEventLoop
 
 from chalice import BadRequestError

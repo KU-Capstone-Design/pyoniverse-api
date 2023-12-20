@@ -46,11 +46,7 @@ class MainInjector:
         self.injectors["persistent"].check_dependencies()
 
         self.injectors["service"] = ServiceInjector(
-            command_factory=self.injectors["persistent"].command_factory(),
-            brand_invoker=self.injectors["persistent"].invoker(),
-            constant_brand_invoker=self.injectors["persistent"].invoker(),
-            product_invoker=self.injectors["persistent"].invoker(),
-            event_invoker=self.injectors["persistent"].invoker(),
+            factory=self.injectors["persistent"].factory(),
             engine_uri=os.getenv("SEARCH_ENGINE_URI"),
         )
         self.injectors["service"].check_dependencies()
@@ -58,12 +54,11 @@ class MainInjector:
         self.injectors["business"] = BusinessInjector(
             loop=client.get_io_loop(),
             home_converter=HomeConverter(),
-            brand_converter=BrandConverter(),
             event_converter=EventConverter(),
             search_converter=SearchConverter(),
             product_converter=ProductConverter(),
             metric_converter=MetricConverter(),
-            brand_service=self.injectors["service"].brand_service(),
+            brand_converter=BrandConverter(),
             constant_brand_service=self.injectors["service"].constant_brand_service(),
             event_service=self.injectors["service"].event_service(),
             product_service=self.injectors["service"].product_service(),

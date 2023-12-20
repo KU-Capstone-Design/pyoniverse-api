@@ -51,10 +51,11 @@ class HomeConverter(ConverterIfs):
                 end_at=end_at,
             )
         elif isinstance(entity, ProductEntity):
-            events = [
-                ConstantConverter.convert_event_id(e)["name"]
-                for e in entity.best.events
-            ]
+            # events = [
+            #     ConstantConverter.convert_event_id(e)["name"]
+            #     for e in entity.best.events
+            # ]
+            events = sorted(entity.best.events)
             event_brand = ConstantConverter.convert_brand_id(entity.best.brand)[
                 "name"
             ].upper()

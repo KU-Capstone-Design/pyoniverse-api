@@ -1,3 +1,4 @@
+import asyncio
 from asyncio import AbstractEventLoop, gather
 
 from chalicelib.business.event.dto.request import EventRequestDto

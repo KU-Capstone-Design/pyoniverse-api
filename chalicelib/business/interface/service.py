@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from typing import Any, Literal, Sequence
+from typing import Any, List, Literal, Sequence, Set
 
 from chalicelib.entity.brand import BrandEntity
 from chalicelib.entity.constant_brand import ConstantBrandEntity
@@ -49,6 +49,47 @@ class ProductServiceIfs(ServiceIfs):
 
     @abstractmethod
     def random(self, chunk_size: int):
+        pass
+
+    @abstractmethod
+    def get_length(self, queries: List[list]) -> int:
+        """
+        :param queries: [OperatorEnum, attr, value] 순서의 리스트의 리스트
+        """
+        pass
+
+    @abstractmethod
+    def find_page(
+        self,
+        filter_key: str,
+        filter_value: Any,
+        sort_key: str,
+        sort_direction: Literal["asc", "desc"],
+        page: int,
+        page_size: int,
+    ):
+        pass
+
+    @abstractmethod
+    def search(
+        self,
+        queries: List[list],
+        sort_key: str,
+        direction: Literal["asc", "desc"],
+        page: int,
+        page_size: int,
+    ) -> List[ProductEntity]:
+        """
+        :param queries: [OperatorEnum, attr, value] 순서의 리스트의 리스트
+        """
+        pass
+
+    @abstractmethod
+    def distinct(self, attr: str, queries: List[list]) -> Set[Any]:
+        """
+        :param attr: 가져올 속성
+        :param queries: [OperatorEnum, attr, value] 순서의 리스트의 리스트
+        """
         pass
 
 

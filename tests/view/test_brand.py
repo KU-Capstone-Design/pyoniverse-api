@@ -1,9 +1,8 @@
 from chalicelib.view.model.api import Api
-from tests.mock.mock import env, injector, test_client
 from tests.schema.brand.brand_response import BrandDetailResponseSchema
 
 
-def test_spec_brand(env, injector, test_client):
+def test_spec_brand(env, test_client, event_loop):
     import json
 
     res = test_client.http.get("/v1/brand/cu")

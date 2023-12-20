@@ -6,7 +6,7 @@ class _HomeProductResponseSchema(Schema):
     image_alt = fields.Str(required=True)
     name = fields.Str(required=True)
     id = fields.Int(required=True)
-    events = fields.List(fields.Str(), required=True)
+    events = fields.List(fields.Integer(), required=True)
     price = fields.Float(required=True)
     event_price = fields.Float(required=True, allow_none=True)
     event_brand = fields.Str(required=True)

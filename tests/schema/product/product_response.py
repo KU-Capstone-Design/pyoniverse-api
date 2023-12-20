@@ -2,15 +2,15 @@ from marshmallow import Schema, fields
 
 
 class ProductBrandHistoryResponseSchema(Schema):
-    date = fields.Date(required=True, format="iso")
-    events = fields.List(fields.Str(), required=True)
+    date = fields.Date(required=True, format="%Y-%m")
+    events = fields.List(fields.Integer(), required=True)
     price = fields.Float(required=True)
     event_price = fields.Float(required=True, allow_none=True)
 
 
 class ProductBrandHistoriesSummaryPriceSchema(Schema):
     brand = fields.Str(required=True)
-    date = fields.Date(required=True, format="iso")
+    date = fields.Date(required=True, format="%Y-%m")
     value = fields.Float(required=True)
 
 
@@ -26,7 +26,7 @@ class ProductBrandResponseSchema(Schema):
     id = fields.Integer(required=True)
     name = fields.Str(required=True)
     image = fields.URL(required=True)
-    events = fields.List(fields.Str(), required=True)
+    events = fields.List(fields.Integer(), required=True)
     event_price = fields.Float(required=True, allow_none=True)
     price = fields.Float(required=True)
     histories = fields.Nested(

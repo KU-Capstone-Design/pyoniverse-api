@@ -4,8 +4,8 @@ from marshmallow import Schema, fields
 class EventListItemSchema(Schema):
     id = fields.Integer(required=True)
     name = fields.Str(required=True)
-    start_at = fields.Date(required=True, format="iso")
-    end_at = fields.Date(required=True, format="iso")
+    start_at = fields.Date(required=True, format="%m/%d")
+    end_at = fields.Date(required=True, format="%m/%d")
     image = fields.URL(required=True)
     image_alt = fields.Str(required=True)
     view_count = fields.Integer(required=True)

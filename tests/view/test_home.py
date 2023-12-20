@@ -1,11 +1,10 @@
 from chalicelib.view.model.api import Api
-from tests.mock.mock import env, injector, test_client
 from tests.schema.home.event_response import HomeEventResponseSchema
 from tests.schema.home.product_response import HomeProductResponseSchema
 from tests.schema.home.store_response import HomeStoreResponseSchema
 
 
-def test_spec_products(env, test_client, injector):
+def test_spec_products(env, test_client, event_loop):
     import json
 
     res = test_client.http.get("/v1/home?type=products")
@@ -14,7 +13,7 @@ def test_spec_products(env, test_client, injector):
     assert Api.validate(HomeProductResponseSchema, body, many=False) == {}
 
 
-def test_spec_events(env, test_client, injector):
+def test_spec_events(env, test_client, event_loop):
     import json
 
     res = test_client.http.get("/v1/home?type=events")
@@ -23,7 +22,7 @@ def test_spec_events(env, test_client, injector):
     assert Api.validate(HomeEventResponseSchema, body, many=False) == {}
 
 
-def test_spec_brands(env, test_client, injector):
+def test_spec_brands(env, test_client, event_loop):
     import json
 
     res = test_client.http.get("/v1/home")
